@@ -39,7 +39,7 @@ export default {
   }),
   watch: {
     $route(to, from) {
-      this.language = to.meta.language;
+      this.language = to.meta.language|| this.language;
       this.query = to.params.title;
     }
   },

@@ -78,7 +78,7 @@ export default {
   }),
   computed: {
     title: function() {
-      return this.displaytitle || this.$route.params.title;
+      return this.$route.params.title;
     }
   },
   watch: {
