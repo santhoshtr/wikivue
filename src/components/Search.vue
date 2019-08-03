@@ -48,7 +48,7 @@ export default {
       this.language = language;
     },
     onSearch: function() {
-      this.$router.push({ path: `/${this.language}/${this.query}` });
+      this.$router.push({ path: `/${this.language||'en'}/${this.query}` });
     }
   }
 };

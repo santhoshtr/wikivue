@@ -1,6 +1,6 @@
 {
-  "name": "wikivue",
-  "short_name": "wikivue",
+  "name": "Wikipedia",
+  "short_name": "Wikipedia",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
