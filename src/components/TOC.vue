@@ -53,6 +53,13 @@ export default {
 <style>
 .toc {
     position: sticky;
-    top: 4em;
+    top: 4.2em;
+    max-height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.v-treeview--dense .v-treeview-node__root {
+    min-height: 25px;
 }
 </style>

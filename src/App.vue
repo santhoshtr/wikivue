@@ -8,6 +8,11 @@
       :clipped="$vuetify.breakpoint.lgAndUp"
       app
     >
+      <v-img
+        :aspect-ratio="1/1"
+        contain
+        src="./assets/Wikipedia-logo.png"
+      />
       <v-list
         flat
       >
@@ -37,30 +42,39 @@
       color="white"
       light
     >
-      <v-toolbar-title
-        style="width: 300px"
-        class="ml-0 pl-4"
-      >
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <Brand />
-      </v-toolbar-title>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer">
+        <v-img
+          contain
+          :aspect-ratio="4/4"
+          src="./assets/Wikipedia-logo.png"
+        />
+      </v-app-bar-nav-icon>
+      <Brand />
       <v-text-field
         v-model="$route.params.title"
         flat
+        single-line
         hide-details
-        prepend-inner-icon="search"
+        class="title"
         label="Search"
-      />
-      <v-btn icon>
-        <v-icon>translate</v-icon>
-      </v-btn>
-      <v-spacer />
-      <v-btn icon>
-        <v-icon>notifications</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>person</v-icon>
-      </v-btn>
+      >
+        <template v-slot:prepend-inner>
+          <v-btn icon>
+            <v-icon>search</v-icon>
+          </v-btn>
+        </template>
+        <template v-slot:append>
+          <v-btn icon>
+            <v-icon>translate</v-icon>
+          </v-btn>
+        </template>
+      </v-text-field>
+      <template v-if="$vuetify.breakpoint.smAndUp">
+        <v-spacer />
+        <v-btn icon>
+          <v-icon>person</v-icon>
+        </v-btn>
+      </template>
     </v-app-bar>
     <v-content color="white">
       <router-view />
@@ -93,12 +107,13 @@
 
 <style>
 #wiki {
-  font-family: "Avenir", Helvetica, "Lato", "Manjari", Arial, sans-serif;
+  font-family: "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   text-align: left;
   font-size: 1em;
-  color: #2c3e50;
+  color: rgba(0, 0, 0, 0.84);
   background-color: white;
 }
 </style>

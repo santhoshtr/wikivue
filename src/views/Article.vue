@@ -15,6 +15,7 @@
         sm2
         md3
         lg3
+        hidden-sm-and-down
         class="ml-2"
       >
         <TOC
@@ -22,8 +23,8 @@
         />
       </v-flex>
       <v-flex
-        xs10
-        sm8
+        xs12
+        sm10
         md6
         lg6
       >
@@ -155,7 +156,7 @@ a {
    background-color: white;
 }
 p {
-    line-height: 1.5em;
-    font-size: 1em;
+    line-height: 1.5;
+    font-size: 18px;
 }
 </style>
