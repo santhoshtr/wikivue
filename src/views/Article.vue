@@ -22,7 +22,7 @@
       </v-flex>
       <v-flex
         xs12
-        sm10
+        sm12
         md6
         lg6
       >
@@ -171,5 +171,10 @@ a {
 p {
   line-height: 1.5;
   font-size: 18px;
+}
+
+article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary,table.wikitable {
+    display: block;
+    overflow: auto;
 }
 </style>
