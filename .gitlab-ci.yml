@@ -5,6 +5,7 @@ pages: # the job must be named pages
   script:
     - npm ci
     - npm run build
+    - rm -rf public # Remove the existing public dir
     - mv dist public # rename the dist folder (result of npm run build)
   artifacts:
     paths:
