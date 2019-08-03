@@ -18,9 +18,7 @@
         hidden-sm-and-down
         class="ml-2"
       >
-        <TOC
-          :toc="toc"
-        />
+        <TOC :toc="toc" />
       </v-flex>
       <v-flex
         xs12
@@ -54,13 +52,14 @@
 
 <script>
 import axios from "axios";
-import TOC from "../components/TOC"
-import ArticleHeader from "../components/ArtcleHeader"
+import TOC from "../components/TOC";
+import ArticleHeader from "../components/ArtcleHeader";
 
 export default {
   name: "Article",
   components: {
-      TOC, ArticleHeader
+    TOC,
+    ArticleHeader
   },
   props: {
     language: {
@@ -73,20 +72,31 @@ export default {
     activeToc: [],
     loaded: false,
     sections: [],
-    title: "",
     description: "",
+    displaytitle: "",
     toc: []
   }),
   computed: {
+    title: function() {
+      return this.displaytitle || this.$route.params.title;
+    }
   },
   watch: {
+    title: function() {
+      this.loadArticle();
+    },
+    language: function() {
+      this.loadArticle();
+    }
   },
-  asyncComputed: {
-    async article() {
+  mounted: function() {
+    this.loadArticle();
+  },
+  methods: {
+    async loadArticle() {
       this.loaded = false;
       this.toc = [];
       this.sections = [];
-      this.title = this.$route.params.title;
       const articleData = await this.fetchArticle(this.language, this.title);
       const sections = [
         ...articleData.lead.sections,
@@ -112,13 +122,14 @@ export default {
         }
       }
       this.loaded = true;
-      this.title = articleData.lead.displaytitle;
+      this.displaytitle = articleData.lead.displaytitle;
       this.description = articleData.lead.description;
-      return articleData;
-    }
-  },
-  methods: {
+      this.error = null;
+    },
     fetchArticle(language, title) {
+      if (!title) {
+        return;
+      }
       const api = `//${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${title}`;
       return axios
         .get(api, {
@@ -128,7 +139,8 @@ export default {
           return response.data;
         })
         .catch(error => {
-            this.error=error
+          this.error = error;
+          this.loaded = true;
         });
     }
   }
@@ -137,26 +149,27 @@ export default {
 
 <style>
 .mw-ref {
-    vertical-align: super;
-    line-height: 1;
-    font-size: smaller;
-    unicode-bidi: embed;
-    font-weight: normal;
-    font-style: normal;
+  vertical-align: super;
+  line-height: 1;
+  font-size: smaller;
+  unicode-bidi: embed;
+  font-weight: normal;
+  font-style: normal;
 }
-a:hover, a:focus {
-    text-decoration: underline;
+a:hover,
+a:focus {
+  text-decoration: underline;
 }
 a {
-    text-decoration: none;
-    color: #0645ad;
-    background: none;
+  text-decoration: none;
+  color: #0645ad;
+  background: none;
 }
 .container {
-   background-color: white;
+  background-color: white;
 }
 p {
-    line-height: 1.5;
-    font-size: 18px;
+  line-height: 1.5;
+  font-size: 18px;
 }
 </style>

@@ -50,25 +50,7 @@
         />
       </v-app-bar-nav-icon>
       <Brand />
-      <v-text-field
-        v-model="$route.params.title"
-        flat
-        single-line
-        hide-details
-        class="title"
-        label="Search"
-      >
-        <template v-slot:prepend-inner>
-          <v-btn icon>
-            <v-icon>search</v-icon>
-          </v-btn>
-        </template>
-        <template v-slot:append>
-          <v-btn icon>
-            <v-icon>translate</v-icon>
-          </v-btn>
-        </template>
-      </v-text-field>
+      <Search />
       <template v-if="$vuetify.breakpoint.smAndUp">
         <v-spacer />
         <v-btn icon>
@@ -85,13 +67,12 @@
 
 <script>
   import Brand from './components/Brand'
+  import Search from './components/Search'
   import Footer from './components/Footer'
   export default {
-    props: {
-      source: String,
-    },
     components: {
       Brand,
+      Search,
       Footer
     },
     data: () => ({

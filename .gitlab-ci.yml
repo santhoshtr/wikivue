@@ -1,0 +1,13 @@
+
+pages: # the job must be named pages
+  image: node:latest
+  stage: deploy
+  script:
+    - npm ci
+    - npm run build
+    - mv dist public # rename the dist folder (result of npm run build)
+  artifacts:
+    paths:
+      - public # artifact path must be /public for GitLab Pages to pick it up
+  only:
+    - master
