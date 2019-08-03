@@ -2,7 +2,6 @@
   <div class="toc">
     <h1
       class="title font-weight-light"
-      fixed
     >
       Table of contents
     </h1>
@@ -52,8 +51,7 @@ export default {
 
 <style>
 .toc {
-    position: sticky;
-    top: 4.2em;
+    position: fixed;
     max-height: 100vh;
     overflow-y: auto;
     scrollbar-width: thin;

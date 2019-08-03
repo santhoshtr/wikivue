@@ -1,5 +1,6 @@
 <template>
-  <div
+  <v-card
+    flat
     class="artcle-header mb-5"
   >
     <h1
@@ -11,7 +12,7 @@
     <h3 class="subtitle-1">
       {{ description }}
     </h3>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -25,7 +26,11 @@ export default {
      description: {
       type: String,
       default: ""
-    }
+    },
+    image: {
+      type: String,
+      default: ""
+    },
   }
 }
 </script>

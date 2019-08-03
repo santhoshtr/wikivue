@@ -1,15 +1,15 @@
 <template>
   <v-container fluid>
+    <v-progress-linear
+      :active="!loaded"
+      :indeterminate="!loaded"
+      absolute
+      top
+    />
     <v-layout
       row
       fill-height
     >
-      <v-progress-linear
-        :active="!loaded"
-        :indeterminate="!loaded"
-        absolute
-        top
-      />
       <v-flex
         xs2
         sm2
@@ -30,13 +30,15 @@
           <ArticleHeader
             :title="title"
             :description="description"
+            :image="bannerImage"
           />
           <v-sheet class="content" />
           <section
             v-for="section in sections"
             :key="section.id"
             :id="section.anchor"
-            v-html="section.text"
+            v-html="section.html"
+            class="my-4"
           />
           <div
             class="error"
@@ -74,6 +76,7 @@ export default {
     sections: [],
     description: "",
     displaytitle: "",
+    bannerImage:"",
     toc: []
   }),
   computed: {
@@ -105,7 +108,14 @@ export default {
       for (let i = 0; i < sections.length; i++) {
         const section = sections[i];
         if (section.text) {
-          this.sections.push(section);
+        const heading= section.line
+                ?`<h${section.toclevel+1}>${section.line}</h${section.toclevel+1}>`
+                 :''
+          this.sections.push({
+              id: section.id,
+            anchor: section.anchor,
+              html: heading + section.text
+          });
           continue;
         }
         if (section.toclevel === 1) {
@@ -124,6 +134,7 @@ export default {
       this.loaded = true;
       this.displaytitle = articleData.lead.displaytitle;
       this.description = articleData.lead.description;
+      this.bannerImage= articleData.lead.image && articleData.lead.image.urls['1024'];
       this.error = null;
     },
     fetchArticle(language, title) {
@@ -177,4 +188,9 @@ article, aside, details, figcaption, figure, footer, header, main, menu, nav, se
     display: block;
     overflow: auto;
 }
+
+figure {
+    margin: 10px 0;
+}
+
 </style>
