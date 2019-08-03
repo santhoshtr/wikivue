@@ -99,9 +99,9 @@ export default {
       this.filteredLanguages = {};
       Object.keys(this.languages).forEach(key => {
         if (
-          key === this.searchQuery ||
+          key.toLowerCase() === this.searchQuery.toLowerCase()||
           (this.languages[key] &&
-            this.languages[key].startsWith(this.searchQuery))
+            this.languages[key].toLowerCase().startsWith(this.searchQuery.toLowerCase()))
         ) {
           this.filteredLanguages[key] = this.languages[key];
         }
