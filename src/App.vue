@@ -97,4 +97,7 @@
   color: rgba(0, 0, 0, 0.84);
   background-color: white;
 }
+* {
+   text-transform: none !important;
+}
 </style>
