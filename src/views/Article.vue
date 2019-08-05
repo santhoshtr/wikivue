@@ -143,9 +143,7 @@ export default {
       }
       const api = `//${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${title}`;
       return axios
-        .get(api, {
-          origin: "*"
-        })
+        .get(api)
         .then(response => {
           return response.data;
         })
