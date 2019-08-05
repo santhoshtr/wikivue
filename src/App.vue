@@ -47,6 +47,8 @@
     <v-app-bar
       :clipped-left="$vuetify.breakpoint.lgAndUp"
       app
+      hide-on-scroll
+      scroll-threshold="500"
       elevate-on-scroll
       color="white"
       light
@@ -69,6 +71,7 @@
       <router-view />
     </v-content>
     <Footer />
+    <BottomNav />
   </v-app>
 </template>
 
@@ -76,11 +79,13 @@
   import Brand from './components/Brand'
   import Search from './components/Search'
   import Footer from './components/Footer'
+  import BottomNav from './components/BottomNav';
   export default {
     components: {
       Brand,
       Search,
-      Footer
+      Footer,
+      BottomNav
     },
     data: () => ({
       drawer: false,
