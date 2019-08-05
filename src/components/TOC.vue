@@ -1,14 +1,18 @@
 <template>
-  <div class="toc">
+  <div
+    class="toc"
+    v-if="toc.length"
+  >
     <h1
-      class="title font-weight-light"
+      class="title"
     >
       Table of contents
     </h1>
     <v-treeview
-      dense
       activatable
       selection-type="independent"
+      hoverable
+      transition
       :active.sync="activeToc"
       :items="toc"
     />
@@ -56,8 +60,7 @@ export default {
     overflow-y: auto;
     scrollbar-width: thin;
 }
-
-.v-treeview--dense .v-treeview-node__root {
-    min-height: 25px;
+.v-treeview-node__content {
+  cursor: pointer;
 }
 </style>
