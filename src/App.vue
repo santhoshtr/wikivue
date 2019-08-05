@@ -8,11 +8,20 @@
       :clipped="$vuetify.breakpoint.lgAndUp"
       app
     >
-      <v-img
-        :aspect-ratio="1/1"
-        contain
-        src="./assets/Wikipedia-logo.png"
-      />
+      <v-list-item>
+        <v-list-item-avatar
+          width="100%"
+          height="124px"
+        >
+          <v-img
+            :aspect-ratio="1/1"
+            contain
+
+            src="./assets/Wikipedia-logo.png"
+          />
+        </v-list-item-avatar>
+      </v-list-item>
+
       <v-list
         flat
       >
@@ -43,11 +52,9 @@
       light
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer">
-        <v-img
-          contain
-          :aspect-ratio="4/4"
-          src="./assets/Wikipedia-logo.png"
-        />
+        <v-btn icon>
+          <v-icon>menu</v-icon>
+        </v-btn>
       </v-app-bar-nav-icon>
       <Brand />
       <Search />
