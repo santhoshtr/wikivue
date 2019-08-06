@@ -6,6 +6,7 @@
     <v-navigation-drawer
       v-model="drawer"
       :clipped="$vuetify.breakpoint.lgAndUp"
+
       app
     >
       <v-list-item>
@@ -23,7 +24,9 @@
       </v-list-item>
 
       <v-list
+        dense
         flat
+        nav
       >
         <v-list-item-group
           color="primary"
@@ -91,8 +94,12 @@
       drawer: false,
       items: [
         { icon: 'apps', text: 'Home', href:"/" },
-        { icon: 'settings', text: 'Settings', href:"/preferences" },
-        { icon: 'help', text: 'Help', href:"/about" },
+        { icon: 'casino', text: 'Random', href:"/random" },
+        { icon: 'place', text: 'Nearby', href:"/nearby" },
+        { icon: 'star', text: 'Watchlist', href:"/user/watchlist" },
+        { icon: 'recent_actors', text: 'Contributions', href:"/user/contributions" },
+        { icon: 'settings', text: 'Settings', href:"/user/preferences" },
+        { icon: 'help', text: 'About', href:"/about" },
       ],
     }),
   }
