@@ -18,10 +18,7 @@
     @change="onSelect"
   >
     <template v-slot:append-outer>
-      <LanguageSelector
-        :selected-language="language"
-        @changeLanguage="onChangeLanguage"
-      />
+      <LanguageSelector />
     </template>
     <template v-slot:item="data">
       <template v-if="typeof data.item !== 'object'">
@@ -51,6 +48,7 @@
 
 <script>
 import LanguageSelector from "./LanguageSelector";
+import { mapGetters, mapMutations } from 'vuex';
 import debounce from "debounce";
 import axios from "axios";
 
@@ -64,11 +62,10 @@ export default {
     isLoading: false,
     article: null,
     search: "",
-    language: "en"
   }),
   watch: {
     $route(to, from) {
-      this.language = to.meta.language || this.language;
+      this.contentLanguage = to.meta.language || this.contentLanguage;
     },
     search(value) {
       if (!value) {
@@ -78,19 +75,21 @@ export default {
       debounce(this.wikiSearch, 1000)(value);
     }
   },
+  computed: {
+    ...mapGetters([
+      'contentLanguage'
+    ])
+  },
   methods: {
-    onChangeLanguage: function(language) {
-      this.language = language;
-    },
     onSelect: function(selected) {
       if (selected && selected.title) {
         this.$router.push({
-          path: `/${this.language || "en"}/${selected.title}`
+          path: `/${this.contentLanguage || "en"}/${selected.title}`
         });
       }
     },
     wikiSearch: async function(value) {
-      const api = `//${this.language}.wikipedia.org/w/api.php?action=query&generator=prefixsearch&gpssearch=${value}&prop=pageimages|description&piprop=thumbnail&pithumbsize=50&pilimit=10&format=json&formatversion=2&origin=*`;
+      const api = `//${this.contentLanguage}.wikipedia.org/w/api.php?action=query&generator=prefixsearch&gpssearch=${value}&prop=pageimages|description&piprop=thumbnail&pithumbsize=50&pilimit=10&format=json&formatversion=2&origin=*`;
       // Handle empty value
       if (!value) {
         this.articles = [];
@@ -106,7 +105,10 @@ export default {
           return response.data.query.pages;
         })
         .finally(() => (this.isLoading = false));
-    }
+    },
+     ...mapMutations([
+      'setContentLanguage'
+    ])
   }
 };
 </script>

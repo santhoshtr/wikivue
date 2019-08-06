@@ -6,7 +6,7 @@
       @click.stop="dialog = true"
     >
       <v-icon>translate</v-icon>
-      {{ $vuetify.breakpoint.smAndUp?selectedLanguageAutonym:selectedLanguage }}
+      {{ $vuetify.breakpoint.smAndUp?selectedLanguageAutonym:contentLanguage }}
     </v-btn>
 
     <v-dialog
@@ -65,6 +65,7 @@
 <script>
 import languagedata from "language-data";
 import wikicodes from "../lib/wikipedia-codes.json";
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: "LanguageSelector",
@@ -78,7 +79,6 @@ export default {
     dialog: false,
     languages: {},
     filteredLanguages: {},
-    selectedLanguageAutonym: "English",
     searchQuery: ""
   }),
   mounted: function() {
@@ -87,11 +87,17 @@ export default {
     }
     this.filteredLanguages = this.languages;
   },
+  computed: {
+    ...mapGetters([
+      'contentLanguage'
+    ]),
+    selectedLanguageAutonym:function(){
+      return languagedata.getAutonym(this.contentLanguage);
+    }
+  },
   methods: {
     selectLanguage: function(language, autonym) {
-      this.selectedLanguage = language;
-      this.selectedLanguageAutonym = autonym;
-      this.$emit("changeLanguage", language, autonym);
+      this.setContentLanguage(language)
       this.dialog = false;
     },
     onSearch: function() {
@@ -105,7 +111,10 @@ export default {
           this.filteredLanguages[key] = this.languages[key];
         }
       });
-    }
+    },
+     ...mapMutations([
+      'setContentLanguage'
+    ]),
   }
 };
 </script>

@@ -27,7 +27,10 @@
         lg6
         class="px-2"
       >
-        <article :if="loaded">
+        <article
+          :lang="$store.getters['contentLanguage']"
+          :if="loaded"
+        >
           <ArticleHeader
             :title="displaytitle"
             :description="description"
@@ -57,6 +60,7 @@
 import axios from "axios";
 import TOC from "../components/TOC";
 import ArticleHeader from "../components/ArtcleHeader";
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: "Article",
@@ -81,6 +85,9 @@ export default {
     toc: []
   }),
   computed: {
+    ...mapGetters([
+      'contentLanguage'
+    ]),
     title: function() {
       return this.$route.params.title || "";
     }
@@ -88,12 +95,9 @@ export default {
   watch: {
     title: function() {
       this.loadArticle();
-    },
-    language: function() {
-      this.loadArticle();
     }
   },
-  mounted: function() {
+  mounted: function(){
     this.loadArticle();
   },
   methods: {
@@ -101,7 +105,7 @@ export default {
       this.loaded = false;
       this.toc = [];
       this.sections = [];
-      const articleData = await this.fetchArticle(this.language, this.title);
+      const articleData = await this.fetchArticle(this.contentLanguage, this.title);
       const sections = [
         ...articleData.lead.sections,
         ...articleData.remaining.sections
@@ -142,8 +146,7 @@ export default {
       if (!title && !this.$route.meta.random) {
         return;
       }
-      const api = this.getApi(language, title)
-      console.log(api)
+      const api = this.getApi(this.contentLanguage, title)
       return axios
         .get(api)
         .then(response => {
@@ -158,7 +161,10 @@ export default {
         return  `//${language}.wikipedia.org/api/rest_v1/page/random/mobile-sections`;
       }
       return  `//${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${title}`;
-    }
+    },
+    ...mapMutations([
+      'setContentLanguage'
+    ]),
   }
 };
 </script>
