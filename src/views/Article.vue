@@ -16,7 +16,7 @@
         md3
         lg3
         hidden-sm-and-down
-        class="ml-2"
+        class="px-2"
       >
         <TOC :toc="toc" />
       </v-flex>
@@ -25,6 +25,7 @@
         sm12
         md6
         lg6
+        class="px-2"
       >
         <article :if="loaded">
           <ArticleHeader
