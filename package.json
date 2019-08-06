@@ -35,6 +35,7 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "lint-staged": "^8.1.5",
+    "material-design-icons-iconfont": "^5.0.1",
     "sass": "^1.17.4",
     "sass-loader": "^7.1.0",
     "vue-async-computed": "^3.7.0",
