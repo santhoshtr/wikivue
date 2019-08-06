@@ -6,7 +6,6 @@
     <v-navigation-drawer
       v-model="drawer"
       :clipped="$vuetify.breakpoint.lgAndUp"
-
       app
     >
       <v-list-item>
@@ -83,6 +82,8 @@
   import Search from './components/Search'
   import Footer from './components/Footer'
   import BottomNav from './components/BottomNav';
+  import Libertinus from './assets/fonts/libertinus.css'
+
   export default {
     components: {
       Brand,
@@ -106,16 +107,17 @@
 </script>
 
 <style>
+
 #wiki {
-  font-family: "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
+  font-family: "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   text-align: left;
   font-size: 1em;
-  color: rgba(0, 0, 0, 0.84);
   background-color: white;
 }
+
 * {
    text-transform: none !important;
 }

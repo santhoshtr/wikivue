@@ -1,0 +1,109 @@
+@font-face {
+    font-family: 'Libertinus Serif';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src:
+        local('Libertinus Serif Regular '),
+        local('Libertinus Serif-Regular'),
+        url('./LibertinusSerif-Regular.woff2') format('woff2')
+        /* Super Modern Browsers */
+}
+
+@font-face {
+    font-family: 'Libertinus Serif';
+    font-style: italic;
+    font-display: swap;
+    font-weight: 400;
+    src:
+        local('Libertinus Serif Italic '),
+        local('Libertinus Serif-Italic'),
+        url('./LibertinusSerif-Italic.woff2') format('woff2')
+        /* Super Modern Browsers */
+}
+
+@font-face {
+    font-family: 'Libertinus Serif';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src:
+        local('Libertinus Serif SemiBold '),
+        local('Libertinus Serif-SemiBold'),
+        url('./LibertinusSerif-SemiBold.woff2') format('woff2')
+        /* Super Modern Browsers */
+}
+
+@font-face {
+    font-family: 'Libertinus Serif';
+    font-style: italic;
+    font-display: swap;
+    font-weight: 600;
+    src:
+        local('Libertinus Serif SemiBoldItalic '),
+        local('Libertinus Serif-SemiBoldItalic'),
+        url('./LibertinusSerif-SemiBoldItalic.woff2') format('woff2')
+        /* Super Modern Browsers */
+}
+
+
+@font-face {
+    font-family: 'Libertinus Serif';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src:
+        local('Libertinus Serif Bold '),
+        local('Libertinus Serif-Bold'),
+        url('./LibertinusSerif-Bold.woff2') format('woff2')
+        /* Super Modern Browsers */
+}
+
+
+@font-face {
+    font-family: 'Libertinus Serif';
+    font-style: italic;
+    font-display: swap;
+    font-weight: 700;
+    src:
+        local('Libertinus Serif BoldItalic'),
+        local('Libertinus Serif-BoldItalic'),
+        url('./LibertinusSerif-BoldItalic.woff2') format('woff2')
+        /* Super Modern Browsers */
+}
+
+@font-face {
+    font-family: 'Libertinus Sans';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src:
+        local('Libertinus Sans Regular '),
+        local('Libertinus Sans-Regular'),
+        url('./LibertinusSans-Regular.woff2') format('woff2')
+        /* Super Modern Browsers */
+}
+
+@font-face {
+    font-family: 'Libertinus Sans';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src:
+        local('Libertinus Sans Bold '),
+        local('Libertinus Sans-Bold'),
+        url('./LibertinusSans-Bold.woff2') format('woff2')
+        /* Super Modern Browsers */
+}
+
+@font-face {
+    font-family: 'Libertinus Sans';
+    font-style: italic;
+    font-display: swap;
+    font-weight: 600;
+    src:
+        local('Libertinus Sans Italic '),
+        local('Libertinus Sans-Italic'),
+        url('./LibertinusSans-Italic.woff2') format('woff2')
+        /* Super Modern Browsers */
+}

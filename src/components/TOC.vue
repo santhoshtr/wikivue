@@ -13,6 +13,7 @@
       selection-type="independent"
       hoverable
       transition
+      dense
       :active.sync="activeToc"
       :items="toc"
     />
