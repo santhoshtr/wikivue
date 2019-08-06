@@ -164,6 +164,11 @@ export default {
 </script>
 
 <style>
+
+article {
+  font-family: "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
 .mw-ref {
   vertical-align: super;
   line-height: 1;

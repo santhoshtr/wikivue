@@ -4,7 +4,6 @@
     class="artcle-header mb-5"
   >
     <h1
-      class="display-3"
       fixed
     >
       {{ title }}
@@ -37,7 +36,10 @@ export default {
 
 
 <style lang="less">
-.artcle-header{
-    font-family: Georgia, 'Times New Roman', Times, serif
+.artcle-header {
+  font-family: "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 24px;
+  line-height: 1.2;
 }
+
 </style>

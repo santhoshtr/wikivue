@@ -62,12 +62,6 @@
       </v-app-bar-nav-icon>
       <Brand />
       <Search />
-      <template v-if="$vuetify.breakpoint.smAndUp">
-        <v-spacer />
-        <v-btn icon>
-          <v-icon>person</v-icon>
-        </v-btn>
-      </template>
     </v-app-bar>
     <v-content color="white">
       <router-view />
@@ -109,7 +103,7 @@
 <style>
 
 #wiki {
-  font-family: "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
+  font-family: "Libertinus Sans",'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;

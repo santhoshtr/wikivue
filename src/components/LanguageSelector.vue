@@ -6,7 +6,7 @@
       @click.stop="dialog = true"
     >
       <v-icon>translate</v-icon>
-      {{ $vuetify.breakpoint.lgAndUp?selectedLanguageAutonym:selectedLanguage }}
+      {{ $vuetify.breakpoint.smAndUp?selectedLanguageAutonym:selectedLanguage }}
     </v-btn>
 
     <v-dialog

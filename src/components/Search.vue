@@ -9,6 +9,7 @@
     item-text="title"
     item-value="title"
     placeholder="Search"
+    prepend-inner-icon="search"
     return-object
     flat
     single-line
@@ -16,12 +17,7 @@
     label="Search"
     @change="onSelect"
   >
-    <template v-slot:prepend-inner>
-      <v-btn text>
-        <v-icon>search</v-icon>
-      </v-btn>
-    </template>
-    <template v-slot:append>
+    <template v-slot:append-outer>
       <LanguageSelector
         :selected-language="language"
         @changeLanguage="onChangeLanguage"
