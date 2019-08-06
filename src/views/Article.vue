@@ -29,7 +29,7 @@
       >
         <article :if="loaded">
           <ArticleHeader
-            :title="title"
+            :title="displaytitle"
             :description="description"
             :image="bannerImage"
           />
@@ -82,7 +82,7 @@ export default {
   }),
   computed: {
     title: function() {
-      return this.$route.params.title;
+      return this.$route.params.title || "";
     }
   },
   watch: {
@@ -139,10 +139,11 @@ export default {
       this.error = null;
     },
     fetchArticle(language, title) {
-      if (!title) {
+      if (!title && !this.$route.meta.random) {
         return;
       }
-      const api = `//${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${title}`;
+      const api = this.getApi(language, title)
+      console.log(api)
       return axios
         .get(api)
         .then(response => {
@@ -150,8 +151,13 @@ export default {
         })
         .catch(error => {
           this.error = error;
-          this.loaded = true;
-        });
+        }).finally(()=>{ this.loaded = true;});
+    },
+    getApi(language, title){
+      if ( this.$route.meta.random){
+        return  `//${language}.wikipedia.org/api/rest_v1/page/random/mobile-sections`;
+      }
+      return  `//${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${title}`;
     }
   }
 };

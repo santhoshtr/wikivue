@@ -5,6 +5,7 @@ import wikicodes from '../lib/wikipedia-codes.json'
 const routerOptions = [
   { path: '/', name: 'home', component: 'Home', params: true },
   { path: '/about', name: 'about', component: 'About', params: true },
+  { path: '/random', name: 'random', component: 'Article', meta: { random: true } },
   { path: '*', name: '404', component: '404', params: true }
 ]
 
