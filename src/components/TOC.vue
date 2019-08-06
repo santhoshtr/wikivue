@@ -1,7 +1,7 @@
 <template>
   <div
     class="toc"
-    v-if="toc.length"
+    v-if="toc.length>1"
   >
     <h1
       class="title"
