@@ -40,7 +40,7 @@
         >
           <v-layout wrap>
             <v-flex
-              v-for="(autonym, code) in filteredLanguages"
+              v-for="(autonym, code) in contentLanguages"
               :key="code"
               xs12
               sm6
@@ -64,8 +64,7 @@
 
 <script>
 import languagedata from "language-data";
-import wikicodes from "../wiki/wikipedia-codes.json";
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters,mapState, mapMutations } from 'vuex';
 
 export default {
   name: "LanguageSelector",
@@ -81,23 +80,20 @@ export default {
     filteredLanguages: {},
     searchQuery: ""
   }),
-  mounted: function() {
-    for (let i = 0; i < wikicodes.length; i++) {
-      this.languages[wikicodes[i]] = languagedata.getAutonym(wikicodes[i]);
-    }
-    this.filteredLanguages = this.languages;
-  },
   computed: {
-    ...mapGetters([
-      'contentLanguage'
+    ...mapGetters('app',[
+      'contentLanguages'
     ]),
+    ...mapState({
+      contentLanguage: state => state.app.contentLanguage,
+    }),
     selectedLanguageAutonym:function(){
       return languagedata.getAutonym(this.contentLanguage);
     }
   },
   methods: {
     selectLanguage: function(language, autonym) {
-      this.setContentLanguage(language)
+      this.$store.commit('app/setContentLanguage',language)
       this.dialog = false;
     },
     onSearch: function() {
@@ -111,10 +107,7 @@ export default {
           this.filteredLanguages[key] = this.languages[key];
         }
       });
-    },
-     ...mapMutations([
-      'setContentLanguage'
-    ]),
+    }
   }
 };
 </script>

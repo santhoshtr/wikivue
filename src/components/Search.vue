@@ -48,7 +48,7 @@
 
 <script>
 import LanguageSelector from "./LanguageSelector";
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapState, mapMutations } from 'vuex';
 import debounce from "debounce";
 import axios from "axios";
 
@@ -65,7 +65,8 @@ export default {
   }),
   watch: {
     $route(to, from) {
-      this.contentLanguage = to.meta.language || this.contentLanguage;
+     const contentLanguage = to.meta.language || this.contentLanguage;
+     this.$store.commit('app/setContentLanguage', contentLanguage)
     },
     search(value) {
       if (!value) {
@@ -76,9 +77,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'contentLanguage'
-    ])
+    ...mapState({
+      contentLanguage: state => state.app.contentLanguage,
+    })
   },
   methods: {
     onSelect: function(selected) {

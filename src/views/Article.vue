@@ -28,13 +28,12 @@
         class="px-2"
       >
         <article
-          :lang="$store.getters['contentLanguage']"
+          :lang="$store.state.app.contentLanguage"
           :if="loaded"
         >
           <ArticleHeader
-            :title="displaytitle"
+            :title="title"
             :description="description"
-            :image="bannerImage"
           />
           <v-sheet class="content" />
           <section
@@ -57,10 +56,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import TOC from "../components/TOC";
 import ArticleHeader from "../components/ArtcleHeader";
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapState, mapMutations } from 'vuex';
 
 export default {
   name: "Article",
@@ -68,26 +66,20 @@ export default {
     TOC,
     ArticleHeader
   },
-  props: {
-    language: {
-      type: String,
-      default: "en"
-    }
-  },
   data: () => ({
     error: null,
     activeToc: [],
-    loaded: false,
-    sections: [],
-    description: "",
-    displaytitle: "",
     bannerImage:"",
-    toc: []
   }),
   computed: {
-    ...mapGetters([
-      'contentLanguage'
-    ]),
+    ...mapState({
+      loaded:state => state.article.loadingStatus==='success'||state.article.loadingStatus==='failure',
+      sections: state => state.article.sections,
+      toc: state => state.article.toc,
+      title: state => state.article.title,
+      description: state => state.article.description,
+      contentLanguage: state => state.app.contentLanguage,
+    }),
     title: function() {
       return this.$route.params.title || "";
     }
@@ -101,70 +93,9 @@ export default {
     this.loadArticle();
   },
   methods: {
-    async loadArticle() {
-      this.loaded = false;
-      this.toc = [];
-      this.sections = [];
-      const articleData = await this.fetchArticle(this.contentLanguage, this.title);
-      const sections = [
-        ...articleData.lead.sections,
-        ...articleData.remaining.sections
-      ];
-      for (let i = 0; i < sections.length; i++) {
-        const section = sections[i];
-        if (section.text) {
-        const heading= section.line
-                ?`<h${section.toclevel+1}>${section.line}</h${section.toclevel+1}>`
-                 :''
-          this.sections.push({
-              id: section.id,
-            anchor: section.anchor,
-              html: heading + section.text
-          });
-          continue;
-        }
-        if (section.toclevel === 1) {
-          this.toc.push({
-            id: section.anchor,
-            name: section.line,
-            children: []
-          });
-        } else if (section.toclevel === 2) {
-          this.toc[this.toc.length - 1].children.push({
-            id: section.anchor,
-            name: section.line
-          });
-        }
-      }
-      this.loaded = true;
-      this.displaytitle = articleData.lead.displaytitle;
-      this.description = articleData.lead.description;
-      this.bannerImage= articleData.lead.image && articleData.lead.image.urls['1024'];
-      this.error = null;
-    },
-    fetchArticle(language, title) {
-      if (!title && !this.$route.meta.random) {
-        return;
-      }
-      const api = this.getApi(this.contentLanguage, title)
-      return axios
-        .get(api)
-        .then(response => {
-          return response.data;
-        })
-        .catch(error => {
-          this.error = error;
-        }).finally(()=>{ this.loaded = true;});
-    },
-    getApi(language, title){
-      if ( this.$route.meta.random){
-        return  `//${language}.wikipedia.org/api/rest_v1/page/random/mobile-sections`;
-      }
-      return  `//${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${title}`;
-    },
-    ...mapMutations([
-      'setContentLanguage'
-    ]),
+    loadArticle(){
+      this.$store.dispatch('article/fetch', {title:this.title, language:this.contentLanguage})
+    }
   }
 };
 </script>

@@ -1,8 +1,7 @@
 <template>
   <v-app
     id="wiki"
-    :lang="$store.getters['uiLanguage']"
-    light
+    :lang="$store.state.app.uiLanguage"
   >
     <v-navigation-drawer
       v-model="drawer"
