@@ -4,7 +4,6 @@
     grow
     app
     hide-on-scroll
-    shift
     horizontal
     scroll-threshold="500"
   >
@@ -18,10 +17,16 @@
       <v-icon>bookmark</v-icon>
     </v-btn>
 
-    <v-btn value="nearby">
-      <span>Nearby</span>
-      <v-icon>place</v-icon>
+    <v-btn value="languages">
+      <span>Languages</span>
+      <v-badge
+        right
+      >
+        <span slot="badge">{{ $store.state.article.languagecount }}</span>
+        <v-icon>translate</v-icon>
+      </v-badge>
     </v-btn>
+
     <v-btn value="share">
       <span>Share</span>
       <v-icon>share</v-icon>
