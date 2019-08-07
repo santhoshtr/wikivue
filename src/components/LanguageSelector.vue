@@ -64,7 +64,7 @@
 
 <script>
 import languagedata from "language-data";
-import wikicodes from "../lib/wikipedia-codes.json";
+import wikicodes from "../wiki/wikipedia-codes.json";
 import { mapGetters, mapMutations } from 'vuex';
 
 export default {

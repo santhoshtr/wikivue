@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import wikicodes from '../lib/wikipedia-codes.json'
+import wikicodes from '../wiki/wikipedia-codes.json'
 
 const routerOptions = [
   { path: '/', name: 'home', component: 'Home', params: true },
