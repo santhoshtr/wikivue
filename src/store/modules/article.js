@@ -10,6 +10,7 @@ const state = {
     image: {},
     languagecount: 0,
     issues: [],
+    history:{},
     loadingStatus: 'loading'
 };
 
@@ -24,6 +25,7 @@ const mutations = {
     setWikidataId(state, id) { state.wikidataId = id },
     setSections(state, sections) { state.sections = sections },
     setTOC(state, toc) { state.toc = toc },
+    setHistory(state, history) { state.history = history },
 }
 
 // Computed properties for stores.
@@ -40,6 +42,11 @@ const actions = {
                 commit('setIssues', articleData.lead.issues)
                 commit('setLanguagecount', articleData.lead.languagecount)
                 commit('setWikidataId', articleData.lead.wikibase_item)
+                commit('setHistory', {
+                    lastmodifier: articleData.lead.lastmodifier,
+                    lastmodified: articleData.lead.lastmodified,
+                    lastrevision: articleData.lead.revision,
+                })
                 const sections = []
                 const toc = []
 

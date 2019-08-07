@@ -34,6 +34,8 @@
           <ArticleHeader
             :title="title"
             :description="description"
+            :lastmodifier="lastmodifier"
+            :lastmodified="lastmodified"
           />
           <v-sheet class="content" />
           <section
@@ -78,6 +80,8 @@ export default {
       toc: state => state.article.toc,
       title: state => state.article.title,
       description: state => state.article.description,
+      lastmodifier: state => state.article.history.lastmodifier,
+      lastmodified: state => state.article.history.lastmodified,
       contentLanguage: state => state.app.contentLanguage,
     }),
     title: function() {
