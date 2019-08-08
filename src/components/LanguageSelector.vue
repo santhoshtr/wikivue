@@ -40,7 +40,7 @@
         >
           <v-layout wrap>
             <v-flex
-              v-for="(autonym, code) in contentLanguages"
+              v-for="(autonym, code) in (filteredLanguages || contentLanguages)"
               :key="code"
               xs12
               sm6
@@ -76,8 +76,7 @@ export default {
   },
   data: () => ({
     dialog: false,
-    languages: {},
-    filteredLanguages: {},
+    filteredLanguages: null,
     searchQuery: ""
   }),
   computed: {
@@ -98,13 +97,13 @@ export default {
     },
     onSearch: function() {
       this.filteredLanguages = {};
-      Object.keys(this.languages).forEach(key => {
+      Object.keys(this.contentLanguages).forEach(key => {
         if (
           key.toLowerCase() === this.searchQuery.toLowerCase()||
-          (this.languages[key] &&
-            this.languages[key].toLowerCase().startsWith(this.searchQuery.toLowerCase()))
+          (this.contentLanguages[key] &&
+            this.contentLanguages[key].toLowerCase().startsWith(this.searchQuery.toLowerCase()))
         ) {
-          this.filteredLanguages[key] = this.languages[key];
+          this.filteredLanguages[key] = this.contentLanguages[key];
         }
       });
     }
