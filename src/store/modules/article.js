@@ -47,7 +47,7 @@ const actions = {
                 commit('setWikidataId', articleData.wikidataId)
                 commit('setHistory', articleData.history )
                 commit('setSections', articleData.sections)
-                commit('setTOC', toc)
+                commit('setTOC', articleData.toc)
                 commit('setLoadingStatus', 'success')
             }).catch(err => {
                 commit('setLoadingStatus', 'failure')
