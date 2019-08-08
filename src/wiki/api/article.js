@@ -10,8 +10,11 @@ export default {
     },
 
     fetchArticle(language, title) {
-        if (!title || !language) {
-            throw new Error('Title or language is null')
+        if (!language) {
+            throw new Error('Language is null')
+        }
+        if(!title){
+            return this.fetchRandomArticle(language)
         }
         const api = this.getApi(language, title)
         return axios

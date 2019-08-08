@@ -51,7 +51,7 @@ export default {
 
 
 <style lang="less">
-.artcle-header h1{
+.artcle-header h1 {
   font-family: "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
   font-size: 24px;
   line-height: 1.2;

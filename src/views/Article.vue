@@ -32,7 +32,7 @@
           :if="loaded"
         >
           <ArticleHeader
-            :title="title"
+            :title="displaytitle || title"
             :description="description"
             :lastmodifier="lastmodifier"
             :lastmodified="lastmodified"
@@ -78,7 +78,7 @@ export default {
       loaded:state => state.article.loadingStatus==='success'||state.article.loadingStatus==='failure',
       sections: state => state.article.sections,
       toc: state => state.article.toc,
-      title: state => state.article.title,
+      displaytitle: state => state.article.title,
       description: state => state.article.description,
       lastmodifier: state => state.article.history.lastmodifier,
       lastmodified: state => state.article.history.lastmodified,
@@ -98,7 +98,11 @@ export default {
   },
   methods: {
     loadArticle(){
-      this.$store.dispatch('article/fetch', {title:this.title, language:this.contentLanguage})
+      if(this.$route.meta.random){
+          this.$store.dispatch('article/fetch', {language:this.contentLanguage})
+      }else{
+          this.$store.dispatch('article/fetch', {title:this.title, language:this.contentLanguage})
+      }
     }
   }
 };

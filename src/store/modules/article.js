@@ -36,7 +36,7 @@ const actions = {
         commit('setLoadingStatus', 'loading')
         articleApi.fetchArticle(articleRequest.language, articleRequest.title)
             .then((articleData) => {
-                commit('setTitle', articleData.lead.title)
+                commit('setTitle', articleData.lead.displaytitle)
                 commit('setDescription', articleData.lead.description)
                 commit('setImage', articleData.lead.image)
                 commit('setIssues', articleData.lead.issues)
@@ -86,7 +86,7 @@ const actions = {
             }).catch(err => {
                 commit('setLoadingStatus', 'failure')
             })
-    }
+    },
 }
 
 
