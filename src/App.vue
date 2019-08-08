@@ -89,7 +89,7 @@
       drawer: false,
       items: [
         { icon: 'apps', text: 'Home', href:"/" },
-        { icon: 'casino', text: 'Random', href:"/random" },
+        { icon: 'casino', text: 'Random', href:"/article/random" },
         { icon: 'place', text: 'Nearby', href:"/nearby" },
         { icon: 'star', text: 'Watchlist', href:"/user/watchlist" },
         { icon: 'recent_actors', text: 'Contributions', href:"/user/contributions" },

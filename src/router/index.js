@@ -5,13 +5,13 @@ import wikicodes from '../wiki/wikipedia-codes.json'
 const routerOptions = [
   { path: '/', name: 'home', component: 'Home', params: true },
   { path: '/about', name: 'about', component: 'About', params: true },
-  { path: '/random', name: 'random', component: 'Article', meta: { random: true } },
+  { path: '/article/random', name: 'random', component: 'Article', meta: { random: true } },
   { path: '*', name: '404', component: '404', params: true }
 ]
 
 for (let i = 0; i < wikicodes.length; i++) {
   routerOptions.push(
-    { path: `/${wikicodes[i]}/:title`, component: 'Article', meta: { language: wikicodes[i] }, props: { language: wikicodes[i] } }
+    { path: `/article/${wikicodes[i]}/:title`, component: 'Article', meta: { language: wikicodes[i] }, props: { language: wikicodes[i] } }
   )
 }
 
