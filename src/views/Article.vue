@@ -42,7 +42,8 @@
             v-for="section in sections"
             :key="section.id"
             :id="section.anchor"
-            v-html=" template(section.html)"
+            @click="handleClicks"
+            v-html="template(section.html)"
             class="my-4"
           />
           <div
@@ -58,7 +59,6 @@
 </template>
 
 <script>
-
 import TOC from "../components/TOC";
 import ArticleHeader from "../components/ArtcleHeader";
 import { mapGetters, mapState, mapMutations } from "vuex";
@@ -134,6 +134,48 @@ export default {
         }
       }
       return wrapper.innerHTML;
+    },
+    // Thanks to https://dennisreimann.de/articles/delegating-html-links-to-vue-router.html
+    handleClicks($event) {
+      // ensure we use the link, in case the click has been received by a subelement
+      let { target } = $event;
+      while (target && target.tagName !== "A") target = target.parentNode;
+      // handle only links that occur inside the component and do not reference external resources
+      if (
+        target &&
+        target.matches("section a:not([href*='://'])") &&
+        target.href
+      ) {
+        // some sanity checks taken from vue-router:
+        // https://github.com/vuejs/vue-router/blob/dev/src/components/link.js#L106
+        const {
+          altKey,
+          ctrlKey,
+          metaKey,
+          shiftKey,
+          button,
+          defaultPrevented
+        } = $event;
+        // don't handle with control keys
+        if (metaKey || altKey || ctrlKey || shiftKey) return;
+        // don't handle when preventDefault called
+        if (defaultPrevented) return;
+        // don't handle right clicks
+        if (button !== undefined && button !== 0) return;
+        // don't handle if `target="_blank"`
+        if (target && target.getAttribute) {
+          const linkTarget = target.getAttribute("target");
+          if (/\b_blank\b/i.test(linkTarget)) return;
+        }
+        // don't handle same page links/anchors
+        const url = new URL(target.href);
+        const to = url.pathname;
+        if (window.location.pathname !== to && $event.preventDefault) {
+          $event.preventDefault();
+          document.documentElement.scrollTop=0; //scroll to top
+          this.$router.push(to);
+        }
+      }
     }
   }
 };
