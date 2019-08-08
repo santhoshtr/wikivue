@@ -1,9 +1,11 @@
 <template>
   <v-card
     flat
-    class="artcle-header mb-5"
+    class="artcle-header"
   >
-    <v-card-text class="mx-0 px-0">
+    <v-card-text
+      class="mx-0 px-0"
+    >
       <h1
         class="text--primary"
         fixed
@@ -14,9 +16,9 @@
         {{ description }}
       </h3>
       <v-divider />
-      <p :if="lastmodifier">
+      <div>
         Last modified by {{ lastmodifier.user }} at {{ lastmodified }}
-      </p>
+      </div>
     </v-card-text>
   </v-card>
 </template>
