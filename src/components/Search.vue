@@ -85,7 +85,7 @@ export default {
     onSelect: function(selected) {
       if (selected && selected.title) {
         this.$router.push({
-          path: `/article/${this.contentLanguage || "en"}/${selected.title}`
+          path: `/page/${this.contentLanguage || "en"}/${selected.title}`
         });
       }
     },

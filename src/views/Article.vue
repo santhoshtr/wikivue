@@ -125,7 +125,7 @@ export default {
               attribute.name,
               attribute.value.replace(
                 "/wiki/",
-                `/article/${this.contentLanguage}/`
+                `/page/${this.contentLanguage}/`
               )
             );
             continue;
