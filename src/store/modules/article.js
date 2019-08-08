@@ -39,51 +39,14 @@ const actions = {
         commit('setLoadingStatus', 'loading')
         articleApi.fetchArticle(articleRequest.language, articleRequest.title)
             .then((articleData) => {
-                commit('setTitle', articleData.lead.normalizedtitle)
-                commit('setDescription', articleData.lead.description)
-                commit('setImage', articleData.lead.image)
-                commit('setIssues', articleData.lead.issues)
-                commit('setLanguagecount', articleData.lead.languagecount)
-                commit('setWikidataId', articleData.lead.wikibase_item)
-                commit('setHistory', {
-                    lastmodifier: articleData.lead.lastmodifier,
-                    lastmodified: articleData.lead.lastmodified,
-                    lastrevision: articleData.lead.revision,
-                })
-                const sections = []
-                const toc = []
-
-                const articleSections = [
-                    ...articleData.lead.sections,
-                    ...articleData.remaining.sections
-                ];
-                for (let i = 0; i < articleSections.length; i++) {
-                    const section = articleSections[i];
-                    if (section.text) {
-                        const heading = section.line
-                            ? `<h${section.toclevel + 1}>${section.line}</h${section.toclevel + 1}>`
-                            : ''
-                        sections.push({
-                            id: section.id,
-                            anchor: section.anchor,
-                            html: heading + section.text
-                        });
-                        continue;
-                    }
-                    if (section.toclevel === 1) {
-                        toc.push({
-                            id: section.anchor,
-                            name: section.line,
-                            children: []
-                        });
-                    } else if (section.toclevel === 2) {
-                        toc[toc.length - 1].children.push({
-                            id: section.anchor,
-                            name: section.line
-                        });
-                    }
-                }
-                commit('setSections', sections)
+                commit('setTitle', articleData.title)
+                commit('setDescription', articleData.description)
+                commit('setImage', articleData.image)
+                commit('setIssues', articleData.issues)
+                commit('setLanguagecount', articleData.languagecount)
+                commit('setWikidataId', articleData.wikidataId)
+                commit('setHistory', articleData.history )
+                commit('setSections', articleData.sections)
                 commit('setTOC', toc)
                 commit('setLoadingStatus', 'success')
             }).catch(err => {
