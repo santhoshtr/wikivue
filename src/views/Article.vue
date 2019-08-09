@@ -229,8 +229,7 @@ export default {
 
 <style>
 article {
-  font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,
-    "Times New Roman", Times, serif;
+  font-family: "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 .mw-ref {

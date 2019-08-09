@@ -103,7 +103,6 @@
 <style>
 
 #wiki {
-  font-family: "Libertinus Sans",'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
