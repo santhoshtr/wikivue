@@ -58,6 +58,7 @@ export default {
 .toc {
     position: fixed;
     max-height: 100vh;
+    max-width: 20%;
     overflow-y: auto;
     scrollbar-width: thin;
 }
