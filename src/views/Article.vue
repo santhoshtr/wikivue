@@ -53,6 +53,7 @@
             {{ error }}
           </div>
         </article>
+        <reference :reference="selectedReference" />
       </v-flex>
     </v-layout>
   </v-container>
@@ -61,18 +62,21 @@
 <script>
 import TOC from "../components/TOC";
 import ArticleHeader from "../components/ArtcleHeader";
+import Reference from "../components/Reference"
 import { mapGetters, mapState, mapMutations } from "vuex";
 
 export default {
   name: "Article",
   components: {
     TOC,
+    Reference,
     ArticleHeader
   },
   data: () => ({
     error: null,
     activeToc: [],
-    bannerImage: ""
+    bannerImage: "",
+    selectedReference:null
   }),
   computed: {
     ...mapState({
@@ -137,16 +141,13 @@ export default {
     },
     // Thanks to https://dennisreimann.de/articles/delegating-html-links-to-vue-router.html
     handleClicks($event) {
+      this.selectedReference=null;
       // ensure we use the link, in case the click has been received by a subelement
       let { target } = $event;
       while (target && target.tagName !== "A") target = target.parentNode;
       // handle only links that occur inside the component and do not reference external resources
-      if (
-        target &&
-        target.matches("section a:not([href*='://'])") &&
-        target.href
-      ) {
-        // some sanity checks taken from vue-router:
+      if ( target){
+         // some sanity checks taken from vue-router:
         // https://github.com/vuejs/vue-router/blob/dev/src/components/link.js#L106
         const {
           altKey,
@@ -167,14 +168,32 @@ export default {
           const linkTarget = target.getAttribute("target");
           if (/\b_blank\b/i.test(linkTarget)) return;
         }
+        if( !target.href) return;
+
+        if( target.matches("section a[href*='#cite']") ){
+         this.referenceClickHandler(target,$event)
+        }else if( target.matches("section a:not([href*='://'])")){
+         this.linkClickHandler(target,$event)
+        }
+      }
+    },
+
+    linkClickHandler(link, $event){
         // don't handle same page links/anchors
-        const url = new URL(target.href);
+        const url = new URL(link.href);
         const to = url.pathname;
         if (window.location.pathname !== to && $event.preventDefault) {
           $event.preventDefault();
           document.documentElement.scrollTop=0; //scroll to top
           this.$router.push(to);
         }
+    },
+    referenceClickHandler(link, $event){
+      const referenceId = new URL(link.href).hash;
+      if ( referenceId&& $event.preventDefault) {
+        $event.preventDefault();
+        const refTarget=document.querySelector(referenceId);
+        this.selectedReference=refTarget.innerHTML
       }
     }
   }
