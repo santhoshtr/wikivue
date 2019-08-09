@@ -42,7 +42,6 @@
             v-for="section in sections"
             :key="section.id"
             :id="section.anchor"
-            @click="handleClicks"
             v-html="template(section.html)"
             class="my-4"
           />
@@ -62,7 +61,7 @@
 <script>
 import TOC from "../components/TOC";
 import ArticleHeader from "../components/ArtcleHeader";
-import Reference from "../components/Reference"
+import Reference from "../components/Reference";
 import { mapGetters, mapState, mapMutations } from "vuex";
 
 export default {
@@ -76,7 +75,7 @@ export default {
     error: null,
     activeToc: [],
     bannerImage: "",
-    selectedReference:null
+    selectedReference: null
   }),
   computed: {
     ...mapState({
@@ -98,6 +97,9 @@ export default {
   watch: {
     title: function() {
       this.loadArticle();
+    },
+    loaded: function() {
+      setTimeout(() => this.listen(), 1000);
     }
   },
   mounted: function() {
@@ -139,61 +141,86 @@ export default {
       }
       return wrapper.innerHTML;
     },
-    // Thanks to https://dennisreimann.de/articles/delegating-html-links-to-vue-router.html
-    handleClicks($event) {
-      this.selectedReference=null;
-      // ensure we use the link, in case the click has been received by a subelement
-      let { target } = $event;
-      while (target && target.tagName !== "A") target = target.parentNode;
-      // handle only links that occur inside the component and do not reference external resources
-      if ( target){
-         // some sanity checks taken from vue-router:
-        // https://github.com/vuejs/vue-router/blob/dev/src/components/link.js#L106
-        const {
-          altKey,
-          ctrlKey,
-          metaKey,
-          shiftKey,
-          button,
-          defaultPrevented
-        } = $event;
-        // don't handle with control keys
-        if (metaKey || altKey || ctrlKey || shiftKey) return;
-        // don't handle when preventDefault called
-        if (defaultPrevented) return;
-        // don't handle right clicks
-        if (button !== undefined && button !== 0) return;
-        // don't handle if `target="_blank"`
-        if (target && target.getAttribute) {
-          const linkTarget = target.getAttribute("target");
-          if (/\b_blank\b/i.test(linkTarget)) return;
-        }
-        if( !target.href) return;
-
-        if( target.matches("section a[href*='#cite']") ){
-         this.referenceClickHandler(target,$event)
-        }else if( target.matches("section a:not([href*='://'])")){
-         this.linkClickHandler(target,$event)
-        }
+    listen() {
+      const links = document.querySelectorAll("section a:not([href*='://'])");
+      for (let i = 0; i < links.length; i++) {
+        const link = links[i];
+        link.addEventListener("click", event => {
+          const href=link.getAttribute("href")
+          if(!href)return;
+          if (href.startsWith('#cite')) {
+            this.referenceClickHandler(link, event);
+          } else if (link.matches("a:not([href*='://'])")) {
+            this.wikilinkClickHandler(link, event);
+          }
+        });
+        link.addEventListener("mouseover", event => {
+          const href=link.getAttribute("href")
+          if(!href)return;
+          if (href.startsWith('#cite')) {
+            this.referenceClickHandler(link, event);
+          }
+        });
+        link.addEventListener("blur", event => {
+          this.selectedReference = null;
+        });
+        link.addEventListener("mouseout", event => {
+          this.selectedReference = null;
+        });
       }
     },
-
-    linkClickHandler(link, $event){
-        // don't handle same page links/anchors
-        const url = new URL(link.href);
-        const to = url.pathname;
-        if (window.location.pathname !== to && $event.preventDefault) {
-          $event.preventDefault();
-          document.documentElement.scrollTop=0; //scroll to top
-          this.$router.push(to);
-        }
+    // Thanks to https://dennisreimann.de/articles/delegating-html-links-to-vue-router.html
+    isIgnorableLinkClick(event) {
+      // ensure we use the link, in case the click has been received by a subelement
+      let { target } = event;
+      // handle only links that occur inside the component and do not reference external resources
+      if (!target) {
+        return trrue;
+      }
+      // some sanity checks taken from vue-router:
+      // https://github.com/vuejs/vue-router/blob/dev/src/components/link.js#L106
+      const {
+        altKey,
+        ctrlKey,
+        metaKey,
+        shiftKey,
+        button,
+        defaultPrevented
+      } = event;
+      // don't handle with control keys
+      if (metaKey || altKey || ctrlKey || shiftKey) return true;
+      // don't handle when preventDefault called
+      if (defaultPrevented) return true;
+      // don't handle right clicks
+      if (button !== undefined && button !== 0) return true;
+      // don't handle if `target="_blank"`
+      if (target && target.getAttribute) {
+        const linkTarget = target.getAttribute("target");
+        if (/\b_blank\b/i.test(linkTarget)) return true;
+      }
+      if (!target.href) return true;
+      return false;
     },
-    referenceClickHandler(link, $event){
-      const referenceId = new URL(link.href).hash;
-      if ( referenceId&& $event.preventDefault) {
-        $event.preventDefault();
-        const refTarget=document.querySelector(referenceId);
-        this.selectedReference=refTarget.innerHTML
+
+    wikilinkClickHandler(link, event) {
+      if (this.isIgnorableLinkClick(event)) return;
+      // don't handle same page links/anchors
+      const url = new URL(link.href);
+      const to = url.pathname;
+      if (window.location.pathname !== to && event.preventDefault) {
+        event.preventDefault();
+        document.documentElement.scrollTop = 0; //scroll to top
+        this.$router.push(to);
+      }
+    },
+    referenceClickHandler(referenceLink, event) {
+      this.selectedReference = null;
+      const referenceId = new URL(referenceLink.href).hash;
+
+      if (referenceId && event.preventDefault) {
+        event.preventDefault();
+        const refTarget = document.querySelector(referenceId);
+        this.selectedReference = refTarget.innerHTML;
       }
     }
   }

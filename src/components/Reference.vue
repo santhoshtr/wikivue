@@ -3,15 +3,13 @@
     hide-overlay
     v-model="shown"
   >
-    <v-sheet
-      height="200px"
-    >
+    <v-sheet>
       <v-layout
         align-center
         justify-center
         row
         fill-height
-        class="reference-content"
+        class="pa-3"
       >
         <v-flex
           xs12
@@ -42,15 +40,8 @@ export default {
   },
   watch:{
       reference:function(){
-          if(this.reference){
-          this.shown=true
-          }
+          this.shown=!!this.reference
       }
   }
 };
 </script>
-<style>
-.reference-content {
-    overflow-y: auto;
-}
-</style>
