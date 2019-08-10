@@ -5,7 +5,6 @@
     app
     hide-on-scroll
     horizontal
-    scroll-threshold="500"
   >
     <v-btn value="recent">
       <span>Recent</span>

@@ -50,7 +50,6 @@
       :clipped-left="$vuetify.breakpoint.lgAndUp"
       app
       hide-on-scroll
-      scroll-threshold="500"
       elevate-on-scroll
       color="white"
       light
