@@ -8,9 +8,10 @@ import i18n from 'vue-banana-i18n'
 
 Vue.config.productionTip = false
 
-const locale=navigator.language || 'en'
+const locale=navigator.language.split('-')[0] || 'en'
 Vue.use(i18n, {
   locale,
+  finalFallback: 'en',
   messages: { }
 })
 
@@ -25,8 +26,8 @@ new Vue({
       delete sessionStorage.redirect
       this.$router.push(redirect)
     }
-    import(/* webpackChunkName: "lang-[request]" */ `@/i18n/${locale}`).then(messages => {
-      this.i18n.loadMessages (messages.default, locale);
+    import(/* webpackChunkName: "lang-[request]" */ `@/i18n/${this.i18n.locale}`).then(messages => {
+      this.i18n.loadMessages (messages.default, this.i18n.locale);
     })
     this.$store.commit('app/setUiLanguage',locale)
   }
