@@ -39,7 +39,7 @@
               <v-icon v-text="item.icon" />
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title v-text="item.text" />
+              <v-list-item-title v-text="$i18n(item.msg)" />
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -87,13 +87,13 @@
     data: () => ({
       drawer: false,
       items: [
-        { icon: 'apps', text: 'Home', href:"/" },
-        { icon: 'casino', text: 'Random', href:"/page/random" },
-        { icon: 'place', text: 'Nearby', href:"/nearby" },
-        { icon: 'star', text: 'Watchlist', href:"/user/watchlist" },
-        { icon: 'recent_actors', text: 'Contributions', href:"/user/contributions" },
-        { icon: 'settings', text: 'Settings', href:"/user/preferences" },
-        { icon: 'help', text: 'About', href:"/about" },
+        { icon: 'apps', msg: 'menu-home', href:"/" },
+        { icon: 'casino', msg: 'menu-random', href:"/page/random" },
+        { icon: 'place', msg: 'menu-nearby', href:"/nearby" },
+        { icon: 'star', msg: 'menu-watchlist', href:"/user/watchlist" },
+        { icon: 'recent_actors', msg: 'menu-contributions', href:"/user/contributions" },
+        { icon: 'settings', msg: 'menu-settings', href:"/user/preferences" },
+        { icon: 'help', msg: 'menu-about', href:"/about" },
       ],
     }),
   }

@@ -1,6 +1,7 @@
 
 import languagedata from "language-data";
 import wikicodes from "../../wiki/wikipedia-codes.json";
+import axios from 'axios';
 
 const state = {
     uiLanguage: navigator.language || 'en',
@@ -30,8 +31,7 @@ const getters = {
     }
 }
 
-const actions = {
-}
+const actions = { }
 
 
 export default {
