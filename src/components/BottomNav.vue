@@ -14,9 +14,7 @@
     </v-btn>
 
     <v-btn value="languages">
-      <v-badge
-        right
-      >
+      <v-badge right>
         <span slot="badge">{{ $store.state.article.languagecount }}</span>
         <v-icon>translate</v-icon>
       </v-badge>
@@ -31,11 +29,25 @@
 
 <script>
 export default {
-  name: 'BottomNav',
-  data () {
-      return {
-        bottomNav: 'recent',
+  name: "BottomNav",
+  data() {
+    return {
+      bottomNav: "recent"
+    };
+  },
+  methods: {
+    share() {
+      if (navigator.share) {
+        navigator
+          .share({
+            title: this.$store.state.article.tilte,
+            text: this.$store.state.article.description,
+            url: document.URL
+          })
+          .then(() => console.log("Successful share"))
+          .catch(error => console.log("Error sharing", error));
       }
     }
-}
+  }
+};
 </script>
