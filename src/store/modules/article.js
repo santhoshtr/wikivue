@@ -10,8 +10,10 @@ const state = {
     image: {},
     languagecount: 0,
     issues: [],
-    history:{},
-    loadingStatus: 'loading'
+    history: {},
+    preview: {},
+    loadingStatus: 'loading',
+    previewLoadingStatus: 'loading',
 };
 
 // The only way to actually change state in a Vuex store is by committing a mutation.
@@ -29,6 +31,8 @@ const mutations = {
     setSections(state, sections) { state.sections = sections },
     setTOC(state, toc) { state.toc = toc },
     setHistory(state, history) { state.history = history },
+    setPreviewLoadingStatus(state, status) { state.previewLoadingStatus = status },
+    setPreview(state, preview) { state.preview = preview },
 }
 
 // Computed properties for stores.
@@ -45,7 +49,7 @@ const actions = {
                 commit('setIssues', articleData.issues)
                 commit('setLanguagecount', articleData.languagecount)
                 commit('setWikidataId', articleData.wikidataId)
-                commit('setHistory', articleData.history )
+                commit('setHistory', articleData.history)
                 commit('setSections', articleData.sections)
                 commit('setTOC', articleData.toc)
                 commit('setLoadingStatus', 'success')
@@ -53,6 +57,16 @@ const actions = {
                 commit('setLoadingStatus', 'failure')
             })
     },
+    preview({ commit, state }, previewRequest) {
+        commit('setPreviewLoadingStatus', 'loading')
+        articleApi.fetchArticle(previewRequest.language, previewRequest.title)
+            .then((articleData) => {
+                commit('setPreview', articleData)
+                commit('setPreviewLoadingStatus', 'success')
+            }).catch(err => {
+                commit('setPreviewLoadingStatus', 'failure')
+            })
+    }
 }
 
 
