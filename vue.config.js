@@ -3,7 +3,7 @@ module.exports = {
         // configure the workbox plugin
         workboxOptions: {
             runtimeCaching: [ {
-                urlPattern: new RegExp('/.*(?:wikipedia)\.org.*$/'),
+                urlPattern: new RegExp('^https://.*\.wikipedia\.org/'),
                 handler: 'cacheFirst',
                 options: {
                     cacheName: 'Wikipedia-api',
