@@ -28,7 +28,7 @@
         <v-icon>share</v-icon>
       </v-btn>
       <v-btn
-        v-show="$vuetify.breakpoint.smAndDown"
+        v-show="tocButtonShown"
         value="tocbutton"
         @click="showToc"
       >
@@ -61,11 +61,6 @@ export default {
     return {
       bottomNav: "recent",
       tocShown: false,
-       items: [
-        { title: 'Click Me' },
-
-        { title: 'Click Me 2' },
-      ],
     };
   },
   computed:{
@@ -74,6 +69,9 @@ export default {
     },
     toc(){
       return this.$store.state.article.toc
+    },
+    tocButtonShown(){
+      return this.$vuetify.breakpoint.smAndDown && this.toc && this.toc.length>2;
     }
   },
   methods: {
