@@ -26,7 +26,7 @@ new Vue({
       delete sessionStorage.redirect
       this.$router.push(redirect)
     }
-    import(/* webpackChunkName: "lang-[request]" */ `@/i18n/${this.i18n.locale}`).then(messages => {
+    import( `./assets/i18n/${this.i18n.locale}`).then(messages => {
       this.i18n.loadMessages (messages.default, this.i18n.locale);
     })
     this.$store.commit('app/setUiLanguage',locale)

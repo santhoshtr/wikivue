@@ -31,12 +31,5 @@ module.exports = {
                 }
             }]
         }
-    },
-    configureWebpack: config => {
-        if (process.env.NODE_ENV === 'production') {
-            config.output.chunkFilename= '[name].bundle.js';
-        } else {
-            config.output.chunkFilename= '[name].bundle.js';
-        }
-      }
+    }
 }
