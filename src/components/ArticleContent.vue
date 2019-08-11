@@ -23,13 +23,14 @@
       <v-flex
         xs12
         sm12
-        md6
-        lg6
+        md9
+        lg9
         class="px-2"
       >
         <article
           :lang="$store.state.app.contentLanguage"
           :if="loaded"
+          class="px-2"
         >
           <article-header
             :title="displaytitle"
@@ -37,20 +38,21 @@
             :lastmodifier="lastmodifier"
             :lastmodified="lastmodified"
           />
-          <v-sheet class="content" />
-          <section
-            v-for="section in sections"
-            :key="section.id"
-            :id="section.anchor"
-            v-html="template(section.html)"
-            class="my-4"
-          />
-          <div
-            class="error"
-            :if="error"
-          >
-            {{ error }}
-          </div>
+          <v-sheet class="content">
+            <section
+              v-for="section in sections"
+              :key="section.id"
+              :id="section.anchor"
+              v-html="layout(section.html)"
+              class="my-4 layout row fill-height"
+            />
+            <div
+              class="error"
+              :if="error"
+            >
+              {{ error }}
+            </div>
+          </v-sheet>
           <reference :reference="selectedReference" />
           <article-preview :preview="preview" />
         </article>
@@ -63,7 +65,7 @@
 import TableOfContents from "./TOC";
 import ArticleHeader from "./ArtcleHeader";
 import Reference from "./Reference";
-import ArticlePreview from "./ArticlePreview"
+import ArticlePreview from "./ArticlePreview";
 
 import { mapGetters, mapState, mapMutations } from "vuex";
 
@@ -74,9 +76,9 @@ export default {
       type: Object,
       default: () => null
     },
-    isPreview:{
-        type: Boolean,
-        default:false
+    isPreview: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -120,7 +122,7 @@ export default {
       return this.article.preview;
     },
     previewLoaded: function() {
-      return this.article.previewLoadingStatus=== "success";
+      return this.article.previewLoadingStatus === "success";
     },
     ...mapState({
       contentLanguage: state => state.app.contentLanguage
@@ -128,16 +130,22 @@ export default {
   },
   watch: {
     loaded: function() {
-        if(!this.isPreview){
-            setTimeout(() => this.listen(), 1000);
-        }
+      if (!this.isPreview) {
+        setTimeout(() => this.listen(), 1000);
+      }
     }
   },
   methods: {
-    template(section) {
-      var wrapper = document.createElement("div");
-      wrapper.innerHTML = section;
-      var links = wrapper.querySelectorAll("a[href]");
+    layout(section) {
+      const wrapper = document.createElement("div");
+      const contentEl = document.createElement("div");
+      contentEl.className += "flex pa-2 md8 lg8 xs12 sm12";
+      wrapper.appendChild(contentEl);
+      contentEl.innerHTML = section;
+      const aside = document.createElement("aside");
+      aside.className += "flex px-4 my-4 md4 lg4 hidden-sm-and-down";
+      wrapper.appendChild(aside);
+      const links = wrapper.querySelectorAll("a[href]");
       for (let l = 0; l < links.length; l++) {
         let link = links[l];
         for (let i = 0; i < link.attributes.length; i++) {
@@ -155,6 +163,29 @@ export default {
           link.setAttribute(attribute.name, attribute.value);
         }
       }
+
+      const hatnotes = wrapper.querySelectorAll("div.hatnote");
+      const amboxes = wrapper.querySelectorAll(".ambox");
+      const infobox = wrapper.querySelectorAll(".infobox");
+      const rightSideImages = wrapper.querySelectorAll(
+        "figure.mw-halign-right"
+      );
+      const leftSideImages = wrapper.querySelectorAll("figure.mw-halign-left");
+      const smallFigures = wrapper.querySelectorAll("figure.mw-default-size");
+      const sideItems = [
+        ...hatnotes,
+        ...infobox,
+        ...amboxes,
+        ...rightSideImages,
+        ...leftSideImages,
+        ...smallFigures
+      ];
+      for (let i = 0; i < sideItems.length; i++) {
+        aside.appendChild(sideItems[i].cloneNode(true));
+        sideItems[i].className += " hidden-md-and-up";
+        if(i===5) break; // Don't add too many items to sidebar
+      }
+
       return wrapper.innerHTML;
     },
     listen() {
@@ -245,10 +276,28 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 article {
   font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,
     "Times New Roman", Times, serif;
+
+  display: flex;
+  flex-flow: row wrap;
+  section {
+    flex: 1;
+  }
+  aside {
+    flex: 1;
+    > * {
+      margin-bottom: 2em;
+    }
+    .hatnote,
+    .ambox {
+      color: #616161;
+      padding: 0 5px;
+      border-left: 1px solid #616161;
+    }
+  }
 }
 
 .mw-ref {

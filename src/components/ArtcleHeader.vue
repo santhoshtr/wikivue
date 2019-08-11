@@ -1,6 +1,5 @@
 <template>
-  <v-card
-    flat
+  <header
     class="artcle-header"
   >
     <v-card-text
@@ -20,7 +19,7 @@
         Last modified by {{ lastmodifier.user }} at {{ lastmodified }}
       </div>
     </v-card-text>
-  </v-card>
+  </header>
 </template>
 
 <script>
