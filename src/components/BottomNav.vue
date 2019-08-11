@@ -41,6 +41,7 @@
       hide-overlay
       clipped
       app
+      temporary
       class="toc-drawer"
     >
       <table-of-contents :toc="toc" />
