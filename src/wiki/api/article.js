@@ -8,6 +8,13 @@ function fetchRandomArticle(language){
         .then(response => process(response.data))
 }
 
+function fetchMetadata(language, title){
+    const api = `//${language}.wikipedia.org/api/rest_v1/page/metadata/${title}`;
+    return axios
+        .get(api)
+        .then(response => response.data)
+}
+
 function fetchArticle(language, title) {
     if (!language) {
         throw new Error('Language is null')
@@ -73,4 +80,4 @@ function process(articleData){
     }
 }
 
-export default { fetchArticle }
+export default { fetchArticle, fetchMetadata }

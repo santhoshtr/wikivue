@@ -14,12 +14,7 @@
         <v-icon>bookmark</v-icon>
       </v-btn>
 
-      <v-btn value="languages">
-        <v-badge right>
-          <span slot="badge">{{ $store.state.article.languagecount }}</span>
-          <v-icon>translate</v-icon>
-        </v-badge>
-      </v-btn>
+      <article-languages />
 
       <v-btn
         v-show="sharable"
@@ -52,11 +47,12 @@
 
 <script>
 import TableOfContents from "./TOC";
-
+import ArticleLanguages from "./ArticleLanguages"
 export default {
   name: "BottomNav",
   components: {
     TableOfContents,
+    ArticleLanguages
   },
   data() {
     return {

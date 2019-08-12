@@ -12,6 +12,7 @@ const state = {
     issues: [],
     history: {},
     preview: {},
+    metadata:{},
     loadingStatus: 'loading',
 };
 
@@ -31,13 +32,14 @@ const mutations = {
     setTOC(state, toc) { state.toc = toc },
     setHistory(state, history) { state.history = history },
     setPreview(state, preview) { state.preview = preview },
+    setMetadata(state, metadata) { state.metadata = metadata },
 }
 
 // Computed properties for stores.
 const getters = {}
 
 const actions = {
-    fetch({ commit, state }, articleRequest) {
+    fetch({ commit, state , dispatch}, articleRequest) {
         commit('setLoadingStatus', 'loading')
         articleApi.fetchArticle(articleRequest.language, articleRequest.title)
             .then((articleData) => {
@@ -51,7 +53,9 @@ const actions = {
                 commit('setSections', articleData.sections)
                 commit('setTOC', articleData.toc)
                 commit('setLoadingStatus', 'success')
+                dispatch('metadata', articleRequest);
             }).catch(err => {
+                console.error(err);
                 commit('setLoadingStatus', 'failure')
             })
     },
@@ -67,6 +71,12 @@ const actions = {
             }).catch(err => {
                 //commit('setPreviewLoadingStatus', 'failure')
             })
+    },
+    metadata({ commit, state }, articleRequest) {
+        articleApi.fetchMetadata(articleRequest.language, articleRequest.title)
+        .then(metadata=>{
+            commit('setMetadata', metadata)
+        })
     }
 }
 
