@@ -1,8 +1,8 @@
 <template>
   <v-container fluid>
     <v-progress-linear
-      :active="isPreview? previewLoaded : !loaded"
-      :indeterminate="isPreview? previewLoaded : !loaded"
+      :active="isPreview?!article.loaded:!loaded"
+      :indeterminate="isPreview?!article.loaded:!loaded"
       absolute
       top
     />
@@ -54,7 +54,10 @@
             </div>
           </v-sheet>
           <reference :reference="selectedReference" />
-          <article-preview :preview="preview" />
+          <article-preview
+            :preview="preview"
+            :show="previewShown"
+          />
         </article>
       </v-flex>
     </v-layout>
@@ -68,6 +71,7 @@ import Reference from "./Reference";
 import ArticlePreview from "./ArticlePreview";
 
 import { mapGetters, mapState, mapMutations } from "vuex";
+import { setTimeout } from "timers";
 
 export default {
   name: "ArticleContent",
@@ -91,7 +95,8 @@ export default {
     error: null,
     activeToc: [],
     bannerImage: "",
-    selectedReference: null
+    selectedReference: null,
+    previewShown: false
   }),
   computed: {
     loaded: function() {
@@ -101,6 +106,10 @@ export default {
       );
     },
     sections: function() {
+      if (this.isPreview) {
+        // Render only first few sections for preview
+        return this.article.sections && this.article.sections.slice(0, 2);
+      }
       return this.article.sections;
     },
     toc: function() {
@@ -113,16 +122,13 @@ export default {
       return this.article.description;
     },
     lastmodifier: function() {
-      return this.article.history.lastmodifier;
+      return this.article.history && this.article.history.lastmodifier;
     },
     lastmodified: function() {
-      return this.article.history.lastmodified;
+      return this.article.history && this.article.history.lastmodified;
     },
     preview: function() {
       return this.article.preview;
-    },
-    previewLoaded: function() {
-      return this.article.previewLoadingStatus === "success";
     },
     ...mapState({
       contentLanguage: state => state.app.contentLanguage
@@ -183,7 +189,7 @@ export default {
       for (let i = 0; i < sideItems.length; i++) {
         aside.appendChild(sideItems[i].cloneNode(true));
         sideItems[i].className += " hidden-md-and-up";
-        if(i===5) break; // Don't add too many items to sidebar
+        if (i === 5) break; // Don't add too many items to sidebar
       }
 
       return wrapper.innerHTML;
@@ -204,15 +210,12 @@ export default {
         link.addEventListener("mouseover", event => {
           const href = link.getAttribute("href");
           if (!href) return;
-          if (href.startsWith("#cite")) {
-            this.referenceClickHandler(link, event);
+          if (link.matches("a:not([href*='://'])")) {
+            this.wikilinkHoverHandler(link, event);
           }
         });
-        link.addEventListener("blur", event => {
-          this.selectedReference = null;
-        });
         link.addEventListener("mouseout", event => {
-          this.selectedReference = null;
+          this.previewShown = false;
         });
       }
     },
@@ -249,7 +252,7 @@ export default {
       return false;
     },
 
-    wikilinkClickHandler(link, event) {
+    wikilinkHoverHandler(link, event) {
       if (this.isIgnorableLinkClick(event)) return;
       // don't handle same page links/anchors
       const url = new URL(link.href);
@@ -260,6 +263,24 @@ export default {
           title: link.title,
           language: this.contentLanguage
         });
+        setTimeout(() => {
+          if (!this.previewShown) {
+            this.previewShown = true;
+          }
+        }, 500);
+      }
+    },
+    wikilinkClickHandler(link, event) {
+      if (this.isIgnorableLinkClick(event)) return;
+      // don't handle same page links/anchors
+      const url = new URL(link.href);
+      const to = url.pathname;
+      if (window.location.pathname !== to && event.preventDefault) {
+        event.preventDefault();
+        this.$router.push(
+          `/page/${this.$store.state.app.contentLanguage}/${this.preview.title}`
+        );
+        this.previewShown = false;
       }
     },
     referenceClickHandler(referenceLink, event) {

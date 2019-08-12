@@ -1,6 +1,5 @@
 <template>
   <v-bottom-sheet
-    hide-overlay
     v-model="shown"
   >
     <v-sheet>

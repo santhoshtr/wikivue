@@ -4,15 +4,6 @@
     v-model="shown"
   >
     <v-sheet class="article-preview">
-      <div class="text-center">
-        <v-btn
-          block
-          @click="read"
-          color="grey lighten-3"
-        >
-          <v-icon>expand_less</v-icon>Read article
-        </v-btn>
-      </div>
       <preview-content
         :article="preview"
         :is-preview="true"
@@ -32,6 +23,10 @@ export default {
     preview: {
       type: Object,
       default: () => null
+    },
+    show:{
+      type: Boolean,
+      default:false
     }
   },
   components: {
@@ -40,15 +35,8 @@ export default {
     'preview-content':  () => import('./ArticleContent')
   },
   watch: {
-    preview: function() {
-      this.shown = !!this.preview;
-    }
-  },
-  methods: {
-    read() {
-        this.shown=false;
-        document.documentElement.scrollTop = 0; //scroll to top
-        this.$router.push(`/page/${this.$store.state.app.contentLanguage}/${this.preview.title}`);
+    show: function() {
+      this.shown = this.show;
     }
   }
 };

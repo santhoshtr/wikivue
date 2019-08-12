@@ -13,7 +13,6 @@ const state = {
     history: {},
     preview: {},
     loadingStatus: 'loading',
-    previewLoadingStatus: 'loading',
 };
 
 // The only way to actually change state in a Vuex store is by committing a mutation.
@@ -31,7 +30,6 @@ const mutations = {
     setSections(state, sections) { state.sections = sections },
     setTOC(state, toc) { state.toc = toc },
     setHistory(state, history) { state.history = history },
-    setPreviewLoadingStatus(state, status) { state.previewLoadingStatus = status },
     setPreview(state, preview) { state.preview = preview },
 }
 
@@ -58,13 +56,16 @@ const actions = {
             })
     },
     preview({ commit, state }, previewRequest) {
-        commit('setPreviewLoadingStatus', 'loading')
+        commit('setPreview', {
+            title:previewRequest.title,
+            loaded: false
+        })
         articleApi.fetchArticle(previewRequest.language, previewRequest.title)
             .then((articleData) => {
+                articleData.loaded=true;
                 commit('setPreview', articleData)
-                commit('setPreviewLoadingStatus', 'success')
             }).catch(err => {
-                commit('setPreviewLoadingStatus', 'failure')
+                //commit('setPreviewLoadingStatus', 'failure')
             })
     }
 }
