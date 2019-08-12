@@ -204,7 +204,7 @@ export default {
         event.preventDefault();
         window.scrollTo(0, 0);
         this.$router.push(
-          `/page/${this.$store.state.app.contentLanguage}/${this.preview.title}`
+          `/page/${this.$store.state.app.contentLanguage}/${link.title}`
         );
       }
     },
