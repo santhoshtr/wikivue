@@ -181,12 +181,13 @@ export default {
       const to = url.pathname;
       if (window.location.pathname !== to && event.preventDefault) {
         event.preventDefault();
-        this.$store.dispatch("article/preview", {
-          title: link.title,
-          language: this.contentLanguage
-        });
         setTimeout(() => {
-          if (!this.previewShown) {
+          if (link.matches(':hover')) {
+            // Still hovered.
+             this.$store.dispatch("article/preview", {
+              title: link.title,
+              language: this.contentLanguage
+            });
             this.previewShown = true;
           }
         }, 500);
