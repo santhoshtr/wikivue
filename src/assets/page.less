@@ -1,0 +1,76 @@
+article {
+    font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,
+        "Times New Roman", Times, serif;
+
+    display: flex;
+    flex-flow: row wrap;
+
+    section {
+        flex: 1;
+    }
+
+    aside {
+        flex: 1;
+
+        >* {
+            margin-bottom: 2em;
+        }
+
+        .hatnote,
+        .ambox {
+            color: #616161;
+            padding: 0 5px;
+            border-left: 1px solid #616161;
+        }
+    }
+}
+
+.mw-ref {
+    vertical-align: super;
+    line-height: 1;
+    font-size: smaller;
+    unicode-bidi: embed;
+    font-weight: normal;
+    font-style: normal;
+}
+
+a:hover,
+a:focus {
+    text-decoration: underline;
+}
+
+a {
+    text-decoration: none;
+    color: #0645ad;
+    background: none;
+}
+
+.container {
+    background-color: white;
+}
+
+p {
+    line-height: 1.5;
+    font-size: 18px;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary,
+table.wikitable {
+    display: block;
+    overflow: auto;
+}
+
+figure {
+    margin: 10px 0;
+}
