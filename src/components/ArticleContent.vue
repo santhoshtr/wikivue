@@ -134,7 +134,7 @@ export default {
       return this.article.history && this.article.history.lastmodifier;
     },
     lastmodified: function() {
-      return this.article.history && this.article.history.lastmodified;
+      return this.article.history && new Date(this.article.history.lastmodified).toLocaleString();
     },
     preview: function() {
       return this.article.preview;
