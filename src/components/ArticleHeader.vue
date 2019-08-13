@@ -4,7 +4,7 @@
   >
     <v-layout
       row
-      class="mx-0 pa-0"
+      class="mx-0 pa-0 py-2"
     >
       <v-flex
         xs12
@@ -25,9 +25,10 @@
             {{ description }}
           </h3>
           <v-divider />
-          <div v-if="loaded">
-            Last modified by {{ lastmodifier.user }} at {{ lastmodified }}
-          </div>
+          <div
+            v-if="loaded"
+            v-i18n="{msg:'article-lastmodified', params: [lastmodifier.user, lastmodified]}"
+          />
         </v-card-text>
       </v-flex>
     </v-layout>

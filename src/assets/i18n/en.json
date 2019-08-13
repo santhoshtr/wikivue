@@ -8,5 +8,6 @@
     "menu-settings": "Settings",
     "menu-about": "About",
     "toc-heading": "Contents",
-    "categories-title":"Categories"
+    "categories-title":"Categories",
+    "article-lastmodified":"Last modified by $1 at $2"
 }
