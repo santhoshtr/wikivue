@@ -2,7 +2,7 @@ module.exports = {
     pwa: {
         themeColor: "#FFFFFF",
         msTileColor: '#000000',
-        appleMobileWebAppStatusBarStyle: 'black',
+        appleMobileWebAppStatusBarStyle: 'black-translucent',
         appleMobileWebAppCapable: 'yes',
         // configure the workbox plugin
         workboxOptions: {
