@@ -5,9 +5,8 @@
   >
     <h1
       class="title"
-    >
-      Table of contents
-    </h1>
+      v-i18n="'toc-heading'"
+    />
     <v-treeview
       activatable
       selection-type="independent"
@@ -54,7 +53,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .toc {
     font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,"Times New Roman", Times, serif;
     position: fixed;

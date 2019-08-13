@@ -93,5 +93,6 @@ export default {
 <style>
 .toc-drawer .toc {
   max-width: 100%;
+  width: 100%;
 }
 </style>
