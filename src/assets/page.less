@@ -18,9 +18,16 @@ article {
 
         .hatnote,
         .ambox {
+            &::before{
+                border-top: 1px solid rgba(0,0,0,.15);
+                content: "";
+                display: block;
+                margin-bottom: 5px;
+                margin-right: 75%;
+                width: 25%;
+            }
             color: #616161;
             padding: 0 5px;
-            border-left: 1px solid #616161;
         }
     }
 }
@@ -77,4 +84,5 @@ table.wikitable {
 
 figure {
     margin: 10px 0;
+    color: #616161;
 }
