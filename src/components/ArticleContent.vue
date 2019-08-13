@@ -37,10 +37,7 @@
           class="px-2"
         >
           <article-header
-            :title="displaytitle"
-            :description="description"
-            :lastmodifier="lastmodifier"
-            :lastmodified="lastmodified"
+            :article="article"
           />
           <v-sheet class="content">
             <section
@@ -126,15 +123,6 @@ export default {
     },
     displaytitle: function() {
       return this.article.title;
-    },
-    description: function() {
-      return this.article.description;
-    },
-    lastmodifier: function() {
-      return this.article.history && this.article.history.lastmodifier;
-    },
-    lastmodified: function() {
-      return this.article.history && new Date(this.article.history.lastmodified).toLocaleString();
     },
     preview: function() {
       return this.article.preview;
