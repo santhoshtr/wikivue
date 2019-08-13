@@ -6,6 +6,7 @@
     <v-navigation-drawer
       v-model="drawer"
       :clipped="$vuetify.breakpoint.lgAndUp"
+      disable-resize-watcher
       app
     >
       <v-list-item>
@@ -16,7 +17,6 @@
           <v-img
             :aspect-ratio="1/1"
             contain
-
             src="./assets/Wikipedia-logo.png"
           />
         </v-list-item-avatar>
@@ -24,7 +24,6 @@
 
       <v-list
         dense
-        flat
         nav
       >
         <v-list-item-group
@@ -59,7 +58,7 @@
           <v-icon>menu</v-icon>
         </v-btn>
       </v-app-bar-nav-icon>
-      <Brand />
+      <brand />
       <Search />
     </v-app-bar>
     <v-content color="white">
