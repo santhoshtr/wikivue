@@ -1,5 +1,9 @@
 module.exports = {
     pwa: {
+        themeColor: "#FFFFFF",
+        msTileColor: '#000000',
+        appleMobileWebAppStatusBarStyle: 'black',
+        appleMobileWebAppCapable: 'yes',
         // configure the workbox plugin
         workboxOptions: {
             runtimeCaching: [ {
