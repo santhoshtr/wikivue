@@ -2,23 +2,30 @@
   <header
     class="artcle-header"
   >
-    <v-card-text
-      class="mx-0 px-0"
+    <v-flex
+      xs12
+      sm12
+      md8
+      lg8
     >
-      <h1
-        class="text--primary"
-        fixed
+      <v-card-text
+        class="mx-0 pa-0"
       >
-        {{ title }}
-      </h1>
-      <h3>
-        {{ description }}
-      </h3>
-      <v-divider />
-      <div>
-        Last modified by {{ lastmodifier.user }} at {{ lastmodified }}
-      </div>
-    </v-card-text>
+        <h1
+          class="text--primary"
+          fixed
+        >
+          {{ title }}
+        </h1>
+        <h3 class="font-weight-regular">
+          {{ description }}
+        </h3>
+        <v-divider />
+        <div>
+          Last modified by {{ lastmodifier.user }} at {{ lastmodified }}
+        </div>
+      </v-card-text>
+    </v-flex>
   </header>
 </template>
 
@@ -52,10 +59,15 @@ export default {
 
 
 <style lang="less">
-.artcle-header h1 {
-  font-family: "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
-  font-size: 24px;
-  line-height: 1.2;
+.artcle-header {
+  h1 {
+    font-family: "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
+    font-size: 2.0em;
+    line-height: 1.2;
+  }
+  h3{
+    font-size: 20px;
+  }
 }
 
 </style>
