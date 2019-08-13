@@ -1,0 +1,105 @@
+@import url('./fonts/libertinus.css');
+
+// Common, Also Latin.
+article {
+    font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,
+        "Times New Roman", Times, serif;
+
+    p {
+        line-height: 1.5;
+        font-size: 1.2em;
+    }
+
+    header {
+        h1 {
+            font-family: "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
+            font-size: 2.0em;
+            line-height: 1.2;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+    }
+}
+
+// Indic scripts
+article:lang(anp),
+article:lang(as),
+article:lang(bh),
+/* Macrarticleanguage, used on bh.wikipedia.org, should be removed one day */
+article:lang(bho),
+article:lang(bn),
+article:lang(gu),
+article:lang(hi),
+article:lang(kn),
+article:lang(ks),
+article:lang(ml),
+article:lang(mr),
+article:lang(my),
+article:lang(mai),
+article:lang(ne),
+article:lang(new),
+article:lang(or),
+article:lang(pa),
+article:lang(pi),
+article:lang(sa),
+article:lang(ta),
+article:lang(te) {
+    // To be defined per script
+    font-family: sans-serif;
+
+    ol:lang(hi) li,
+    ol:lang(mai) li,
+    ol:lang(mr) li,
+    ol:lang(ne) li {
+        list-style-type: devanagari;
+    }
+
+    ol:lang(as) li,
+    ol:lang(bn) li {
+        list-style-type: bengali;
+    }
+
+    ol:lang(or) li {
+        list-style-type: oriya;
+    }
+
+}
+
+article:lang(ml) {
+    font-family: "Manjari", "Libertinus Sans",  sans-serif;
+    header {
+        h1 {
+            font-weight: 100;
+            line-height: 1.4;
+        }
+    }
+}
+
+// Persian set
+article:lang(azb),
+article:lang(bcc),
+article:lang(bgn),
+article:lang(bqi),
+article:lang(fa),
+article:lang(glk),
+article:lang(kk-arab),
+article:lang(lrc),
+article:lang(luz),
+article:lang(mzn) {
+    ol li {
+        /* Localised ordered list numbering for some languages */
+        list-style-type: persian;
+    }
+}
+
+// Arabic indic
+article:lang(ckb),
+article:lang(sdh) {
+    ol {
+        li {
+            list-style-type: arabic-indic;
+        }
+    }
+}

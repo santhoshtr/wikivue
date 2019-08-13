@@ -56,18 +56,3 @@ export default {
   }
 }
 </script>
-
-
-<style lang="less">
-.artcle-header {
-  h1 {
-    font-family: "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
-    font-size: 2.0em;
-    line-height: 1.2;
-  }
-  h3{
-    font-size: 20px;
-  }
-}
-
-</style>

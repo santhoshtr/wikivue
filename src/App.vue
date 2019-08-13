@@ -77,7 +77,6 @@
   import Search from './components/Search'
   import Footer from './components/Footer'
   import BottomNav from './components/BottomNav';
-  import Libertinus from './assets/fonts/libertinus.css'
   import LanguageSelector from './components/LanguageSelector';
 
   export default {
@@ -103,7 +102,9 @@
   }
 </script>
 
-<style>
+
+<style lang="less">
+@import url('./assets/typography.less');
 
 #wiki {
   -webkit-font-smoothing: antialiased;
