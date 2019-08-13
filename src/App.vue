@@ -59,7 +59,10 @@
         </v-btn>
       </v-app-bar-nav-icon>
       <brand />
-      <Search />
+      <search />
+      <v-toolbar-items>
+        <language-selector />
+      </v-toolbar-items>
     </v-app-bar>
     <v-content color="white">
       <router-view />
@@ -75,11 +78,13 @@
   import Footer from './components/Footer'
   import BottomNav from './components/BottomNav';
   import Libertinus from './assets/fonts/libertinus.css'
+  import LanguageSelector from './components/LanguageSelector';
 
   export default {
     components: {
       Brand,
       Search,
+      LanguageSelector,
       Footer,
       BottomNav
     },

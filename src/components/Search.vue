@@ -5,20 +5,29 @@
     :loading="isLoading"
     :search-input.sync="search"
     hide-selected
-    hide-no-data
+    clearable
+    allow-overflow
     item-text="title"
     item-value="title"
     placeholder="Search"
     prepend-inner-icon="search"
+    height="40px"
     return-object
+    auto-select-first
     flat
+    solo
     single-line
     hide-details
     label="Search"
+    @click:prepend="onSelect"
     @change="onSelect"
   >
-    <template v-slot:append-outer>
-      <LanguageSelector />
+    <template v-slot:no-data>
+      <v-list-item>
+        <v-list-item-title>
+          Search for an article
+        </v-list-item-title>
+      </v-list-item>
     </template>
     <template v-slot:item="data">
       <template v-if="typeof data.item !== 'object'">
@@ -54,9 +63,6 @@ import axios from "axios";
 
 export default {
   name: "Search",
-  components: {
-    LanguageSelector
-  },
   data: () => ({
     articles: [], // search results
     isLoading: false,
@@ -87,6 +93,7 @@ export default {
         this.$router.push({
           path: `/page/${this.contentLanguage || "en"}/${selected.title}`
         });
+        window.scrollTo(0,0)
       }
     },
     wikiSearch: async function(value) {
