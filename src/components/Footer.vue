@@ -1,7 +1,7 @@
 <template>
   <v-footer
     light
-    class="pa-4"
+    class="pa-10 my-10"
     elevation="2"
   >
     <p id="footer-info-copyright">
