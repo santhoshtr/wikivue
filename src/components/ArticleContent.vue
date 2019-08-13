@@ -53,6 +53,9 @@
             >
               {{ error }}
             </div>
+            <article-footer
+              :article="article"
+            />
           </v-sheet>
           <reference :reference="selectedReference" />
           <article-preview
@@ -67,7 +70,8 @@
 
 <script>
 import TableOfContents from "./TOC";
-import ArticleHeader from "./ArtcleHeader";
+import ArticleHeader from "./ArticleHeader";
+import ArticleFooter from "./ArticleFooter";
 import Reference from "./Reference";
 import ArticlePreview from "./ArticlePreview";
 import { Touch } from 'vuetify/lib/directives'
@@ -95,6 +99,7 @@ export default {
     TableOfContents,
     Reference,
     ArticleHeader,
+    ArticleFooter,
     ArticlePreview
   },
   data: () => ({
