@@ -35,13 +35,16 @@ export default {
         );
         const leftSideImages = wrapper.querySelectorAll("figure.mw-halign-left");
         const smallFigures = wrapper.querySelectorAll("figure.mw-default-size");
+        const rightTables = wrapper.querySelectorAll("table[align='right']");
+
         const sideItems = [
             ...hatnotes,
             ...infobox,
             ...amboxes,
             ...rightSideImages,
             ...leftSideImages,
-            ...smallFigures
+            ...smallFigures,
+            ...rightTables
         ];
         for (let i = 0; i < sideItems.length; i++) {
             aside.appendChild(sideItems[i].cloneNode(true));
