@@ -27,7 +27,7 @@
         value="tocbutton"
         @click="showToc"
       >
-        <v-icon>list</v-icon>
+        <v-icon>toc</v-icon>
       </v-btn>
     </v-bottom-navigation>
     <v-navigation-drawer
