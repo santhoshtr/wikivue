@@ -33,12 +33,17 @@
       >
         <article
           :lang="$store.state.app.contentLanguage"
-          :if="loaded"
           class="px-2"
         >
           <article-header
             :article="article"
           />
+          <div
+            class="error"
+            :if="error"
+          >
+            {{ error }}
+          </div>
           <v-sheet class="content">
             <section
               v-for="section in sections"
@@ -47,15 +52,24 @@
               v-html="layout(section.html)"
               class="my-4 layout row fill-height"
             />
-            <div
-              class="error"
-              :if="error"
+            <v-expansion-panels
+              flat
+              class="flex md8 lg8 xs12 sm12"
             >
-              {{ error }}
-            </div>
-            <article-footer
-              :article="article"
-            />
+              <v-expansion-panel
+                v-for="(section,i) in collapsibleSections"
+                :key="i"
+              >
+                <v-expansion-panel-header>{{ section.title }}</v-expansion-panel-header>
+                <v-expansion-panel-content v-html="(section.html)" />
+              </v-expansion-panel>
+            </v-expansion-panels>
+
+            <template v-if="loaded">
+              <article-footer
+                :article="article"
+              />
+            </template>
           </v-sheet>
           <reference :reference="selectedReference" />
           <article-preview
@@ -107,7 +121,8 @@ export default {
     activeToc: [],
     bannerImage: "",
     selectedReference: null,
-    previewShown: false
+    previewShown: false,
+    collapsibleSections:[]
   }),
   computed: {
     loaded: function() {
