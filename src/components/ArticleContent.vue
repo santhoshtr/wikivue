@@ -35,9 +35,7 @@
           :lang="$store.state.app.contentLanguage"
           class="px-2"
         >
-          <article-header
-            :article="article"
-          />
+          <article-header :article="article" />
           <div
             class="error"
             :if="error"
@@ -46,29 +44,60 @@
           </div>
           <v-sheet class="content">
             <section
-              v-for="section in sections"
+              v-for="section in layout.sections"
               :key="section.id"
               :id="section.anchor"
-              v-html="layout(section.html)"
-              class="my-4 layout row fill-height"
-            />
+              class="py-4 ma-0"
+            >
+              <h2
+                v-if="section.toclevel===1"
+                v-html="section.heading"
+              />
+              <h3
+                v-else
+                v-html="section.heading"
+              />
+              <v-layout
+                row
+                fill-height
+                class="pa-0 ma-0"
+              >
+                <div
+                  class="flex md8 lg8 xs12 sm12"
+                  v-html="section.content"
+                />
+                <aside
+                  class="flex px-4 md4 lg4 hidden-sm-and-down"
+                  v-html="section.aside"
+                />
+              </v-layout>
+            </section>
             <v-expansion-panels
-              flat
-              class="flex md8 lg8 xs12 sm12"
+              accordion
+              class="mb-5"
             >
               <v-expansion-panel
-                v-for="(section,i) in collapsibleSections"
+                v-for="(section,i) in layout.collapsibleSections"
                 :key="i"
+                :id="section.anchor"
               >
-                <v-expansion-panel-header>{{ section.title }}</v-expansion-panel-header>
-                <v-expansion-panel-content v-html="(section.html)" />
+                <v-expansion-panel-header>
+                  <h2
+                    v-if="section.toclevel===1"
+                    v-html="section.heading"
+                  />
+                  <h3
+                    v-else
+                    v-html="section.heading"
+                  />
+                </v-expansion-panel-header>
+                <v-expansion-panel-content v-html="section.content" />
               </v-expansion-panel>
             </v-expansion-panels>
 
+            <v-divider />
             <template v-if="loaded">
-              <article-footer
-                :article="article"
-              />
+              <article-footer :article="article" />
             </template>
           </v-sheet>
           <reference :reference="selectedReference" />
@@ -88,16 +117,16 @@ import ArticleHeader from "./ArticleHeader";
 import ArticleFooter from "./ArticleFooter";
 import Reference from "./Reference";
 import ArticlePreview from "./ArticlePreview";
-import { Touch } from 'vuetify/lib/directives'
+import { Touch } from "vuetify/lib/directives";
 
-import wikipage from '../wiki/page'
+import wikipage from "../wiki/page";
 import { mapGetters, mapState, mapMutations } from "vuex";
 import { setTimeout } from "timers";
 
 export default {
   name: "ArticleContent",
-  directives:{
-    touch:Touch
+  directives: {
+    touch: Touch
   },
   props: {
     article: {
@@ -121,8 +150,7 @@ export default {
     activeToc: [],
     bannerImage: "",
     selectedReference: null,
-    previewShown: false,
-    collapsibleSections:[]
+    previewShown: false
   }),
   computed: {
     loaded: function() {
@@ -147,6 +175,42 @@ export default {
     preview: function() {
       return this.article.preview;
     },
+    layout: function() {
+      const sections = [];
+      const collapsibleSections = [];
+      if (!this.article.sections) return [];
+      let isCollapsing = false;
+      const sectionsCount = this.article.sections.length;
+      for (let i = 0; i < sectionsCount; i++) {
+        const section = this.article.sections[i];
+        const parseResult = this.parse(section, isCollapsing);
+        const sectionLayout = {
+          id: section.id,
+          anchor: section.anchor,
+          heading: section.heading,
+          toclevel: section.toclevel,
+          aside: parseResult.aside,
+          content: parseResult.content
+        };
+
+        if (
+          sectionsCount > 10 &&
+          i >= sectionsCount - 3 &&
+          section.toclevel === 1
+        ) {
+          isCollapsing = true;
+        }
+        if (isCollapsing) {
+          collapsibleSections.push(sectionLayout);
+        } else {
+          sections.push(sectionLayout);
+        }
+      }
+      return {
+        sections,
+        collapsibleSections
+      };
+    },
     ...mapState({
       contentLanguage: state => state.app.contentLanguage
     })
@@ -160,16 +224,20 @@ export default {
     }
   },
   methods: {
-    layout(section) {
-      return wikipage.layout(section,this.contentLanguage)
+    parse(section, noAside) {
+      return wikipage.parse(section.html, this.contentLanguage, noAside);
     },
     listen() {
       const links = document.querySelectorAll("section a[title]");
       for (let i = 0; i < links.length; i++) {
         const link = links[i];
-        link.addEventListener("click", event => this.wikilinkClickHandler(link, event));
-        if (this.$vuetify.breakpoint.mdAndUp){
-          link.addEventListener("mouseover", event => this.wikilinkHoverHandler(link, event) );
+        link.addEventListener("click", event =>
+          this.wikilinkClickHandler(link, event)
+        );
+        if (this.$vuetify.breakpoint.mdAndUp) {
+          link.addEventListener("mouseover", event =>
+            this.wikilinkHoverHandler(link, event)
+          );
         }
         link.addEventListener("mouseout", event => {
           this.previewShown = false;
@@ -178,7 +246,9 @@ export default {
 
       const references = document.querySelectorAll("section a[href^='#cite']");
       for (let i = 0; i < references.length; i++) {
-        references[i].addEventListener("click", event => this.referenceClickHandler(references[i], event));
+        references[i].addEventListener("click", event =>
+          this.referenceClickHandler(references[i], event)
+        );
       }
     },
 
@@ -190,9 +260,9 @@ export default {
       if (window.location.pathname !== to && event.preventDefault) {
         event.preventDefault();
         setTimeout(() => {
-          if (link.matches(':hover')) {
+          if (link.matches(":hover")) {
             // Still hovered.
-             this.$store.dispatch("article/preview", {
+            this.$store.dispatch("article/preview", {
               title: link.title,
               language: this.contentLanguage
             });
@@ -204,7 +274,7 @@ export default {
     wikilinkClickHandler(link, event) {
       this.previewShown = false;
       if (wikipage.isIgnorableLinkClick(event)) return;
-      link.removeEventListener("mouseover", this.wikilinkHoverHandler );
+      link.removeEventListener("mouseover", this.wikilinkHoverHandler);
 
       // don't handle same page links/anchors
       const url = new URL(link.href);
@@ -240,5 +310,5 @@ export default {
 </script>
 
 <style lang="less">
-@import url('../assets/page.less');
+@import url("../assets/page.less");
 </style>

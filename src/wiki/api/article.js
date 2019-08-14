@@ -39,13 +39,12 @@ function process(articleData){
     for (let i = 0; i < articleSections.length; i++) {
         const section = articleSections[i];
         if (section.text) {
-            const heading = section.line
-                ? `<h${section.toclevel + 1}>${section.line}</h${section.toclevel + 1}>`
-                : ''
             sections.push({
                 id: section.id,
+                toclevel: section.toclevel,
                 anchor: section.anchor,
-                html: heading + section.text
+                heading: section.line,
+                html: section.text
             });
             continue;
         }

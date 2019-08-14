@@ -8,11 +8,11 @@
     <v-expansion-panels
       accordion
       focusable
-      class="flex md8 lg8 xs12 sm12 my-10"
+      class="flex md12 lg12 xs12 sm12 my-10"
     >
       <v-expansion-panel>
         <v-expansion-panel-header>
-          {{ $i18n('categories-title') }}
+          <h2>{{ $i18n('categories-title') }}</h2>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-list rounded>
