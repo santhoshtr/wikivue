@@ -22,7 +22,10 @@
               link
               :to="'Category:'+item.titles.display"
             >
-              <v-list-item-title>{{ item.titles.display }}</v-list-item-title>
+              <v-list-item-title>
+                <v-icon>bookmark_border</v-icon>
+                {{ item.titles.display }}
+              </v-list-item-title>
             </v-list-item>
           </v-list>
         </v-expansion-panel-content>
