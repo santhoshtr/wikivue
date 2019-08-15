@@ -268,7 +268,7 @@ export default {
             });
             this.previewShown = true;
           }
-        }, 500);
+        }, 1000);
       }
     },
     wikilinkClickHandler(link, event) {
