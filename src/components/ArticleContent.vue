@@ -180,7 +180,11 @@ export default {
       const collapsibleSections = [];
       if (!this.article.sections) return [];
       let isCollapsing = false;
-      const sectionsCount = this.article.sections.length;
+      let sectionsCount = this.article.sections.length;
+      if (this.isPreview) {
+        // Render only first few sections for preview
+        sectionsCount=2;
+      }
       for (let i = 0; i < sectionsCount; i++) {
         const section = this.article.sections[i];
         const parseResult = this.parse(section, isCollapsing);
