@@ -64,7 +64,7 @@
         <language-selector />
       </v-toolbar-items>
     </v-app-bar>
-    <v-content color="white">
+    <v-content>
       <router-view />
     </v-content>
     <Footer />

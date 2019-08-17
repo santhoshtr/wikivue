@@ -1,5 +1,8 @@
 <template>
-  <v-container fluid>
+  <v-container
+    fluid
+    class="my-0 py-0"
+  >
     <v-progress-linear
       :active="isPreview?!article.loaded:!loaded"
       :indeterminate="isPreview?!article.loaded:!loaded"
@@ -29,15 +32,17 @@
         sm12
         md9
         lg9
-        class="px-2"
       >
         <article
           :lang="$store.state.app.contentLanguage"
-          class="px-2"
         >
-          <article-header :article="article" />
+          <article-header
+            :article="article"
+            :is-preview="isPreview"
+          />
           <div
-            class="error"
+            class="
+            error"
             :if="error"
           >
             {{ error }}
@@ -47,7 +52,7 @@
               v-for="section in layout.sections"
               :key="section.id"
               :id="section.anchor"
-              class="py-4 ma-0"
+              class="py-4 px-2 ma-0"
             >
               <h2
                 v-if="section.toclevel===1"
