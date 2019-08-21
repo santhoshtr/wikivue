@@ -4,14 +4,11 @@ const state = {
     title: null,
     language: null,
     description: null,
-    wikidataId: null,
     sections: [],
     toc: [],
     image: {},
-    languagecount: 0,
-    issues: [],
-    history: {},
-    metadata:{},
+    history:{},
+    preview: {},
     loadingStatus: 'loading',
 };
 
@@ -24,13 +21,9 @@ const mutations = {
     },
     setDescription(state, description) { state.description = description },
     setImage(state, image) { state.image = image },
-    setIssues(state, issues) { state.issues = issues },
-    setLanguagecount(state, languagecount) { state.languagecount = languagecount },
-    setWikidataId(state, id) { state.wikidataId = id },
     setSections(state, sections) { state.sections = sections },
-    setTOC(state, toc) { state.toc = toc },
     setHistory(state, history) { state.history = history },
-    setMetadata(state, metadata) { state.metadata = metadata },
+    setTOC(state, toc) { state.toc = toc },
 }
 
 // Computed properties for stores.
@@ -45,24 +38,14 @@ const actions = {
                 commit('setTitle', articleData.title)
                 commit('setDescription', articleData.description)
                 commit('setImage', articleData.image)
-                commit('setIssues', articleData.issues)
-                commit('setLanguagecount', articleData.languagecount)
-                commit('setWikidataId', articleData.wikidataId)
-                commit('setHistory', articleData.history)
                 commit('setSections', articleData.sections)
+                commit('setHistory', articleData.history)
                 commit('setTOC', articleData.toc)
                 commit('setLoadingStatus', 'success')
-                dispatch('metadata', articleRequest);
             }).catch(err => {
                 console.error(err);
                 commit('setLoadingStatus', 'failure')
             })
-    },
-    metadata({ commit, state }, articleRequest) {
-        articleApi.fetchMetadata(articleRequest.language, articleRequest.title)
-        .then(metadata=>{
-            commit('setMetadata', metadata)
-        })
     }
 }
 

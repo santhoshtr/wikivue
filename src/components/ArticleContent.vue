@@ -4,8 +4,8 @@
     class="my-0 py-0"
   >
     <v-progress-linear
-      :active="isPreview?!article.loaded:!loaded"
-      :indeterminate="isPreview?!article.loaded:!loaded"
+      :active="!loaded"
+      :indeterminate="!loaded"
       absolute
       top
     />
@@ -177,9 +177,6 @@ export default {
     displaytitle: function() {
       return this.article.title;
     },
-    preview: function() {
-      return this.article.preview;
-    },
     layout: function() {
       const sections = [];
       const collapsibleSections = [];
@@ -188,7 +185,7 @@ export default {
       let sectionsCount = this.article.sections.length;
       if (this.isPreview) {
         // Render only first few sections for preview
-        sectionsCount=2;
+        sectionsCount=Math.min(sectionsCount,2);
       }
       for (let i = 0; i < sectionsCount; i++) {
         const section = this.article.sections[i];
@@ -221,7 +218,8 @@ export default {
       };
     },
     ...mapState({
-      contentLanguage: state => state.app.contentLanguage
+      contentLanguage: state => state.app.contentLanguage,
+      preview: state => state.preview,
     })
   },
   watch: {
@@ -271,7 +269,7 @@ export default {
         setTimeout(() => {
           if (link.matches(":hover")) {
             // Still hovered.
-            this.$store.dispatch("article/preview", {
+            this.$store.dispatch("preview/fetch", {
               title: link.title,
               language: this.contentLanguage
             });
