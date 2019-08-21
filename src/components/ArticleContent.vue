@@ -106,6 +106,7 @@
             </template>
           </v-sheet>
           <reference :reference="selectedReference" />
+          <image-viewer :image="selectedImage" />
           <article-preview
             :preview="preview"
             :show="previewShown"
@@ -121,6 +122,7 @@ import TableOfContents from "./TOC";
 import ArticleHeader from "./ArticleHeader";
 import ArticleFooter from "./ArticleFooter";
 import Reference from "./Reference";
+import ImageViewer from  './ImageViewer'
 import ArticlePreview from "./ArticlePreview";
 import { Touch } from "vuetify/lib/directives";
 
@@ -148,13 +150,15 @@ export default {
     Reference,
     ArticleHeader,
     ArticleFooter,
-    ArticlePreview
+    ArticlePreview,
+    ImageViewer,
   },
   data: () => ({
     error: null,
     activeToc: [],
     bannerImage: "",
     selectedReference: null,
+    selectedImage:null,
     previewShown: false
   }),
   computed: {
@@ -257,6 +261,13 @@ export default {
           this.referenceClickHandler(references[i], event)
         );
       }
+
+      const images = document.querySelectorAll("section a[class='image']");
+      for (let i = 0; i < images.length; i++) {
+        images[i].addEventListener("click", event =>
+          this.imageClickHandler(images[i], event)
+        );
+      }
     },
 
     wikilinkHoverHandler(link, event) {
@@ -302,6 +313,19 @@ export default {
         event.preventDefault();
         const refTarget = document.querySelector(referenceId);
         this.selectedReference = refTarget.innerHTML;
+      }
+    },
+    imageClickHandler(imageLink, event) {
+      this.selectedReference = null;
+      const img=imageLink.firstChild;
+      if (img && event.preventDefault) {
+        event.preventDefault();
+        this.selectedImage = {
+          src:img.src,
+          width:img.dataset.fileWidth,
+          height:img.dataset.fileHeight,
+          srcset:img.srcset
+        }
       }
     },
     swipe(direction) {
