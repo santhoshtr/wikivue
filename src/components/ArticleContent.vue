@@ -106,7 +106,7 @@
             </template>
           </v-sheet>
           <reference :reference="selectedReference" />
-          <image-viewer :image="selectedImage" />
+          <image-viewer :imgsrc="selectedImage" />
           <article-preview
             :preview="preview"
             :show="previewShown"
@@ -317,15 +317,9 @@ export default {
     },
     imageClickHandler(imageLink, event) {
       this.selectedReference = null;
-      const img=imageLink.firstChild;
-      if (img && event.preventDefault) {
+      if ( event.preventDefault) {
         event.preventDefault();
-        this.selectedImage = {
-          src:img.src,
-          width:img.dataset.fileWidth,
-          height:img.dataset.fileHeight,
-          srcset:img.srcset
-        }
+        this.selectedImage =  new URL(imageLink.href).pathname.split('/').pop();
       }
     },
     swipe(direction) {

@@ -15,6 +15,13 @@ function fetchMetadata(language, title){
         .then(response => response.data)
 }
 
+function fetchMedia(language, title){
+    const api = `//${language}.wikipedia.org/api/rest_v1/page/media/${title}`;
+    return axios
+        .get(api)
+        .then(response => response.data)
+}
+
 function fetchArticle(language, title) {
     if (!language) {
         throw new Error('Language is null')
@@ -79,4 +86,4 @@ function process(articleData){
     }
 }
 
-export default { fetchArticle, fetchMetadata }
+export default { fetchArticle, fetchMetadata, fetchMedia }

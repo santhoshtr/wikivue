@@ -5,30 +5,48 @@
     <v-card>
       <v-img
         cover
-        :src="image.src"
-        :srcset="image.srcset"
-        :height="image.height"
-        :width="image.width"
+        :if="image"
+        :src="image.original.source"
+        aspect-ratio="1"
+        width="100%"
+        height="auto"
       />
+      <v-card-title v-html="image.artist.html" />
+      <v-card-text v-html="image.description.html" />
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import { mapGetters, mapState, mapMutations } from "vuex";
+
 export default {
   name: "ImageViewer",
   data: () => ({
       shown: false,
   }),
+  computed:{
+    ...mapState({
+      media: state => state.article.media
+    }),
+    image: function(){
+        if(this.media.items){
+            return this.media.items.find(item=>{
+                return item.titles.canonical===this.imgsrc;
+            })
+        }
+        return null;
+    }
+  },
   props: {
-    image: {
-      type: Object,
-      default: ()=>({})
+    imgsrc: {
+      type: String,
+      default: null,
     }
   },
   watch:{
       image:function(){
-          this.shown=!!this.image
+          this.shown=!!this.imgsrc
       }
   }
 };

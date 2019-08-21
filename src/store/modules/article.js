@@ -12,6 +12,7 @@ const state = {
     issues: [],
     history: {},
     metadata:{},
+    media:{},
     loadingStatus: 'loading',
 };
 
@@ -31,6 +32,7 @@ const mutations = {
     setTOC(state, toc) { state.toc = toc },
     setHistory(state, history) { state.history = history },
     setMetadata(state, metadata) { state.metadata = metadata },
+    setMedia(state, mediaInfo) { state.media = mediaInfo },
 }
 
 // Computed properties for stores.
@@ -53,6 +55,7 @@ const actions = {
                 commit('setTOC', articleData.toc)
                 commit('setLoadingStatus', 'success')
                 dispatch('metadata', articleRequest);
+                dispatch('media', articleRequest);
             }).catch(err => {
                 console.error(err);
                 commit('setLoadingStatus', 'failure')
@@ -63,7 +66,13 @@ const actions = {
         .then(metadata=>{
             commit('setMetadata', metadata)
         })
-    }
+    },
+    media({ commit, state }, articleRequest) {
+        articleApi.fetchMedia(articleRequest.language, articleRequest.title)
+        .then(mediaInfo=>{
+            commit('setMedia', mediaInfo)
+        })
+    },
 }
 
 
