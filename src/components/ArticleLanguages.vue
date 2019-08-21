@@ -18,15 +18,23 @@
     </template>
     <v-card>
       <v-container grid-list-md>
-        <v-toolbar>
+        <v-toolbar flat>
           <v-btn
             icon
             @click="dialog = false"
           >
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Language</v-toolbar-title>
-          <v-spacer />
+          <v-text-field
+            v-model="searchQuery"
+            flat
+            single-line
+            hide-details
+            prepend-inner-icon="search"
+            @input="onSearch"
+            class="language-search"
+            label="Select language"
+          />
         </v-toolbar>
         <v-list
           two-line
@@ -34,12 +42,14 @@
         >
           <v-list-item-group color="primary">
             <v-list-item
-              v-for="(item, index) in articleLanguages"
+              v-for="(item, index) in (filteredLanguages ||articleLanguages)"
               :key="index"
               @click="selectLanguage(item.lang, item.titles.normalized )"
             >
               <v-list-item-content>
-                <v-list-item-title>{{ item.titles.normalized }}</v-list-item-title>
+                <v-list-item-title class="title">
+                  {{ item.titles.normalized }}
+                </v-list-item-title>
                 <v-list-item-subtitle>{{ autonym(item.lang) }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -57,7 +67,9 @@ import { mapGetters, mapState, mapMutations } from "vuex";
 export default {
   name: "ArticleLanguages",
   data: () => ({
-    dialog: false
+    dialog: false,
+    searchQuery: "",
+    filteredLanguages: null
   }),
   computed: {
     ...mapState({
@@ -68,11 +80,18 @@ export default {
     autonym: function(lang) {
       return languagedata.getAutonym(lang);
     },
+    onSearch: function() {
+      this.filteredLanguages = this.articleLanguages.filter(item => {
+        return item.lang
+          .toLowerCase()
+          .startsWith(this.searchQuery.toLowerCase());
+      });
+    },
     selectLanguage: function(language, title) {
       this.$store.commit("app/setContentLanguage", language);
       this.dialog = false;
       this.$router.push(`/page/${language}/${title}`);
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
     }
   }
 };

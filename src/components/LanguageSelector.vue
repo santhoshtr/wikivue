@@ -21,7 +21,7 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-toolbar>
+        <v-toolbar flat>
           <v-btn
             icon
             @click="dialog = false"
@@ -43,24 +43,26 @@
           grid-list-md
           text-center
         >
-          <v-layout wrap>
-            <v-flex
-              v-for="(autonym, code) in (filteredLanguages || contentLanguages)"
-              :key="code"
-              xs12
-              sm6
-              md4
-              lg3
-              xl2
-            >
-              <v-btn
-                text
-                @click="selectLanguage(code, autonym)"
+          <v-item-group>
+            <v-row>
+              <v-col
+                v-for="(autonym, code) in (filteredLanguages || contentLanguages)"
+                :key="code"
+                cols="12"
+                md="4"
+                lg="3"
               >
-                {{ autonym }}
-              </v-btn>
-            </v-flex>
-          </v-layout>
+                <v-item>
+                  <v-btn
+                    text
+                    @click="selectLanguage(code, autonym)"
+                  >
+                    {{ autonym }}
+                  </v-btn>
+                </v-item>
+              </v-col>
+            </v-row>
+          </v-item-group>
         </v-container>
       </v-card>
     </v-dialog>
