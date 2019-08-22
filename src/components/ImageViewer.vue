@@ -1,18 +1,32 @@
 <template>
   <v-dialog
+    fullscreen
+    hide-overlay
     v-model="shown"
   >
+    <v-toolbar>
+      <v-toolbar-title>Image</v-toolbar-title>
+      <div class="flex-grow-1" />
+      <v-toolbar-items>
+        <v-btn
+          text
+          @click="shown = false"
+        >
+          <v-icon>close</v-icon>
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
     <v-card>
       <v-img
-        cover
+        contain
         :if="image"
         :src="image.original.source"
         aspect-ratio="1"
-        width="100%"
-        height="auto"
+        width="auto"
+        height="80vh"
       />
-      <v-card-title v-html="image.artist.html" />
-      <v-card-text v-html="image.description.html" />
+      <v-card-title v-html="image.description.html" />
+      <v-card-text v-html="image.artist.html" />
     </v-card>
   </v-dialog>
 </template>
