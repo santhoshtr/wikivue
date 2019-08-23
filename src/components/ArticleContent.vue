@@ -231,6 +231,7 @@ export default {
       this.previewShown = false;
       if (!this.isPreview) {
         setTimeout(() => this.listen(), 1000);
+        window.document.title = this.article.title
       }
     }
   },

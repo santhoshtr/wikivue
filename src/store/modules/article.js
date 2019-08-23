@@ -21,7 +21,6 @@ const mutations = {
     setLoadingStatus(state, status) { state.loadingStatus = status },
     setTitle(state, title) {
         state.title = title
-        window.document.title = state.title
     },
     setDescription(state, description) { state.description = description },
     setImage(state, image) { state.image = image },
