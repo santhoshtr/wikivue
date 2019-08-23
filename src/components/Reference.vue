@@ -8,7 +8,7 @@
         justify-center
         row
         fill-height
-        class="reference-content pa-3"
+        class="reference-content px-2 py-4"
       >
         <v-flex
           xs12
@@ -48,5 +48,6 @@ export default {
 .reference-content {
      font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,
     "Times New Roman", Times, serif;
+    font-size: 1.2em;
 }
 </style>
