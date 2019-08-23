@@ -45,7 +45,14 @@ export default {
                 ...rightTables
             ];
             for (let i = 0; i < sideItems.length; i++) {
-                aside.appendChild(sideItems[i].cloneNode(true));
+                if(sideItems[i].matches('.infobox')){
+                    const infoboxWrapper = document.createElement('div');
+                    infoboxWrapper.className += " infobox-wrapper";
+                    infoboxWrapper.appendChild(sideItems[i].cloneNode(true));
+                    aside.appendChild(infoboxWrapper);
+                }else{
+                    aside.appendChild(sideItems[i].cloneNode(true));
+                }
                 sideItems[i].className += " hidden-md-and-up";
                 if (i === 5) break; // Don't add too many items to sidebar
             }
