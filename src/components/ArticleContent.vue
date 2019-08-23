@@ -338,7 +338,7 @@ export default {
 <style lang="less">
 @import url("../assets/page.less");
 
-.infobox-wrapper{
+.table-wrapper {
   max-height: 80vh;
   padding: 5px 0;
   overflow: auto;

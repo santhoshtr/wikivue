@@ -34,6 +34,7 @@ export default {
             const leftSideImages = wrapper.querySelectorAll("figure.mw-halign-left");
             const smallFigures = wrapper.querySelectorAll("figure.mw-default-size");
             const rightTables = wrapper.querySelectorAll("table[align='right']");
+            const navboxes=wrapper.querySelectorAll("table.vertical-navbox");
 
             const sideItems = [
                 ...hatnotes,
@@ -42,14 +43,15 @@ export default {
                 ...rightSideImages,
                 ...leftSideImages,
                 ...smallFigures,
-                ...rightTables
+                ...rightTables,
+                ...navboxes
             ];
             for (let i = 0; i < sideItems.length; i++) {
-                if(sideItems[i].matches('.infobox')){
-                    const infoboxWrapper = document.createElement('div');
-                    infoboxWrapper.className += " infobox-wrapper";
-                    infoboxWrapper.appendChild(sideItems[i].cloneNode(true));
-                    aside.appendChild(infoboxWrapper);
+                if(sideItems[i].matches('table')){
+                    const tableWrapper = document.createElement('div');
+                    tableWrapper.className += " table-wrapper";
+                    tableWrapper.appendChild(sideItems[i].cloneNode(true));
+                    aside.appendChild(tableWrapper);
                 }else{
                     aside.appendChild(sideItems[i].cloneNode(true));
                 }
