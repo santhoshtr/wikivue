@@ -72,7 +72,7 @@
                   v-html="section.content"
                 />
                 <aside
-                  class="flex px-4 md4 lg4 hidden-sm-and-down section-aside"
+                  class="flex px-2 md4 lg4 hidden-sm-and-down section-aside"
                   v-html="section.aside"
                 />
               </v-layout>
@@ -339,7 +339,9 @@ export default {
 @import url("../assets/page.less");
 
 .infobox-wrapper{
-  max-height:80vh;
+  max-height: 80vh;
+  padding: 5px 0;
+  overflow: auto;
 }
 .section-aside {
   overflow:hidden;
