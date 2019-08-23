@@ -27,6 +27,8 @@
       />
       <v-card-title v-html="image.description.html" />
       <v-card-text v-html="image.artist.html" />
+      <v-card-text v-html="image.credit.html" />
+      <v-card-text v-text="image.license.type" />
     </v-card>
   </v-dialog>
 </template>
