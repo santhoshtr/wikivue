@@ -56,6 +56,7 @@ export default {
 <style scoped>
 .toc {
     font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,"Times New Roman", Times, serif;
+    font-size: 1.2em;
     position: fixed;
     max-height: 100vh;
     max-width: 20%;
