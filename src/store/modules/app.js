@@ -28,7 +28,13 @@ const getters = {
             languageMap[wikicodes[i]] = languagedata.getAutonym(wikicodes[i]);
         }
         return languageMap;
-    }
+    },
+    contentLanguageDir: (state, getters, rootState) => {
+        return languagedata.getDir(state.contentLanguage);
+    },
+    uiLanguageDir: (state, getters, rootState) => {
+        return languagedata.getDir(state.uiLanguage);
+    },
 }
 
 const actions = { }

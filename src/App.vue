@@ -2,6 +2,7 @@
   <v-app
     id="wiki"
     :lang="$store.state.app.uiLanguage"
+    :dir="uiLanguageDir"
   >
     <v-navigation-drawer
       v-model="drawer"
@@ -78,6 +79,7 @@
   import Footer from './components/Footer'
   import BottomNav from './components/BottomNav';
   import LanguageSelector from './components/LanguageSelector';
+  import { mapGetters, mapState, mapMutations } from "vuex";
 
   export default {
     components: {
@@ -86,6 +88,11 @@
       LanguageSelector,
       Footer,
       BottomNav
+    },
+    computed:{
+      ...mapGetters('app',[
+        'uiLanguageDir'
+      ]),
     },
     data: () => ({
       drawer: false,

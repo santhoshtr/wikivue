@@ -34,7 +34,8 @@
         lg9
       >
         <article
-          :lang="$store.state.app.contentLanguage"
+          :lang="contentLanguage"
+          :dir="contentLanguageDir"
         >
           <article-header
             :article="article"
@@ -221,6 +222,9 @@ export default {
         collapsibleSections
       };
     },
+     ...mapGetters('app',[
+      'contentLanguageDir'
+    ]),
     ...mapState({
       contentLanguage: state => state.app.contentLanguage,
       preview: state => state.preview,
