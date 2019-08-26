@@ -64,7 +64,7 @@ export default {
   }),
   computed: {
     ...mapState({
-      revisions: state => state.article.history.revisions
+      revisions: state => state.article.revisions
     })
   }
 };

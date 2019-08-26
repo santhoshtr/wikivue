@@ -11,6 +11,7 @@ const state = {
     image: {},
     languagecount: 0,
     issues: [],
+    revisions:[],
     history: {},
     metadata:{},
     media:{},
@@ -31,7 +32,7 @@ const mutations = {
     setSections(state, sections) { state.sections = sections },
     setTOC(state, toc) { state.toc = toc },
     setHistory(state, history) { state.history = history },
-    setRevisions(state, revisions) { state.history.revisions = revisions },
+    setRevisions(state, revisions) { state.revisions = revisions },
     setMetadata(state, metadata) { state.metadata = metadata },
     setMedia(state, mediaInfo) { state.media = mediaInfo },
 }

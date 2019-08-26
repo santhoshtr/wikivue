@@ -7,7 +7,7 @@ function fetchHistory(language, title) {
         formatversion: 2,
         prop: 'revisions',
         titles: title,
-        rvprop: 'ids|timestamp|comment|size|flags|sizediff|user',
+        rvprop: 'ids|timestamp|comment|size|flags|user',
         rvlimit: 50,
         origin:'*'
     };
