@@ -6,9 +6,7 @@
       app
       hide-on-scroll
     >
-      <v-btn value="recent">
-        <v-icon>history</v-icon>
-      </v-btn>
+      <article-revisions />
 
       <v-btn value="bookmark">
         <v-icon>bookmark</v-icon>
@@ -48,10 +46,13 @@
 <script>
 import TableOfContents from "./TOC";
 import ArticleLanguages from "./ArticleLanguages"
+import ArticleRevisions from "./History"
+
 export default {
   name: "BottomNav",
   components: {
     TableOfContents,
+    ArticleRevisions,
     ArticleLanguages
   },
   data() {

@@ -1,4 +1,5 @@
 import articleApi from '../../wiki/api/article'
+import historyApi from '../../wiki/api/history'
 
 const state = {
     title: null,
@@ -30,6 +31,7 @@ const mutations = {
     setSections(state, sections) { state.sections = sections },
     setTOC(state, toc) { state.toc = toc },
     setHistory(state, history) { state.history = history },
+    setRevisions(state, revisions) { state.history.revisions = revisions },
     setMetadata(state, metadata) { state.metadata = metadata },
     setMedia(state, mediaInfo) { state.media = mediaInfo },
 }
@@ -55,6 +57,7 @@ const actions = {
                 commit('setLoadingStatus', 'success')
                 dispatch('metadata', articleRequest);
                 dispatch('media', articleRequest);
+                dispatch('history', articleRequest);
             }).catch(err => {
                 console.error(err);
                 commit('setLoadingStatus', 'failure')
@@ -70,6 +73,12 @@ const actions = {
         articleApi.fetchMedia(articleRequest.language, articleRequest.title)
         .then(mediaInfo=>{
             commit('setMedia', mediaInfo)
+        })
+    },
+    history({ commit, state }, articleRequest) {
+        historyApi.fetchHistory(articleRequest.language, state.title)
+        .then(revisions=>{
+            commit('setRevisions', revisions)
         })
     },
 }
