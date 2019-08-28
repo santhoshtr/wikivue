@@ -16,6 +16,7 @@ const state = {
     metadata:{},
     media:{},
     geo:{},
+    pronunciation:{},
     loadingStatus: 'loading',
 };
 
@@ -37,7 +38,9 @@ const mutations = {
     setMetadata(state, metadata) { state.metadata = metadata },
     setMedia(state, mediaInfo) { state.media = mediaInfo },
     setGeo(state, geo) { state.geo = geo },
+    setPronunciation(state, pronunciation) { state.pronunciation = pronunciation },
 }
+
 
 // Computed properties for stores.
 const getters = {}
@@ -59,6 +62,7 @@ const actions = {
                 commit('setTOC', articleData.toc)
                 commit('setGeo', articleData.geo)
                 commit('setLoadingStatus', 'success')
+                commit('setPronunciation', articleData.pronunciation)
                 dispatch('metadata', articleRequest);
                 dispatch('media', articleRequest);
                 dispatch('history', articleRequest);

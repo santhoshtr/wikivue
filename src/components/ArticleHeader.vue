@@ -77,6 +77,11 @@
                 max-width="24"
               />
             </v-btn>
+            <audio
+              controls
+              v-if="loaded && article.pronunciation"
+              :src="article.pronunciation.url"
+            />
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -135,3 +140,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+audio{
+  max-width:48px;
+}
+</style>
