@@ -74,6 +74,7 @@ function process(articleData){
         description: articleData.lead.description,
         image: articleData.lead.image,
         issues: articleData.lead.issues,
+        geo: articleData.lead.geo,
         languagecount: articleData.lead.languagecount,
         wikidataId: articleData.lead.wikibase_item,
         history: {

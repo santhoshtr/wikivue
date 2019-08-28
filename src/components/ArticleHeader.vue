@@ -39,14 +39,45 @@
               </h3>
             </v-card-text>
           </v-img>
-          <v-card-text
-            class="mx-0 pa-0"
+          <v-card-actions
+            class="mx-0 pa-0 grey darken-3 hidden-sm-and-down"
           >
-            <div
+            <v-btn
+              text
+              class="white--text body-2 font-weight-regular"
+              :to="`/page/${contentLanguage}/${title}?oldid=${revision}`"
               v-if="loaded"
-              v-i18n="{msg:'article-lastmodified', params: [lastmodifier.user, lastmodified]}"
-            />
-          </v-card-text>
+            >
+              <v-icon small>
+                history
+              </v-icon>
+              {{ $i18n('article-lastmodified',lastmodifier.user, lastmodified) }}
+            </v-btn>
+            <div class="flex-grow-1" />
+            <v-btn
+              small
+              text
+              class="white--text font-weight-regular"
+              :href="locationLink(article)"
+              target="__blank"
+              v-if="loaded && article.geo"
+            >
+              <v-icon>location_on</v-icon>
+            </v-btn>
+            <v-btn
+              small
+              text
+              class="white--text font-weight-regular"
+              :href="`https://www.wikidata.org/wiki/${article.wikidataId}`"
+              v-if="loaded && article.wikidataId"
+              target="__blank"
+            >
+              <v-img
+                src="../assets/Wikidata-logo.svg"
+                max-width="24"
+              />
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>
@@ -54,6 +85,7 @@
 </template>
 
 <script>
+import { mapGetters, mapState, mapMutations } from "vuex";
 export default {
   name: 'ArticleHeader',
   props: {
@@ -85,6 +117,20 @@ export default {
     bannerImageUrl: function(){
       const imgURL = this.article.image && this.article.image.urls && this.article.image.urls[1024];
       return imgURL || require('../assets/Wikipedia-logo.png');
+    },
+    revision: function(){
+      return this.article.history.lastrevision
+    },
+    ...mapState({
+      contentLanguage: state => state.app.contentLanguage,
+      title: state => state.article.title,
+    }),
+  },
+  methods:{
+    locationLink(article){
+      if(article.geo){
+      return `https://www.openstreetmap.org/?mlat=${article.geo.latitude}&mlon=${article.geo.longitude}&zoom=12&layers=M`
+      }
     }
   }
 }

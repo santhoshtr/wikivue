@@ -15,6 +15,7 @@ const state = {
     history: {},
     metadata:{},
     media:{},
+    geo:{},
     loadingStatus: 'loading',
 };
 
@@ -35,6 +36,7 @@ const mutations = {
     setRevisions(state, revisions) { state.revisions = revisions },
     setMetadata(state, metadata) { state.metadata = metadata },
     setMedia(state, mediaInfo) { state.media = mediaInfo },
+    setGeo(state, geo) { state.geo = geo },
 }
 
 // Computed properties for stores.
@@ -55,6 +57,7 @@ const actions = {
                 commit('setHistory', articleData.history)
                 commit('setSections', articleData.sections)
                 commit('setTOC', articleData.toc)
+                commit('setGeo', articleData.geo)
                 commit('setLoadingStatus', 'success')
                 dispatch('metadata', articleRequest);
                 dispatch('media', articleRequest);
