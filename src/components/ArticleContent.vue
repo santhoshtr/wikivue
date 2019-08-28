@@ -107,7 +107,10 @@
             </template>
           </v-sheet>
           <reference :reference="selectedReference" />
-          <image-viewer :imgsrc="selectedImage" />
+          <image-viewer
+            :if="selectedImage"
+            :imgsrc="selectedImage"
+          />
           <article-preview
             :preview="preview"
             :show="previewShown"

@@ -16,10 +16,9 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-card>
+    <v-card :if="image">
       <v-img
         contain
-        :if="image"
         :src="image.original.source"
         aspect-ratio="1"
         width="auto"
@@ -48,7 +47,7 @@ export default {
     image: function(){
         if(this.media.items){
             return this.media.items.find(item=>{
-                return item.titles.canonical===this.imgsrc;
+                return item.titles && item.titles.canonical===this.imgsrc;
             })
         }
         return null;
