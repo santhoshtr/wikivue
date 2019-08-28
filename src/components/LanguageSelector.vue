@@ -26,7 +26,7 @@
             icon
             @click="dialog = false"
           >
-            <v-icon>close</v-icon>
+            <v-icon>arrow_back</v-icon>
           </v-btn>
           <v-text-field
             v-model="searchQuery"
@@ -38,6 +38,14 @@
             class="language-search"
             label="Select language"
           />
+          <v-toolbar-items>
+            <v-btn
+              icon
+              @click="dialog = false"
+            >
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-toolbar-items>
         </v-toolbar>
         <v-container
           grid-list-md
