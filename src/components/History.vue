@@ -15,7 +15,14 @@
     <v-card>
       <v-container grid-list-md>
         <v-toolbar flat>
-          <v-toolbar-title>History</v-toolbar-title>
+          <v-btn
+            icon
+            @click="dialog = false"
+          >
+            <v-icon>arrow_back</v-icon>
+          </v-btn>
+          <v-toolbar-title v-i18n="'article-history-title'" />
+          <div class="flex-grow-1" />
           <v-toolbar-items>
             <v-btn
               icon
@@ -32,22 +39,18 @@
             right
             small
           >
-            <v-card class="elevation-1 pa-2">
-              <v-row>
-                <v-col cols="6">
-                  {{ revision.user }}
-                </v-col>
-                <v-col cols="6">
-                  {{ revision.timestamp }}
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col
-                  cols="12"
+            <v-card>
+              <v-card-title>{{ revision.user }}</v-card-title>
+              <v-card-text>{{ revision.comment }}</v-card-text>
+              <v-card-actions>
+                <v-btn
+                  :to="`/page/${contentLanguage}/${title}?oldid=${revision.revid}`"
+                  @click="dialog = false"
+                  text
                 >
-                  {{ revision.comment }}
-                </v-col>
-              </v-row>
+                  {{ localTime(revision.timestamp) }}
+                </v-btn>
+              </v-card-actions>
             </v-card>
           </v-timeline-item>
         </v-timeline>
@@ -64,8 +67,15 @@ export default {
   }),
   computed: {
     ...mapState({
-      revisions: state => state.article.revisions
-    })
-  }
+      contentLanguage: state => state.app.contentLanguage,
+      revisions: state => state.article.revisions,
+      title: state => state.article.title,
+    }),
+  },
+  methods:{
+    localTime(timestamp){
+      return new Date(timestamp).toLocaleString()
+    }
+}
 };
 </script>

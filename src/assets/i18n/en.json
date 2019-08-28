@@ -9,5 +9,6 @@
     "menu-about": "About",
     "toc-heading": "Contents",
     "categories-title":"Categories",
-    "article-lastmodified":"Last modified by $1 at $2"
+    "article-lastmodified":"Last modified by $1 at $2",
+    "article-history-title":"History"
 }
