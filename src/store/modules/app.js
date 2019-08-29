@@ -1,5 +1,5 @@
 
-import languagedata from "language-data";
+import languagedata from "@wikimedia/language-data";
 import wikicodes from "../../wiki/wikipedia-codes.json";
 import axios from 'axios';
 

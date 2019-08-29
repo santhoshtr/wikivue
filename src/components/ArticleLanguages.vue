@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import languagedata from "language-data";
+import languagedata from "@wikimedia/language-data";
 import { mapGetters, mapState, mapMutations } from "vuex";
 
 export default {
