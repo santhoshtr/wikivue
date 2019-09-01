@@ -14,7 +14,7 @@
       >
         <v-card
           flat
-          class="mx-auto pa-0"
+          class=" mx-1 pa-0"
         >
           <v-img
             class="banner-img ma-0 px-5"
@@ -40,11 +40,11 @@
             </v-card-text>
           </v-img>
           <v-card-actions
-            class="mx-0 pa-0 grey darken-3 hidden-sm-and-down"
+            class="mx-0 pa-0 hidden-sm-and-down"
           >
             <v-btn
               text
-              class="white--text body-2 font-weight-regular"
+              class="  body-2 font-weight-regular"
               :to="`/page/${contentLanguage}/${title}?oldid=${revision}`"
               v-if="loaded"
             >
@@ -57,7 +57,7 @@
             <v-btn
               small
               text
-              class="white--text font-weight-regular"
+              class="font-weight-regular"
               :href="locationLink(article)"
               target="__blank"
               v-if="loaded && article.geo"
@@ -67,7 +67,7 @@
             <v-btn
               small
               text
-              class="white--text font-weight-regular"
+              class="font-weight-regular"
               :href="`https://www.wikidata.org/wiki/${article.wikidataId}`"
               v-if="loaded && article.wikidataId"
               target="__blank"
