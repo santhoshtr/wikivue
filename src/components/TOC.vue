@@ -1,6 +1,6 @@
 <template>
   <v-sheet
-    class="toc fill-height"
+    class="toc fill-height pa-2"
     v-if="toc.length>1"
   >
     <h1
