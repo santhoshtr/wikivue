@@ -51,8 +51,6 @@
       app
       hide-on-scroll
       elevate-on-scroll
-      color="white"
-      light
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer">
         <v-btn icon>
@@ -119,7 +117,6 @@
   text-rendering: optimizeLegibility;
   text-align: left;
   font-size: 1em;
-  background-color: white;
 }
 
 * {

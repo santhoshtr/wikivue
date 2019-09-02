@@ -1,6 +1,6 @@
 <template>
-  <div
-    class="toc"
+  <v-sheet
+    class="toc fill-height"
     v-if="toc.length>1"
   >
     <h1
@@ -16,7 +16,7 @@
       :active.sync="activeToc"
       :items="toc"
     />
-  </div>
+  </v-sheet>
 </template>
 
 <script>
@@ -58,8 +58,9 @@ export default {
     font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,"Times New Roman", Times, serif;
     font-size: 1.2em;
     position: fixed;
+    width: 100%;
     max-height: 100vh;
-    max-width: 20%;
+    max-width: 25%;
     overflow-y: auto;
     scrollbar-width: thin;
 }

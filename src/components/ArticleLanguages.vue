@@ -11,7 +11,10 @@
         v-on="on"
       >
         <v-badge right>
-          <span slot="badge">{{ $store.state.article.languagecount }}</span>
+          <span
+            slot="badge"
+            class="blue darken-1"
+          >{{ $store.state.article.languagecount }}</span>
           <v-icon>translate</v-icon>
         </v-badge>
       </v-btn>

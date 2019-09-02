@@ -4,7 +4,7 @@
   >
     <v-layout
       column
-      class="mt-0 pb-2"
+      class="mt-0"
     >
       <v-flex
         xs12
@@ -14,7 +14,7 @@
       >
         <v-card
           flat
-          class=" mx-1 pa-0"
+          class="pa-1"
         >
           <v-img
             class="banner-img ma-0 px-5"

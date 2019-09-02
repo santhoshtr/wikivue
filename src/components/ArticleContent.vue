@@ -23,7 +23,6 @@
         md3
         lg3
         hidden-sm-and-down
-        class="px-2"
       >
         <table-of-contents :toc="toc" />
       </v-flex>
