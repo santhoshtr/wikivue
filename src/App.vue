@@ -43,11 +43,12 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
+        <v-list-item-group
+          color="primary"
+        >
+          <app-settings />
+        </v-list-item-group>
       </v-list>
-
-      <template v-slot:append>
-        <app-settings />
-      </template>
     </v-navigation-drawer>
 
     <v-app-bar
@@ -106,7 +107,6 @@
         { icon: 'place', msg: 'menu-nearby', href:"/nearby" },
         { icon: 'star', msg: 'menu-watchlist', href:"/user/watchlist" },
         { icon: 'recent_actors', msg: 'menu-contributions', href:"/user/contributions" },
-        { icon: 'settings', msg: 'menu-settings', href:"/settings" },
         { icon: 'help', msg: 'menu-about', href:"/about" },
       ],
     }),

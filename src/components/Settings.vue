@@ -1,35 +1,32 @@
 <template>
-  <v-layout
-    justify-center
-    align-center
-  >
-    <v-btn
-      text
-      @click.stop="dialog = true"
-    >
-      <v-icon>
-        settings
-      </v-icon>
-      {{ $i18n('menu-settings') }}
-    </v-btn>
+  <v-layout>
+    <v-list-item @click.stop="dialog = true">
+      <v-list-item-icon>
+        <v-icon>settings</v-icon>
+      </v-list-item-icon>
+      <v-list-item-content>
+        <v-list-item-title v-i18n="msg" />
+      </v-list-item-content>
+    </v-list-item>
 
     <v-dialog
       v-model="dialog"
-
+      max-width="600"
       transition="dialog-bottom-transition"
     >
       <v-card class="pa-5">
         <v-card-title>
-          <span class="headline">  {{ $i18n('menu-settings') }}</span>
+          <span
+            class="headline"
+            v-i18n="msg"
+          />
         </v-card-title>
         <v-card-text>
           <v-container
             grid-list-md
             text-center
           >
-            <v-row
-              class="pa-3"
-            >
+            <v-row class="pa-3">
               <v-col
                 class="d-flex"
                 cols="12"
@@ -61,26 +58,27 @@
 </template>
 
 <script>
-import { mapGetters,mapState, mapMutations } from 'vuex';
+import { mapGetters, mapState, mapMutations } from "vuex";
 
 export default {
-  name: "LanguageSelector",
+  name: "AppSettings",
   data: () => ({
     dialog: false,
-    selectedTheme: 'light',
-    themes: ['dark', 'light']
+    msg: "menu-settings",
+    selectedTheme: "light",
+    themes: ["dark", "light"]
   }),
-  mounted: function(){
-      this.selectedTheme= this.$vuetify.theme.dark?'dark':'light';
+  mounted: function() {
+    this.selectedTheme = this.$vuetify.theme.dark ? "dark" : "light";
   },
   methods: {
     selectTheme: function(theme) {
-      if(theme==='light'){
-        this.$vuetify.theme.dark=false
-      }else{
-        this.$vuetify.theme.dark=true
+      if (theme === "light") {
+        this.$vuetify.theme.dark = false;
+      } else {
+        this.$vuetify.theme.dark = true;
       }
-       this.$store.commit('app/theme',theme)
+      this.$store.commit("app/setTheme", theme);
     }
   }
 };
