@@ -57,10 +57,11 @@ export default {
 .toc {
     font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,"Times New Roman", Times, serif;
     font-size: 1.2em;
-    position: fixed;
+    position: sticky;
+    top: 0;
     width: 100%;
     max-height: 100vh;
-    max-width: 25%;
+    max-width: 100%;
     overflow-y: auto;
     scrollbar-width: thin;
 }
