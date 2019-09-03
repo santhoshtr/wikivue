@@ -44,6 +44,10 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
+
+      <template v-slot:append>
+        <app-settings />
+      </template>
     </v-navigation-drawer>
 
     <v-app-bar
@@ -77,11 +81,13 @@
   import Footer from './components/Footer'
   import BottomNav from './components/BottomNav';
   import LanguageSelector from './components/LanguageSelector';
+  import AppSettings from './components/Settings'
   import { mapGetters, mapState, mapMutations } from "vuex";
 
   export default {
     components: {
       Brand,
+      AppSettings,
       Search,
       LanguageSelector,
       Footer,
@@ -100,7 +106,7 @@
         { icon: 'place', msg: 'menu-nearby', href:"/nearby" },
         { icon: 'star', msg: 'menu-watchlist', href:"/user/watchlist" },
         { icon: 'recent_actors', msg: 'menu-contributions', href:"/user/contributions" },
-        { icon: 'settings', msg: 'menu-settings', href:"/user/preferences" },
+        { icon: 'settings', msg: 'menu-settings', href:"/settings" },
         { icon: 'help', msg: 'menu-about', href:"/about" },
       ],
     }),
