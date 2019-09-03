@@ -1,76 +1,71 @@
 article {
-    display: flex;
+    display: block;
     flex-flow: row wrap;
+    overflow: hidden;
 
     section {
         flex: 1;
-    }
 
-    aside {
-        flex: 1;
+        aside {
+            flex: 1;
 
-        >* {
-            margin-bottom: 2em;
-        }
-
-        .hatnote,
-        .ambox {
-            &::before{
-                border-top: 1px solid rgba(0,0,0,.15);
-                content: "";
-                display: block;
-                margin-bottom: 5px;
-                margin-right: 75%;
-                width: 25%;
+            >* {
+                margin-bottom: 2em;
             }
-            color: #616161;
-            padding: 0 5px;
+
+            .hatnote,
+            .ambox {
+                &::before{
+                    border-top: 1px solid rgba(0,0,0,.15);
+                    content: "";
+                    display: block;
+                    margin-bottom: 5px;
+                    margin-right: 75%;
+                    width: 25%;
+                }
+                padding: 0 5px;
+            }
+        }
+
+
+        .mw-ref {
+            vertical-align: super;
+            line-height: 1;
+            font-size: smaller;
+            unicode-bidi: embed;
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        a:hover,
+        a:focus {
+            text-decoration: underline;
+        }
+
+        a {
+            text-decoration: none;
+            color: #03a9f4 !important;
+            background: none;
+        }
+
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        main,
+        menu,
+        nav,
+        section,
+        summary,
+        table.wikitable {
+            display: block;
+            overflow: auto;
+        }
+
+        figure {
+            margin: 10px 0;
         }
     }
-}
-
-.mw-ref {
-    vertical-align: super;
-    line-height: 1;
-    font-size: smaller;
-    unicode-bidi: embed;
-    font-weight: normal;
-    font-style: normal;
-}
-
-a:hover,
-a:focus {
-    text-decoration: underline;
-}
-
-a {
-    text-decoration: none;
-    color: #0645ad;
-    background: none;
-}
-
-article {
-    display: block;
-    overflow: hidden;
-}
-
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-main,
-menu,
-nav,
-section,
-summary,
-table.wikitable {
-    display: block;
-    overflow: auto;
-}
-
-figure {
-    margin: 10px 0;
-    color: #616161;
 }
