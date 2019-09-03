@@ -13,7 +13,6 @@
         <v-badge right>
           <span
             slot="badge"
-            class="blue darker-1"
           >{{ $store.state.article.languagecount }}</span>
           <v-icon>translate</v-icon>
         </v-badge>
