@@ -238,6 +238,12 @@ export default {
       if (!this.isPreview) {
         setTimeout(() => this.listen(), 1000);
         window.document.title = this.article.title
+        // Push the article to history
+        this.$store.commit("app/pushToHistory", {
+          title: this.article.title,
+          language: this.contentLanguage,
+          description: this.article.description,
+        });
       }
     }
   },

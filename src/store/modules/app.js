@@ -6,7 +6,9 @@ import axios from 'axios';
 const state = {
     uiLanguage: navigator.language || 'en',
     contentLanguage: 'en',
-    theme: 'light'
+    theme: 'light',
+    articlesHistory:[],
+    nearbyArticles:[]
 };
 
 const mutations = {
@@ -18,6 +20,14 @@ const mutations = {
     },
     setContentLanguage(state, contentLanguage) {
         state.contentLanguage = contentLanguage;
+    },
+    pushToHistory(state, article){
+        // TODO: filter and remove duplicates
+        // Cap the max size of history
+        state.articlesHistory.push(article);
+    },
+    setNearbyArticles(state, nearbyArticles){
+        state.nearbyArticles=nearbyArticles;
     }
 }
 
@@ -37,7 +47,11 @@ const getters = {
     },
 }
 
-const actions = { }
+const actions = {
+    fetchNearbyArticles({ commit, state }) {
+        // Implement
+    },
+}
 
 
 export default {
