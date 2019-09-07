@@ -16,18 +16,18 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-card :if="image">
+    <v-card :if="shown">
       <v-img
         contain
-        :src="image.original.source"
+        :src="image && image.original.source"
         aspect-ratio="1"
         width="auto"
         height="80vh"
       />
-      <v-card-title v-html="image.description.html" />
-      <v-card-text v-html="image.artist.html" />
-      <v-card-text v-html="image.credit.html" />
-      <v-card-text v-text="image.license.type" />
+      <v-card-title v-html="image && image.description.html" />
+      <v-card-text v-html="image && image.artist.html" />
+      <v-card-text v-html="image && image.credit.html" />
+      <v-card-text v-text="image && image.license.type" />
     </v-card>
   </v-dialog>
 </template>
@@ -66,9 +66,3 @@ export default {
   }
 };
 </script>
-<style>
-.reference-content {
-     font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,
-    "Times New Roman", Times, serif;
-}
-</style>

@@ -79,7 +79,6 @@
 </template>
 
 <script>
-import LanguageSelector from "./LanguageSelector";
 import { mapGetters, mapState, mapMutations } from 'vuex';
 import debounce from "debounce";
 import axios from "axios";

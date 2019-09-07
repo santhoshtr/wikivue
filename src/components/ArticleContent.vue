@@ -105,7 +105,10 @@
               <article-footer :article="article" />
             </template>
           </v-sheet>
-          <reference :reference="selectedReference" />
+          <reference
+            :reference="selectedReference"
+            :if="selectedReference"
+          />
           <image-viewer
             :if="selectedImage"
             :imgsrc="selectedImage"
@@ -124,9 +127,6 @@
 import TableOfContents from "./TOC";
 import ArticleHeader from "./ArticleHeader";
 import ArticleFooter from "./ArticleFooter";
-import Reference from "./Reference";
-import ImageViewer from  './ImageViewer'
-import ArticlePreview from "./ArticlePreview";
 import { Touch } from "vuetify/lib/directives";
 
 import wikipage from "../wiki/page";
@@ -150,11 +150,11 @@ export default {
   },
   components: {
     TableOfContents,
-    Reference,
+    Reference:() => import(/* webpackPrefetch: true */ './Reference.vue'),
     ArticleHeader,
     ArticleFooter,
-    ArticlePreview,
-    ImageViewer,
+    ArticlePreview:() => import(/* webpackPrefetch: true */ './ArticlePreview.vue'),
+    ImageViewer:() => import(/* webpackPrefetch: true */ './ImageViewer.vue'),
   },
   data: () => ({
     error: null,

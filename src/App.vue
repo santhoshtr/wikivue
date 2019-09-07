@@ -18,7 +18,7 @@
           <v-img
             :aspect-ratio="1/1"
             contain
-            src="./assets/Wikipedia-logo.png"
+            src="@/assets/Wikipedia logo version 2.svg?lazy"
           />
         </v-list-item-avatar>
       </v-list-item>

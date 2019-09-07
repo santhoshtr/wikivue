@@ -35,5 +35,18 @@ module.exports = {
                 }
             }]
         }
+    },
+    configureWebpack: {
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    commons: {
+                      test: /[\\/]node_modules[\\/](vue|vuex|vue-router|vue-banana-i18n|@wikimedia)[\\/]/,
+                      name: 'vendor',
+                      chunks: 'all'
+                    }
+                }
+            }
+      }
     }
 }

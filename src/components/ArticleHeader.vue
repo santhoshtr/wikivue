@@ -121,7 +121,7 @@ export default {
     },
     bannerImageUrl: function(){
       const imgURL = this.article.image && this.article.image.urls && this.article.image.urls[1024];
-      return imgURL || require('../assets/Wikipedia-logo.png');
+      return imgURL || require('@/assets/Wikipedia logo version 2.svg?lazy');
     },
     revision: function(){
       return this.article.history.lastrevision
