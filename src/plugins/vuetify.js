@@ -13,13 +13,13 @@ export default new Vuetify({
     dark: false,
     themes: {
       light: {
-        primary: colors.white,
+        primary: { base: colors.white },
         secondary: colors.grey.darken1,
         accent: colors.shades.black,
         error: colors.red.accent3,
       },
       dark: {
-        primary: colors.grey.darken1,
+        primary: { base: colors.grey.darken1 },
         secondary: colors.white,
       },
     },
