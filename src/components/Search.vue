@@ -4,6 +4,7 @@
     :items="articles"
     :loading="isLoading"
     :search-input.sync="search"
+    :menu-props="{ 'close-on-content-click': true }"
     hide-selected
     clearable
     allow-overflow
@@ -23,28 +24,33 @@
     @change="onSelect"
   >
     <template v-slot:no-data>
-      <v-list-item>
-        <v-list-item-title>
-          Search for an article
-        </v-list-item-title>
-      </v-list-item>
-      <v-list-item-group
-        color="primary"
-      >
-        <v-list-item
-          v-for="(item, i) in articlesHistory"
-          :key="i"
-          :to="item.title"
-        >
-          <v-list-item-icon>
-            <v-icon>description</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-            <v-list-item-subtitle v-html="item.description" />
-          </v-list-item-content>
+      <v-list>
+        <v-list-item>
+          <v-list-item-title>
+            Search for an article
+          </v-list-item-title>
         </v-list-item>
-      </v-list-item-group>
+        <v-subheader :if="articlesHistory.length">
+          Recently viewed articles
+        </v-subheader>
+        <v-list-item-group
+          color="primary"
+        >
+          <v-list-item
+            v-for="(item, i) in articlesHistory"
+            :key="i"
+            :to="item.title"
+          >
+            <v-list-item-icon>
+              <v-icon>description</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+              <v-list-item-subtitle v-html="item.description" />
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
     </template>
     <template v-slot:item="data">
       <template v-if="typeof data.item !== 'object'">
@@ -102,7 +108,7 @@ export default {
   computed: {
     ...mapState({
       contentLanguage: state => state.app.contentLanguage,
-      articlesHistory: state => state.app.articlesHistory,
+      articlesHistory: state => state.app.articlesHistory.slice().reverse(),
     })
   },
   methods: {

@@ -7,8 +7,8 @@ const state = {
     uiLanguage: navigator.language || 'en',
     contentLanguage: 'en',
     theme: 'light',
-    articlesHistory:[],
-    nearbyArticles:[]
+    articlesHistory: [],
+    nearbyArticles: []
 };
 
 const mutations = {
@@ -21,13 +21,18 @@ const mutations = {
     setContentLanguage(state, contentLanguage) {
         state.contentLanguage = contentLanguage;
     },
-    pushToHistory(state, article){
-        // TODO: filter and remove duplicates
-        // Cap the max size of history
-        state.articlesHistory.push(article);
+    pushToHistory(state, article) {
+        const found = state.articlesHistory.find(
+            item => item.title === article.title && item.language === article.language
+        )
+        if (!found) {
+            state.articlesHistory.push(article);
+        }
+        // Keep only 10 items max
+        state.articlesHistory = state.articlesHistory.splice(0, 10)
     },
-    setNearbyArticles(state, nearbyArticles){
-        state.nearbyArticles=nearbyArticles;
+    setNearbyArticles(state, nearbyArticles) {
+        state.nearbyArticles = nearbyArticles;
     }
 }
 
