@@ -2,7 +2,7 @@
 import axios from "axios";
 
 function fetchRandomArticle(language){
-    const api = `//${language}.wikipedia.org/api/rest_v1/page/random/mobile-sections`;
+    const api = `https://${language}.wikipedia.org/api/rest_v1/page/random/mobile-sections`;
     return axios
         .get(api)
         .then(response => process(response.data))
@@ -16,7 +16,7 @@ function fetchMetadata(language, title){
 }
 
 function fetchMedia(language, title){
-    const api = `//${language}.wikipedia.org/api/rest_v1/page/media/${title}`;
+    const api = `https://${language}.wikipedia.org/api/rest_v1/page/media/${title}`;
     return axios
         .get(api)
         .then(response => response.data)
@@ -29,7 +29,7 @@ function fetchArticle(language, title) {
     if (!title) {
         return fetchRandomArticle(language)
     }
-    const api = `//${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${title}`;
+    const api = `https://${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${title}`;
     return axios
         .get(api)
         .then(response => process(response.data))
