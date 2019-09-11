@@ -10,7 +10,10 @@
         value="languages"
         v-on="on"
       >
-        <v-badge right>
+        <v-badge
+          right
+          color="blue"
+        >
           <span
             slot="badge"
           >{{ $store.state.article.languagecount }}</span>

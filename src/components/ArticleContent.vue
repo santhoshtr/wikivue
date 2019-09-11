@@ -356,7 +356,10 @@ export default {
 .table-wrapper {
   max-height: 80vh;
   padding: 5px 0;
-  overflow: auto;
+  overflow: hidden;
+  &:hover {
+    overflow: auto;
+  }
 }
 .section-aside {
   overflow:hidden;
