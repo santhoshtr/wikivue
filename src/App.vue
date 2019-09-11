@@ -58,9 +58,11 @@
       elevate-on-scroll
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer">
-        <v-btn icon>
-          <v-icon>menu</v-icon>
-        </v-btn>
+        <v-img
+          :aspect-ratio="1/1"
+          contain
+          src="@/assets/Wikipedia logo version 2.svg?lazy"
+        />
       </v-app-bar-nav-icon>
       <brand />
       <search />
