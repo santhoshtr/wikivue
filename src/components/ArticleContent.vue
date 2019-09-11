@@ -6,6 +6,7 @@
     <v-progress-linear
       :active="!loaded"
       :indeterminate="!loaded"
+      color="blue"
       absolute
       top
     />
