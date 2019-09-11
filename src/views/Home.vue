@@ -9,8 +9,8 @@
           <v-img
             :aspect-ratio="1/1"
             contain
-            height="3em"
-            width="3em"
+            height="2em"
+            width="2em"
             src="@/assets/Wikipedia logo version 2.svg?lazy"
           /> <span class="cap">W</span><span class="smallcap">ikipedi</span><span class="cap">A</span>
         </h1>
@@ -35,7 +35,7 @@ export default {
 </script>
 <style scoped lang="less" >
 h1 {
-  font-size: 3em;
+  font-size: 2.5em;
   font-family: "Libertinus serif" !important;
   font-feature-settings: "salt";
   .smallcap {
