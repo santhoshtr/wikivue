@@ -25,7 +25,6 @@
     <v-navigation-drawer
       v-model="tocShown"
       right
-      hide-overlay
       clipped
       app
       temporary
