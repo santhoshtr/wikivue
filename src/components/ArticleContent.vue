@@ -42,16 +42,15 @@
             :is-preview="isPreview"
           />
           <div
-            class="
-            error"
+            class="error"
             :if="error"
           >
             {{ error }}
           </div>
           <v-sheet class="content">
             <section
-              v-for="section in layout.sections"
-              :key="section.id"
+              v-for="section in sections"
+              :key="`section-${section.id}`"
               :id="section.anchor"
               class="py-4 px-2 ma-0"
             >
@@ -83,8 +82,8 @@
               class="mb-5"
             >
               <v-expansion-panel
-                v-for="(section,i) in layout.collapsibleSections"
-                :key="i"
+                v-for="(section,i) in collapsibleSections"
+                :key="`section-collapsible-${i}`"
                 :id="section.anchor"
               >
                 <v-expansion-panel-header>
@@ -151,18 +150,21 @@ export default {
   },
   components: {
     TableOfContents,
-    Reference:() => import(/* webpackPrefetch: true */ './Reference.vue'),
+    Reference: () => import(/* webpackPrefetch: true */ "./Reference.vue"),
     ArticleHeader,
     ArticleFooter,
-    ArticlePreview:() => import(/* webpackPrefetch: true */ './ArticlePreview.vue'),
-    ImageViewer:() => import(/* webpackPrefetch: true */ './ImageViewer.vue'),
+    ArticlePreview: () =>
+      import(/* webpackPrefetch: true */ "./ArticlePreview.vue"),
+    ImageViewer: () => import(/* webpackPrefetch: true */ "./ImageViewer.vue")
   },
   data: () => ({
     error: null,
     activeToc: [],
     bannerImage: "",
     selectedReference: null,
-    selectedImage:null,
+    selectedImage: null,
+    sections: [],
+    collapsibleSections: [],
     previewShown: false
   }),
   computed: {
@@ -172,29 +174,47 @@ export default {
         this.article.loadingStatus === "failure"
       );
     },
-    sections: function() {
-      if (this.isPreview) {
-        // Render only first few sections for preview
-        return this.article.sections && this.article.sections.slice(0, 2);
-      }
-      return this.article.sections;
-    },
     toc: function() {
       return this.article.toc;
     },
     displaytitle: function() {
       return this.article.title;
     },
-    layout: function() {
-      const sections = [];
-      const collapsibleSections = [];
-      if (!this.article.sections) return [];
-      let isCollapsing = false;
-      let sectionsCount = this.article.sections.length;
-      if (this.isPreview) {
-        // Render only first few sections for preview
-        sectionsCount=Math.min(sectionsCount,2);
+    ...mapGetters("app", ["contentLanguageDir"]),
+    ...mapState({
+      contentLanguage: state => state.app.contentLanguage,
+      preview: state => state.preview
+    })
+  },
+  watch: {
+    loaded: function() {
+      if (this.loaded) {
+        this.layout();
+        this.previewShown = false;
+        if (!this.isPreview) {
+          setTimeout(() => this.listen(), 1000);
+          window.document.title = this.article.title;
+          // Push the article to history
+          this.$store.commit("app/pushToHistory", {
+            title: this.article.title,
+            language: this.contentLanguage,
+            description: this.article.description
+          });
+        }
       }
+    }
+  },
+  methods: {
+    layout() {
+      this.sections = [];
+      this.collapsibleSections = [];
+      let sectionsCount;
+      if (!this.article.sections) sectionsCount = 0;
+      sectionsCount = this.article.sections.length;
+      if (this.isPreview) {
+        sectionsCount = Math.min(sectionsCount, 2);
+      }
+      let isCollapsing = false;
       for (let i = 0; i < sectionsCount; i++) {
         const section = this.article.sections[i];
         const parseResult = this.parse(section, isCollapsing);
@@ -215,42 +235,12 @@ export default {
           isCollapsing = true;
         }
         if (isCollapsing) {
-          collapsibleSections.push(sectionLayout);
+          this.collapsibleSections.push(sectionLayout);
         } else {
-          sections.push(sectionLayout);
+          this.sections.push(sectionLayout);
         }
       }
-      return {
-        sections,
-        collapsibleSections
-      };
     },
-     ...mapGetters('app',[
-      'contentLanguageDir'
-    ]),
-    ...mapState({
-      contentLanguage: state => state.app.contentLanguage,
-      preview: state => state.preview,
-    })
-  },
-  watch: {
-    loaded: function() {
-      if(this.loaded){
-        this.previewShown = false;
-        if (!this.isPreview) {
-          setTimeout(() => this.listen(), 1000);
-          window.document.title = this.article.title
-          // Push the article to history
-          this.$store.commit("app/pushToHistory", {
-            title: this.article.title,
-            language: this.contentLanguage,
-            description: this.article.description,
-          });
-        }
-      }
-    }
-  },
-  methods: {
     parse(section, noAside) {
       return wikipage.parse(section.html, this.contentLanguage, noAside);
     },
@@ -333,9 +323,9 @@ export default {
     },
     imageClickHandler(imageLink, event) {
       this.selectedReference = null;
-      if ( event.preventDefault) {
+      if (event.preventDefault) {
         event.preventDefault();
-        this.selectedImage =  new URL(imageLink.href).pathname.split('/').pop();
+        this.selectedImage = new URL(imageLink.href).pathname.split("/").pop();
       }
     },
     swipe(direction) {
@@ -362,6 +352,6 @@ export default {
   }
 }
 .section-aside {
-  overflow:hidden;
+  overflow: hidden;
 }
 </style>
