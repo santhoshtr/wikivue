@@ -15,12 +15,6 @@
       <article-languages />
 
       <v-btn
-        v-show="sharable"
-        value="sharable"
-      >
-        <v-icon>share</v-icon>
-      </v-btn>
-      <v-btn
         v-show="tocButtonShown"
         value="tocbutton"
         @click="showToc"
@@ -62,9 +56,6 @@ export default {
     };
   },
   computed:{
-    sharable(){
-      return navigator.share;
-    },
     toc(){
       return this.$store.state.article.toc
     },
@@ -76,18 +67,6 @@ export default {
     showToc(){
       this.tocShown=true;
     },
-    share() {
-      if (navigator.share) {
-        navigator
-          .share({
-            title: this.$store.state.article.tilte,
-            text: this.$store.state.article.description,
-            url: document.URL
-          })
-          .then(() => console.log("Successful share"))
-          .catch(error => console.log("Error sharing", error));
-      }
-    }
   }
 };
 </script>
