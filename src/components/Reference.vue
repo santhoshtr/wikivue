@@ -8,7 +8,7 @@
         justify-center
         row
         fill-height
-        class="reference-content px-2 py-4"
+        class="reference-content px-5 py-4"
       >
         <v-flex
           xs12

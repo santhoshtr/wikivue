@@ -1,10 +1,11 @@
 <template>
   <v-autocomplete
     v-model="article"
+    id="search"
     :items="articles"
-    :loading="isLoading"
+    :loading="isLoading?'blue':false"
     :search-input.sync="search"
-    :menu-props="{ 'close-on-content-click': true }"
+    :menu-props="{ maxHeight:'80vh' }"
     hide-selected
     clearable
     allow-overflow
@@ -16,6 +17,7 @@
     return-object
     auto-select-first
     flat
+    attach="search"
     solo
     single-line
     hide-details
