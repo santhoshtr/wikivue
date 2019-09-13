@@ -13,10 +13,6 @@
     <v-layout
       row
       fill-height
-      v-touch="{
-        left: () => swipe('Left'),
-        right: () => swipe('Right'),
-      }"
     >
       <v-flex
         xs2
@@ -127,7 +123,6 @@
 import TableOfContents from "./TOC";
 import ArticleHeader from "./ArticleHeader";
 import ArticleFooter from "./ArticleFooter";
-import { Touch } from "vuetify/lib/directives";
 
 import wikipage from "../wiki/page";
 import { mapGetters, mapState, mapMutations } from "vuex";
@@ -135,9 +130,6 @@ import { setTimeout } from "timers";
 
 export default {
   name: "ArticleContent",
-  directives: {
-    touch: Touch
-  },
   props: {
     article: {
       type: Object,
@@ -328,14 +320,6 @@ export default {
         this.selectedImage = new URL(imageLink.href).pathname.split("/").pop();
       }
     },
-    swipe(direction) {
-      if (direction === "Left") {
-        this.$router.go(1);
-      }
-      if (direction === "Right") {
-        this.$router.go(-1);
-      }
-    }
   }
 };
 </script>
