@@ -8,23 +8,39 @@
     :menu-props="{ maxHeight:'80vh' }"
     hide-selected
     clearable
-    allow-overflow
     item-text="title"
     item-value="title"
     placeholder="Search"
-    prepend-inner-icon="search"
-    height="40px"
     return-object
     auto-select-first
-    flat
+    rounded
     attach="search"
-    solo
+    flat
+    filled
     single-line
     hide-details
     label="Search"
-    @click:prepend="onSelect"
+    class="search lg12"
     @change="onSelect"
   >
+    <template v-slot:prepend-inner>
+      <v-btn
+        text
+        @click.stop="onBrandClick"
+        class="px-0 mx-0"
+        style="top:-6px"
+      >
+        <v-img
+          :aspect-ratio="1/1"
+          width="32"
+          height="32"
+          contain
+          class="mr-2"
+          src="@/assets/Wikipedia logo version 2.svg?lazy"
+        />
+        <brand />
+      </v-btn>
+    </template>
     <template v-slot:no-data>
       <v-list>
         <v-list-item>
@@ -77,21 +93,31 @@
         </v-list-item-content>
       </template>
     </template>
+    <template v-slot:append>
+      <language-selector />
+    </template>
   </v-autocomplete>
 </template>
 
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex';
+import LanguageSelector from './LanguageSelector';
+import Brand from './Brand'
 import debounce from "debounce";
 import axios from "axios";
 
 export default {
   name: "Search",
+   components: {
+     Brand,
+     LanguageSelector
+  },
   data: () => ({
     articles: [], // search results
     isLoading: false,
     article: null,
     search: "",
+    drawer: false,
   }),
   watch: {
     $route(to, from) {
@@ -120,6 +146,10 @@ export default {
         });
         window.scrollTo(0,0)
       }
+    },
+    onBrandClick: function(event){
+      this.drawer=!this.drawer;
+      this.$emit('navdrawerToggle');
     },
     wikiSearch: async function(value) {
       const api = `https://${this.contentLanguage}.wikipedia.org/w/api.php?action=query&generator=prefixsearch&gpssearch=${value}&prop=pageimages|description&piprop=thumbnail&pithumbsize=50&pilimit=10&format=json&formatversion=2&origin=*`;

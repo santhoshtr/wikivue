@@ -57,18 +57,9 @@
       hide-on-scroll
       elevate-on-scroll
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer">
-        <v-img
-          :aspect-ratio="1/1"
-          contain
-          src="@/assets/Wikipedia logo version 2.svg?lazy"
-        />
-      </v-app-bar-nav-icon>
-      <brand />
-      <search />
-      <v-toolbar-items>
-        <language-selector />
-      </v-toolbar-items>
+      <search
+        @navdrawerToggle="drawer = !drawer"
+      />
     </v-app-bar>
     <v-content>
       <router-view />
@@ -79,20 +70,16 @@
 </template>
 
 <script>
-  import Brand from './components/Brand'
   import Search from './components/Search'
   import Footer from './components/Footer'
   import BottomNav from './components/BottomNav';
-  import LanguageSelector from './components/LanguageSelector';
   import AppSettings from './components/Settings'
   import { mapGetters, mapState, mapMutations } from "vuex";
 
   export default {
     components: {
-      Brand,
       AppSettings,
       Search,
-      LanguageSelector,
       Footer,
       BottomNav
     },
