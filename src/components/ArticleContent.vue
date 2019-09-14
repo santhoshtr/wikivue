@@ -274,10 +274,12 @@ export default {
       const to = url.pathname;
       if (window.location.pathname !== to && event.preventDefault) {
         event.preventDefault();
-        this.$store.dispatch("preview/fetch", {
-          title: link.title,
-          language: this.contentLanguage
-        });
+        setTimeout(() => {
+          this.$store.dispatch("preview/fetch", {
+            title: link.title,
+            language: this.contentLanguage
+          });
+        }, 500);
         // Still hovered.
         setTimeout(() => {
           if (link.matches(":hover") && this.loaded) {
