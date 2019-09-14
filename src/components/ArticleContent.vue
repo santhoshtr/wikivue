@@ -296,7 +296,6 @@ export default {
       const to = url.pathname;
       if (window.location.pathname !== to && event.preventDefault) {
         event.preventDefault();
-        window.scrollTo(0, 0);
         this.$router.push(
           `/page/${this.$store.state.app.contentLanguage}/${link.title}`
         );
