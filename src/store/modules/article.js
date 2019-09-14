@@ -22,7 +22,9 @@ const state = {
 
 // The only way to actually change state in a Vuex store is by committing a mutation.
 const mutations = {
-    setLoadingStatus(state, status) { state.loadingStatus = status },
+    setLoadingStatus(state, status) {
+        state.loadingStatus = status
+    },
     setTitle(state, title) {
         state.title = title
     },
@@ -51,6 +53,7 @@ const actions = {
         commit('setTitle', articleRequest.title)
         articleApi.fetchArticle(articleRequest.language, articleRequest.title)
             .then((articleData) => {
+                commit('setLoadingStatus', 'success')
                 commit('setTitle', articleData.title)
                 commit('setDescription', articleData.description)
                 commit('setImage', articleData.image)
@@ -61,15 +64,14 @@ const actions = {
                 commit('setSections', articleData.sections)
                 commit('setTOC', articleData.toc)
                 commit('setGeo', articleData.geo)
-                commit('setLoadingStatus', 'success')
                 commit('setPronunciation', articleData.pronunciation)
-                dispatch('metadata', articleRequest);
-                dispatch('media', articleRequest);
-                dispatch('history', articleRequest);
             }).catch(err => {
                 console.error(err);
                 commit('setLoadingStatus', 'failure')
             })
+        dispatch('metadata', articleRequest);
+        dispatch('media', articleRequest);
+        dispatch('history', articleRequest);
     },
     metadata({ commit, state }, articleRequest) {
         articleApi.fetchMetadata(articleRequest.language, articleRequest.title)

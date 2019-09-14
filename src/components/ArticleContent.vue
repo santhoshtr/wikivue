@@ -274,16 +274,16 @@ export default {
       const to = url.pathname;
       if (window.location.pathname !== to && event.preventDefault) {
         event.preventDefault();
+        this.$store.dispatch("preview/fetch", {
+          title: link.title,
+          language: this.contentLanguage
+        });
+        // Still hovered.
         setTimeout(() => {
-          if (link.matches(":hover")) {
-            // Still hovered.
-            this.$store.dispatch("preview/fetch", {
-              title: link.title,
-              language: this.contentLanguage
-            });
+          if (link.matches(":hover") && this.loaded) {
             this.previewShown = true;
           }
-        }, 1000);
+        }, 1500);
       }
     },
     wikilinkClickHandler(link, event) {

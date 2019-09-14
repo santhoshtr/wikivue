@@ -46,7 +46,7 @@
               text
               class="  body-2 font-weight-regular"
               :to="`/page/${contentLanguage}/${title}?oldid=${revision}`"
-              v-if="loaded"
+              v-if="lastmodifier"
             >
               <v-icon small>
                 history

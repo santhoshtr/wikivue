@@ -5,6 +5,7 @@
 <script>
 import ArticleContent from "../components/ArticleContent";
 import { mapGetters, mapState, mapMutations } from "vuex";
+import { setTimeout } from "timers";
 
 export default {
   name: "Article",
