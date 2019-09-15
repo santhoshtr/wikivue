@@ -196,6 +196,7 @@ export default {
         }
         this.$nextTick(()=>{
           this.$refs.article.focus();
+          this.$root.$emit('pageLoaded')
         });
       }
     }
