@@ -2,8 +2,13 @@
   <v-layout
     justify-center
     align-center
+    row
+    fill-height
   >
-    <v-card class="my-5">
+    <v-card
+      class="my-5"
+      :elevation="0"
+    >
       <v-card-title>
         <h1 align="center">
           <v-img
@@ -21,8 +26,9 @@
         <v-btn
           text
           to="page/random"
+          style="width: 100%;"
         >
-          Read Random Article
+          Read a random article
         </v-btn>
       </v-card-actions>
     </v-card>
