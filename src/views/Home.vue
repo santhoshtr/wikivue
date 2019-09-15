@@ -28,7 +28,7 @@
           to="page/random"
           style="width: 100%;"
         >
-          Read a random article
+          Read a random Article
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -46,6 +46,7 @@ h1 {
   font-feature-settings: "salt";
   .smallcap {
     font-variant: common-ligatures small-caps;
+    margin-left: -5px;
   }
 }
 </style>

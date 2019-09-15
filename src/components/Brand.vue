@@ -18,6 +18,7 @@ export default {
   font-feature-settings: "salt";
   .smallcap {
     font-variant: common-ligatures small-caps;
+    margin-left: -2px;
   }
 }
 </style>
