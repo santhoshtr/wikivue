@@ -1,7 +1,7 @@
 <template>
   <v-sheet>
     <v-bottom-navigation
-      v-model="bottomNav"
+      v-if="bottomNav"
       grow
       app
       hide-on-scroll
@@ -50,11 +50,13 @@ export default {
   },
   data() {
     return {
-      bottomNav: "recent",
       tocShown: false,
     };
   },
   computed:{
+    bottomNav(){
+      return !!this.$store.state.article.title
+    },
     toc(){
       return this.$store.state.article.toc
     },
