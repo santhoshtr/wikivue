@@ -5,8 +5,10 @@
   >
     <v-btn
       text
+      rounded
       :title="selectedLanguageAutonym"
       @click.stop="dialog = true"
+      style="top:-6px; left: 10px;"
     >
       <v-icon>
         translate

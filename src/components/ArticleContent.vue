@@ -32,6 +32,8 @@
         <article
           :lang="contentLanguage"
           :dir="contentLanguageDir"
+          ref="article"
+          tabindex="0"
         >
           <article-header
             :article="article"
@@ -192,6 +194,9 @@ export default {
             description: this.article.description
           });
         }
+        this.$nextTick(()=>{
+          this.$refs.article.focus();
+        });
       }
     }
   },

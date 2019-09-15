@@ -14,7 +14,6 @@ export default {
 </script>
 <style lang="less" >
 .wikipedia {
-  padding-right: 20px;
   font-family: "Libertinus serif" !important;
   font-feature-settings: "salt";
   .smallcap {

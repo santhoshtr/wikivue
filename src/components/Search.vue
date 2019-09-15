@@ -1,7 +1,7 @@
 <template>
   <v-autocomplete
     v-model="article"
-    id="search"
+    id="wikip-search"
     :items="articles"
     :loading="isLoading?'blue':false"
     :search-input.sync="search"
@@ -26,9 +26,10 @@
     <template v-slot:prepend-inner>
       <v-btn
         text
+        rounded
         @click.stop="onBrandClick"
         class="px-0 mx-0"
-        style="top:-6px"
+        style="top:-6px; left: -10px;"
       >
         <v-img
           :aspect-ratio="1/1"
