@@ -46,10 +46,10 @@
       <v-list>
         <v-list-item>
           <v-list-item-title>
-            Search for an article
+            What do you want to know?
           </v-list-item-title>
         </v-list-item>
-        <v-subheader :if="articlesHistory.length">
+        <v-subheader v-if="articlesHistory.length">
           Recently viewed articles
         </v-subheader>
         <v-list-item-group
