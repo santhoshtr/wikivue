@@ -10,14 +10,8 @@
       :elevation="0"
     >
       <v-card-title>
-        <h1 align="center">
-          <v-img
-            :aspect-ratio="1/1"
-            contain
-            height="2em"
-            width="2em"
-            src="@/assets/Wikipedia logo version 2.svg?lazy"
-          /> <span class="cap">W</span><span class="smallcap">ikipedi</span><span class="cap">A</span>
+        <h1>
+          <span class="cap">W</span><span class="smallcap">ikipedi</span><span class="cap">A</span>
         </h1>
       </v-card-title>
       <v-card-actions
