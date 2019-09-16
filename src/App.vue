@@ -56,6 +56,7 @@
       app
       hide-on-scroll
       elevate-on-scroll
+      class="pa-0"
     >
       <search
         @navdrawerToggle="drawer = !drawer"
@@ -117,4 +118,17 @@
 * {
    text-transform: none !important;
 }
+
+// Floating search bar
+.v-toolbar.v-app-bar.v-app-bar--elevate-on-scroll.v-app-bar--is-scrolled {
+    margin-left: 16px;
+    margin-right: 16px;
+    border-radius: 8px;
+
+  .v-toolbar__content{
+    padding: 0;
+  }
+}
+
+
 </style>

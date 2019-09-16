@@ -13,10 +13,9 @@
     placeholder="Search"
     return-object
     auto-select-first
-    rounded
     attach="search"
     flat
-    filled
+    solo
     single-line
     hide-details
     label="Search"
@@ -29,7 +28,6 @@
         rounded
         @click.stop="onBrandClick"
         class="px-0 mx-0"
-        style="top:-6px; left: -10px;"
       >
         <v-img
           :aspect-ratio="1/1"
