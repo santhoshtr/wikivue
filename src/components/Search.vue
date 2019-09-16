@@ -13,7 +13,7 @@
     placeholder="Search"
     return-object
     auto-select-first
-    attach="search"
+    attach=".search"
     flat
     solo
     single-line
@@ -22,24 +22,7 @@
     class="search lg12"
     @change="onSelect"
   >
-    <template v-slot:prepend-inner>
-      <v-btn
-        text
-        rounded
-        @click.stop="onBrandClick"
-        class="px-0 mx-0"
-      >
-        <v-img
-          :aspect-ratio="1/1"
-          width="32"
-          height="32"
-          contain
-          class="mr-2"
-          src="@/assets/Wikipedia logo version 2.svg?lazy"
-        />
-        <brand />
-      </v-btn>
-    </template>
+    <template v-slot:prepend-inner />
     <template v-slot:no-data>
       <v-list>
         <v-list-item>
@@ -101,14 +84,12 @@
 <script>
 import { mapGetters, mapState, mapMutations } from 'vuex';
 import LanguageSelector from './LanguageSelector';
-import Brand from './Brand'
 import debounce from "debounce";
 import axios from "axios";
 
 export default {
   name: "Search",
    components: {
-     Brand,
      LanguageSelector
   },
   data: () => ({
@@ -145,10 +126,6 @@ export default {
         });
         window.scrollTo(0,0)
       }
-    },
-    onBrandClick: function(event){
-      this.drawer=!this.drawer;
-      this.$emit('navdrawerToggle');
     },
     wikiSearch: async function(value) {
       const api = `https://${this.contentLanguage}.wikipedia.org/w/api.php?action=query&generator=prefixsearch&gpssearch=${value}&prop=pageimages|description&piprop=thumbnail&pithumbsize=50&pilimit=10&format=json&formatversion=2&origin=*`;

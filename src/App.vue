@@ -58,9 +58,23 @@
       elevate-on-scroll
       class="pa-0"
     >
-      <search
-        @navdrawerToggle="drawer = !drawer"
-      />
+      <v-btn
+        text
+        rounded
+        @click.stop="drawer = !drawer"
+        class="px-0 mx-0"
+      >
+        <v-img
+          :aspect-ratio="1/1"
+          width="32"
+          height="32"
+          contain
+          class="mr-2"
+          src="@/assets/Wikipedia logo version 2.svg?lazy"
+        />
+        <brand />
+      </v-btn>
+      <search />
     </v-app-bar>
     <v-content>
       <router-view />
@@ -74,12 +88,14 @@
   import Search from './components/Search'
   import Footer from './components/Footer'
   import BottomNav from './components/BottomNav';
+  import Brand from './components/Brand';
   import AppSettings from './components/Settings'
   import { mapGetters, mapState, mapMutations } from "vuex";
 
   export default {
     components: {
       AppSettings,
+      Brand,
       Search,
       Footer,
       BottomNav
