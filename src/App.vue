@@ -60,7 +60,6 @@
     >
       <v-btn
         text
-        rounded
         @click.stop="drawer = !drawer"
         class="px-0 mx-0"
       >
@@ -69,7 +68,7 @@
           width="32"
           height="32"
           contain
-          class="mr-2"
+          class="mx-sm-1 mx-md-2 mx-lg-2 pa-0"
           src="@/assets/Wikipedia logo version 2.svg?lazy"
         />
         <brand />
@@ -146,7 +145,7 @@
     }
   }
   &.v-app-bar--hide-shadow {
-    margin-top:0  !important;;
+    margin-top:0 !important;
   }
 }
 </style>

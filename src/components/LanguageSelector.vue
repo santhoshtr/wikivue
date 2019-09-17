@@ -7,6 +7,7 @@
       text
       rounded
       :title="selectedLanguageAutonym"
+      class="px-0"
       @click.stop="dialog = true"
     >
       <v-icon>
