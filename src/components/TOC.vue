@@ -45,7 +45,7 @@ export default {
   methods: {
    gotoSection(anchor) {
       if (anchor) {
-        document.getElementById(anchor).scrollIntoView();
+        this.$router.push(`#${anchor}`)
       }
     }
   }

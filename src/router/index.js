@@ -28,10 +28,13 @@ export default new Router({
   routes,
   mode: "history",
   scrollBehavior(to, from, savedPosition) {
-      return new Promise((resolve) => {
-        this.app.$root.$once('pageLoaded', () => {
-          resolve(savedPosition||{ x: 0, y: 0 })
-        })
+    if (to.hash) {
+      return { selector: to.hash, offset: { y: 80 } };
+    }
+    return new Promise((resolve) => {
+      this.app.$root.$once('pageLoaded', () => {
+        resolve(savedPosition || { x: 0, y: 0 })
       })
+    })
   }
 })

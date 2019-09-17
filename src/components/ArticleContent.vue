@@ -52,14 +52,19 @@
               :id="section.anchor"
               class="py-4 px-2 ma-0"
             >
-              <h2
-                v-if="section.toclevel===1"
-                v-html="section.heading"
-              />
-              <h3
-                v-else
-                v-html="section.heading"
-              />
+              <a
+                :href="`#${section.anchor}`"
+                class="section-anchor text--primary"
+              >
+                <h2
+                  v-if="section.toclevel===1"
+                  v-html="section.heading"
+                />
+                <h3
+                  v-else
+                  v-html="section.heading"
+                />
+              </a>
               <v-layout
                 row
                 fill-height
@@ -341,7 +346,13 @@ export default {
     overflow: auto;
   }
 }
+
 .section-aside {
   overflow: hidden;
 }
+
+.section-anchor:hover {
+  text-decoration: none;
+}
+
 </style>
