@@ -136,15 +136,17 @@
 }
 
 // Floating search bar
-.v-toolbar.v-app-bar.v-app-bar--elevate-on-scroll.v-app-bar--is-scrolled {
-    margin-left: 16px;
-    margin-right: 16px;
+.v-toolbar.v-app-bar.v-app-bar--elevate-on-scroll {
+  &.v-app-bar--is-scrolled {
+    margin: 16px !important;
     border-radius: 8px;
 
-  .v-toolbar__content{
-    padding: 0;
+    .v-toolbar__content{
+      padding: 0;
+    }
+  }
+  &.v-app-bar--hide-shadow {
+    margin-top:0  !important;;
   }
 }
-
-
 </style>
