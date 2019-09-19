@@ -3,13 +3,12 @@
     justify-center
     wrap
     row
-    class="px-2 ma-2"
+    class="ma-auto"
     align-center
   >
     <v-card
-      width="30%"
       max-width="400px"
-      min-width="400px"
+      min-width="300px"
       :to="`/page/${contentLanguage}/${article.title}`"
       class="ma-2 overflow-y-hidden"
       height="50vh"
