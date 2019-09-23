@@ -34,22 +34,22 @@
               </v-col>
               <v-col
                 cols="12"
-                sm="2"
+                sm="3"
                 class="py-0"
               >
                 <v-btn-toggle
-                  v-model="toggle_multiple"
                   multiple
                 >
                   <v-btn
                     text
+                    :class="{ 'v-btn--active': isActive.bold() }"
                     @click="commands.bold"
                   >
                     <v-icon>format_bold</v-icon>
                   </v-btn>
                   <v-btn
                     text
-                    :class="{ 'is-active': isActive.italic() }"
+                    :class="{ 'v-btn--active': isActive.italic() }"
                     @click="commands.italic"
                   >
                     <v-icon>format_italic</v-icon>
@@ -61,6 +61,12 @@
                   >
                     <v-icon>format_underline</v-icon>
                   </v-btn>
+                  <v-btn
+                    text
+                    @click="showLinkPrompt(commands.link)"
+                  >
+                    <v-icon>link</v-icon>
+                  </v-btn>
                 </v-btn-toggle>
               </v-col>
               <v-col
@@ -69,12 +75,10 @@
                 class="py-0"
               >
                 <v-btn-toggle
-                  v-model="toggle_multiple"
                   multiple
                 >
                   <v-btn
                     text
-
                     :class="{ 'is-active': isActive.heading({ level: 1 }) }"
                     @click="commands.heading({ level: 1 })"
                   >
@@ -83,7 +87,6 @@
 
                   <v-btn
                     text
-
                     :class="{ 'is-active': isActive.heading({ level: 2 }) }"
                     @click="commands.heading({ level: 2 })"
                   >
@@ -92,7 +95,6 @@
 
                   <v-btn
                     text
-
                     :class="{ 'is-active': isActive.heading({ level: 3 }) }"
                     @click="commands.heading({ level: 3 })"
                   >
@@ -101,7 +103,6 @@
 
                   <v-btn
                     text
-
                     :class="{ 'is-active': isActive.bullet_list() }"
                     @click="commands.bullet_list"
                   >
@@ -110,7 +111,6 @@
 
                   <v-btn
                     text
-
                     :class="{ 'is-active': isActive.ordered_list() }"
                     @click="commands.ordered_list"
                   >
@@ -119,7 +119,6 @@
 
                   <v-btn
                     text
-
                     :class="{ 'is-active': isActive.blockquote() }"
                     @click="commands.blockquote"
                   >
@@ -128,7 +127,6 @@
 
                   <v-btn
                     text
-
                     :class="{ 'is-active': isActive.code_block() }"
                     @click="commands.code_block"
                   >
@@ -137,7 +135,6 @@
 
                   <v-btn
                     text
-
                     @click="commands.horizontal_rule"
                   >
                     <v-icon>remove</v-icon>
@@ -166,63 +163,50 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-container
+      fluid
+      class="pa-0"
+    >
+      <v-card>
+        <v-card-title class="py-1">
+          HTML
+        </v-card-title>
+        <v-card-text>
+          <pre><code>{{ html }}</code></pre>
+        </v-card-text>
+      </v-card>
+      <v-card>
+        <v-card-title class="py-1">
+          Wikitext
+        </v-card-title>
+        <v-card-text>
+          <pre><code>{{ wikitext }}</code></pre>
+        </v-card-text>
+      </v-card>
+    </v-container>
   </div>
 </template>
 
 <script>
-import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
-import {
-  Blockquote,
-  CodeBlock,
-  HardBreak,
-  Heading,
-  HorizontalRule,
-  OrderedList,
-  BulletList,
-  ListItem,
-  TodoItem,
-  TodoList,
-  Bold,
-  Code,
-  Italic,
-  Link,
-  Strike,
-  Underline,
-  History,
-} from 'tiptap-extensions'
+import { mapGetters, mapState, mapMutations } from "vuex";
+import axios from "axios";
+import debounce from "debounce";
+import { EditorContent, EditorMenuBar, WikiEditor } from "../plugins/editor";
 
 export default {
   components: {
     EditorContent,
-    EditorMenuBar,
+    EditorMenuBar
   },
   data() {
     return {
-        toggle_exclusive: 2,
-        toggle_multiple: [],
-      editor: new Editor({
-        extensions: [
-          new Blockquote(),
-          new BulletList(),
-          new CodeBlock(),
-          new HardBreak(),
-          new Heading({ levels: [1, 2, 3] }),
-          new HorizontalRule(),
-          new ListItem(),
-          new OrderedList(),
-          new TodoItem(),
-          new TodoList(),
-          new Link(),
-          new Bold(),
-          new Code(),
-          new Italic(),
-          new Strike(),
-          new Underline(),
-          new History(),
-        ],
-        content: `
+      toggle_exclusive: 2,
+      toggle_multiple: [],
+      html: "Update content to see changes",
+      wikitext: "Update the content to see changes",
+      content: `
           <h2>
-            Hi there,
+            Title
           </h2>
           <p>
             this is a very <em>basic</em> example of tiptap.
@@ -239,14 +223,59 @@ export default {
           <blockquote>
             It's amazing 👏
             <br />
-            – mom
+            – somebody
           </blockquote>
-        `,
-      }),
+           <table>
+              <tr>
+                <th colspan="3" data-colwidth="100,0,0">Wide header</th>
+              </tr>
+              <tr>
+                <td>One</td>
+                <td>Two</td>
+                <td>Three</td>
+              </tr>
+              <tr>
+                <td>Four</td>
+                <td>Five</td>
+                <td>Six</td>
+              </tr>
+            </table>
+        `
+    };
+  },
+  computed: {
+    ...mapState({
+      contentLanguage: state => state.app.contentLanguage
+    }),
+    editor: function() {
+      return new WikiEditor({
+        content: this.content,
+        onInit: this.onEditorInit,
+        onUpdate: this.onEditorUpdate
+      });
+    }
+  },
+  methods: {
+    onEditorInit() {
+      // Editor init handler
+    },
+    onEditorUpdate({ getHTML }) {
+      this.html = getHTML();
+      debounce(this.html2wikitext, 1000)(this.html);
+    },
+    html2wikitext(html) {
+      const api = `https://${this.contentLanguage}.wikipedia.org/api/rest_v1/transform/html/to/wikitext`;
+      axios.post(api, { html, scrub_wikitext: true }).then(response => {
+        this.wikitext = response.data;
+      });
     }
   },
   beforeDestroy() {
-    this.editor.destroy()
-  },
-}
+    this.editor.destroy();
+  }
+};
 </script>
+
+<style lang="less">
+@import url('../plugins/editor/assets/editor.less');
+</style>
