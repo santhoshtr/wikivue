@@ -9,7 +9,7 @@
     <v-card
       max-width="400px"
       min-width="300px"
-      :to="`/page/${contentLanguage}/${article.displaytitle}`"
+      :to="`/page/${contentLanguage}/${article.normalizedtitle}`"
       class="ma-2 overflow-y-hidden"
       height="50vh"
       v-for="article in [...tfa, ...mostreadArticles]"
