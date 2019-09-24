@@ -26,7 +26,8 @@ export default class Link extends Mark {
       ],
       toDOM: node => ['a', {
         ...node.attrs,
-        rel: 'noopener noreferrer nofollow',
+        rel: 'mw:WikiLink',
+        title: node.href
       }, 0],
     }
   }
@@ -59,7 +60,7 @@ export default class Link extends Mark {
             const { schema } = view.state
             const attrs = getMarkAttrs(view.state, schema.marks.link)
 
-            if (attrs.href && event.target instanceof HTMLAnchorElement) {
+            if (attrs.href && event.ctrlKey && event.target instanceof HTMLAnchorElement) {
               event.stopPropagation()
               window.open(attrs.href)
             }

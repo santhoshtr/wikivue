@@ -1,4 +1,4 @@
-import { EditorContent, EditorMenuBar, Editor } from 'tiptap'
+import { EditorContent, EditorMenuBar, EditorMenuBubble, Editor } from 'tiptap'
 
 import Blockquote from './nodes/Blockquote'
 import BulletList from './nodes/BulletList'
@@ -55,4 +55,4 @@ class WikiEditor extends Editor {
     }
 }
 
-export { EditorContent, EditorMenuBar, WikiEditor };
+export { EditorContent, EditorMenuBar, EditorMenuBubble, WikiEditor };
