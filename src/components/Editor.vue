@@ -1,207 +1,216 @@
 <template>
   <div class="editor">
-    <editor-menu-bar
-      :editor="editor"
-      v-slot="{ commands, isActive }"
-    >
-      <v-toolbar
-        dense
-        dark
-      >
-        <v-btn-toggle>
-          <v-btn
-            text
-            @click="commands.undo"
-          >
-            <v-icon>undo</v-icon>
-          </v-btn>
-
-          <v-btn
-            text
-            @click="commands.redo"
-          >
-            <v-icon>redo</v-icon>
-          </v-btn>
-        </v-btn-toggle>
-        <v-divider vertical />
-
-        <v-btn-toggle multiple>
-          <v-btn
-            text
-            :depressed="isActive.bold()"
-            @click="commands.bold"
-          >
-            <v-icon>format_bold</v-icon>
-          </v-btn>
-          <v-btn
-            text
-            :class="{ 'v-btn--active': isActive.italic() }"
-            @click="commands.italic"
-          >
-            <v-icon>format_italic</v-icon>
-          </v-btn>
-
-          <v-btn
-            text
-            @click="commands.underline"
-          >
-            <v-icon>format_underline</v-icon>
-          </v-btn>
-          <v-btn
-            text
-            @click="commands.link({href:'#'})"
-          >
-            <v-icon>link</v-icon>
-          </v-btn>
-        </v-btn-toggle>
-
-        <v-btn-toggle multiple>
-          <v-btn
-            text
-            :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-            @click="commands.heading({ level: 1 })"
-          >
-            H1
-          </v-btn>
-
-          <v-btn
-            text
-            :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-            @click="commands.heading({ level: 2 })"
-          >
-            H2
-          </v-btn>
-
-          <v-btn
-            text
-            :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-            @click="commands.heading({ level: 3 })"
-          >
-            H3
-          </v-btn>
-          <v-divider vertical />
-
-          <v-btn
-            text
-            :class="{ 'is-active': isActive.bullet_list() }"
-            @click="commands.bullet_list"
-          >
-            <v-icon>format_list_bulleted</v-icon>
-          </v-btn>
-
-          <v-btn
-            text
-            :class="{ 'is-active': isActive.ordered_list() }"
-            @click="commands.ordered_list"
-          >
-            <v-icon>format_list_numbered</v-icon>
-          </v-btn>
-          <v-divider vertical />
-
-          <v-btn
-            text
-            :class="{ 'is-active': isActive.blockquote() }"
-            @click="commands.blockquote"
-          >
-            <v-icon>format_quote</v-icon>
-          </v-btn>
-
-          <v-btn
-            text
-            :class="{ 'is-active': isActive.code_block() }"
-            @click="commands.code_block"
-          >
-            <v-icon>code</v-icon>
-          </v-btn>
-
-          <v-btn
-            text
-            @click="commands.horizontal_rule"
-          >
-            <v-icon>remove</v-icon>
-          </v-btn>
-        </v-btn-toggle>
-      </v-toolbar>
-    </editor-menu-bar>
     <v-container
       fluid
       class="pa-0"
     >
+      <v-tabs
+        class="elevation-1"
+        grow
+      >
+        <v-tabs-slider />
+
+        <v-tab :href="`#tab-editor`">
+          Editor
+        </v-tab>
+        <v-tab :href="`#tab-html`">
+          HTML
+        </v-tab>
+        <v-tab :href="`#tab-wikitext`">
+          Wikitext
+        </v-tab>
+        <v-tab-item :value="'tab-editor'">
+          <editor-menu-bar
+            :editor="editor"
+            v-slot="{ commands, isActive }"
+          >
+            <v-toolbar
+              dense
+              flat
+              elevation="1"
+            >
+              <v-btn-toggle>
+                <v-btn
+                  text
+                  @click="commands.undo"
+                >
+                  <v-icon>undo</v-icon>
+                </v-btn>
+
+                <v-btn
+                  text
+                  @click="commands.redo"
+                >
+                  <v-icon>redo</v-icon>
+                </v-btn>
+              </v-btn-toggle>
+              <v-divider vertical />
+
+              <v-btn-toggle multiple>
+                <v-btn
+                  text
+                  :class="{ 'v-btn--active': isActive.bold() }"
+                  @click="commands.bold"
+                >
+                  <v-icon>format_bold</v-icon>
+                </v-btn>
+                <v-btn
+                  text
+                  :class="{ 'v-btn--active': isActive.italic() }"
+                  @click="commands.italic"
+                >
+                  <v-icon>format_italic</v-icon>
+                </v-btn>
+
+                <v-btn
+                  text
+                  :class="{ 'v-btn--active': isActive.underline() }"
+                  @click="commands.underline"
+                >
+                  <v-icon>format_underline</v-icon>
+                </v-btn>
+                <v-btn
+                  text
+                  @click="commands.link({href: selectedText})"
+                >
+                  <v-icon>link</v-icon>
+                </v-btn>
+              </v-btn-toggle>
+
+              <v-btn-toggle>
+                <v-btn
+                  text
+                  :class="{ 'v-btn--active': isActive.heading({ level: 1 }) }"
+                  @click="commands.heading({ level: 1 })"
+                >
+                  H1
+                </v-btn>
+
+                <v-btn
+                  text
+                  :class="{ 'v-btn--active': isActive.heading({ level: 2 }) }"
+                  @click="commands.heading({ level: 2 })"
+                >
+                  H2
+                </v-btn>
+
+                <v-btn
+                  text
+                  :class="{ 'v-btn--active': isActive.heading({ level: 3 }) }"
+                  @click="commands.heading({ level: 3 })"
+                >
+                  H3
+                </v-btn>
+                <v-divider vertical />
+
+                <v-btn
+                  text
+                  :class="{ 'v-btn--active': isActive.bullet_list() }"
+                  @click="commands.bullet_list"
+                >
+                  <v-icon>format_list_bulleted</v-icon>
+                </v-btn>
+
+                <v-btn
+                  text
+                  :class="{ 'v-btn--active': isActive.ordered_list() }"
+                  @click="commands.ordered_list"
+                >
+                  <v-icon>format_list_numbered</v-icon>
+                </v-btn>
+                <v-divider vertical />
+
+                <v-btn
+                  text
+                  :class="{ 'v-btn--active': isActive.blockquote() }"
+                  @click="commands.blockquote"
+                >
+                  <v-icon>format_quote</v-icon>
+                </v-btn>
+
+                <v-btn
+                  text
+                  :class="{ 'v-btn--active': isActive.code_block() }"
+                  @click="commands.code_block"
+                >
+                  <v-icon>code</v-icon>
+                </v-btn>
+
+                <v-btn
+                  text
+                  @click="commands.horizontal_rule"
+                >
+                  <v-icon>remove</v-icon>
+                </v-btn>
+              </v-btn-toggle>
+            </v-toolbar>
+          </editor-menu-bar>
+          <editor-content
+            class="editor__content"
+            :editor="editor"
+          />
+          <editor-menu-bubble
+            :editor="editor"
+            v-slot="{ commands, isActive, getMarkAttrs, menu }"
+          >
+            <v-form
+              class="contexttool"
+              :class="{ 'is-active': isActive.link() }"
+              @submit.prevent="setLinkUrl(commands.link, linkUrl)"
+            >
+              <v-toolbar
+                dense
+                flat
+              >
+                <v-text-field
+                  solo
+                  flat
+                  filled
+                  single-line
+                  placeholder="Title"
+                  hide-details
+                  :value="getMarkAttrs('link').href"
+                />
+
+                <v-btn
+                  text
+                  @click="commands.link({})"
+                >
+                  <v-icon>delete</v-icon>
+                </v-btn>
+                <v-btn
+                  text
+                  :href="getMarkAttrs('link').href"
+                  target="_blank"
+                >
+                  <v-icon>link</v-icon>
+                </v-btn>
+              </v-toolbar>
+            </v-form>
+          </editor-menu-bubble>
+        </v-tab-item>
+        <v-tab-item :value="'tab-html'">
+          <v-card>
+            <v-card-text>
+              <pre><code>{{ html }}</code></pre>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item :value="'tab-wikitext'">
+          <v-card>
+            <v-card-text>
+              <pre><code>{{ wikitext }}</code></pre>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+      </v-tabs>
       <v-row>
         <v-col
           cols="12"
           sm="12"
           class="editor px-4"
-        >
-          <editor-menu-bubble
-            :editor="editor"
-            v-slot="{ commands, isActive, getMarkAttrs, menu }"
-          >
-            <v-card
-              class="contexttool"
-              :class="{ 'is-active': isActive.link() }"
-            >
-              <v-form @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-                <v-toolbar
-                  dense
-                  flat
-                  dark
-                >
-                  <v-text-field
-                    solo
-                    flat
-                    filled
-                    single-line
-                    placeholder="Title"
-                    hide-details
-                    v-model="linkUrl"
-                    :value="getMarkAttrs('link').href"
-                  />
-
-                  <v-btn
-                    text
-                    @click="commands.link({})"
-                  >
-                    <v-icon>delete</v-icon>
-                  </v-btn>
-                  <v-btn
-                    text
-                    :href="getMarkAttrs('link').href"
-                    target="_blank"
-                  >
-                    <v-icon>link</v-icon>
-                  </v-btn>
-                </v-toolbar>
-              </v-form>
-            </v-card>
-          </editor-menu-bubble>
-          <editor-content
-            class="editor__content"
-            :editor="editor"
-          />
-        </v-col>
+        />
       </v-row>
-    </v-container>
-    <v-container
-      fluid
-      class="pa-0"
-    >
-      <v-card>
-        <v-card-title class="py-1">
-          HTML
-        </v-card-title>
-        <v-card-text>
-          <pre><code>{{ html }}</code></pre>
-        </v-card-text>
-      </v-card>
-      <v-card>
-        <v-card-title class="py-1">
-          Wikitext
-        </v-card-title>
-        <v-card-text>
-          <pre><code>{{ wikitext }}</code></pre>
-        </v-card-text>
-      </v-card>
     </v-container>
   </div>
 </template>
@@ -235,7 +244,7 @@ export default {
             Title
           </h2>
           <p>
-            this is a very <em>basic</em> example of tiptap.
+            this is a <b>very</b> <i>basic</i> example of tiptap.
           </p>
           <pre><code>body { display: none; }</code></pre>
           <ul>
@@ -280,6 +289,11 @@ export default {
         onInit: this.onEditorInit,
         onUpdate: this.onEditorUpdate
       });
+    },
+    selectedText: function() {
+      const { selection, state } = this.editor;
+      const { from, to } = selection;
+      return state.doc.textBetween(from, to, " ");
     }
   },
   methods: {
@@ -288,7 +302,7 @@ export default {
     },
     onEditorUpdate({ getHTML }) {
       this.html = getHTML();
-      debounce(this.html2wikitext, 1000)(this.html);
+      debounce(this.html2wikitext, 2000)(this.html);
     },
     html2wikitext(html) {
       const api = `https://${this.contentLanguage}.wikipedia.org/api/rest_v1/transform/html/to/wikitext`;
@@ -297,12 +311,12 @@ export default {
       });
     },
     hideLinkMenu() {
-      this.linkUrl = null
+      this.linkUrl = null;
     },
     setLinkUrl(command, url) {
-      command({ href: url })
-      this.hideLinkMenu()
-    },
+      command({ href: url });
+      this.hideLinkMenu();
+    }
   },
   beforeDestroy() {
     this.editor.destroy();
@@ -312,22 +326,74 @@ export default {
 
 <style lang="less">
 .editor {
-  position: relative;
   .contexttool {
-    position: relative;
-    top: 0;
-    display: flex;
     z-index: 20;
-    visibility: hidden;
+    display: none;
     opacity: 0;
-    // transform: translateX(-50%);
-    align-items: center;
+
     transition: opacity 0.2s, visibility 0.2s;
 
     &.is-active {
+      align-items: center;
+      display: flex;
       opacity: 1;
-      visibility: visible;
     }
+  }
+  .editor__content {
+    table {
+      border-collapse: collapse;
+      table-layout: fixed;
+      width: 100%;
+      margin: 0;
+      overflow: hidden;
+
+      td,
+      th {
+        min-width: 1em;
+        border: 2px solid grey;
+        padding: 3px 5px;
+        vertical-align: top;
+        box-sizing: border-box;
+        position: relative;
+        > * {
+          margin-bottom: 0;
+        }
+      }
+
+      th {
+        font-weight: bold;
+        text-align: left;
+      }
+
+      .selectedCell:after {
+        z-index: 2;
+        position: absolute;
+        content: "";
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: rgba(200, 200, 255, 0.4);
+        pointer-events: none;
+      }
+
+      .column-resize-handle {
+        position: absolute;
+        right: -2px;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        z-index: 20;
+        background-color: #adf;
+        pointer-events: none;
+      }
+
+    }
+
+      .resize-cursor {
+        cursor: ew-resize;
+        cursor: col-resize;
+      }
   }
 }
 </style>

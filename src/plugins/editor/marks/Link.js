@@ -13,7 +13,7 @@ export default class Link extends Mark {
       attrs: {
         href: {
           default: null,
-        },
+        }
       },
       inclusive: false,
       parseDOM: [

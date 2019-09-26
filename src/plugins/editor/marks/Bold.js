@@ -22,7 +22,7 @@ export default class Bold extends Mark {
           getAttrs: value => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null,
         },
       ],
-      toDOM: () => ['strong', 0],
+      toDOM: () => ['b', 0],
     }
   }
 
