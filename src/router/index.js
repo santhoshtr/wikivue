@@ -6,7 +6,7 @@ const routerOptions = [
   { path: '/', name: 'home', component: 'Home', params: true },
   { path: '/about', name: 'about', component: 'About', params: true },
   { path: '/page/random', name: 'random', component: 'Article', meta: { random: true } },
-  { path: '/edit', name: 'about', component: 'Edit', params: true },
+  { path: '/edit', name: 'edit', component: 'Edit', params: true },
   { path: '*', name: '404', component: '404', params: true }
 ]
 
