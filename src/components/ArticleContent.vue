@@ -33,6 +33,7 @@
           :lang="contentLanguage"
           :dir="contentLanguageDir"
           ref="article"
+          style="outline: none;"
           tabindex="0"
         >
           <article-header
