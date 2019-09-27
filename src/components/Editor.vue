@@ -271,10 +271,6 @@
               </v-btn-toggle>
             </v-toolbar>
           </editor-menu-bar>
-          <editor-content
-            class="editor__content"
-            :editor="editor"
-          />
           <editor-menu-bubble
             :editor="editor"
             v-slot="{ commands, isActive, getMarkAttrs, menu }"
@@ -288,32 +284,36 @@
                 dense
                 flat
               >
+                <v-icon>mdi-link</v-icon>
                 <v-text-field
                   solo
                   flat
                   filled
-                  single-line
                   placeholder="Title"
                   hide-details
                   :value="getMarkAttrs('link').href"
                 />
 
                 <v-btn
-                  text
+                  icon
                   @click="commands.link({})"
                 >
-                  <v-icon>delete</v-icon>
+                  <v-icon>mdi-delete</v-icon>
                 </v-btn>
                 <v-btn
-                  text
+                  icon
                   :href="getMarkAttrs('link').href"
                   target="_blank"
                 >
-                  <v-icon>link</v-icon>
+                  <v-icon>mdi-open-in-new</v-icon>
                 </v-btn>
               </v-toolbar>
             </v-form>
           </editor-menu-bubble>
+          <editor-content
+            class="editor__content"
+            :editor="editor"
+          />
         </v-tab-item>
         <v-tab-item :value="'tab-html'">
           <v-card>
@@ -452,17 +452,20 @@ export default {
 
 <style lang="less">
 .editor {
+  position: relative;
   .contexttool {
     z-index: 20;
     display: none;
     opacity: 0;
-
     transition: opacity 0.2s, visibility 0.2s;
 
     &.is-active {
       align-items: center;
-      display: flex;
+      display: block;
+      position: absolute;
       opacity: 1;
+      box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+      border-radius: 4px;
     }
   }
   .editor__content {
