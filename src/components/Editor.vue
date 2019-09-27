@@ -11,13 +11,13 @@
         <v-tabs-slider />
 
         <v-tab :href="`#tab-editor`">
-          Editor
+          <v-icon>mdi-pencil</v-icon>
         </v-tab>
         <v-tab :href="`#tab-html`">
-          HTML
+          <v-icon>mdi-code-tags</v-icon>
         </v-tab>
         <v-tab :href="`#tab-wikitext`">
-          Wikitext
+          <v-icon>mdi-code-braces</v-icon>
         </v-tab>
         <v-tab-item :value="'tab-editor'">
           <editor-menu-bar
@@ -34,14 +34,14 @@
                   text
                   @click="commands.undo"
                 >
-                  <v-icon>undo</v-icon>
+                  <v-icon>mdi-undo</v-icon>
                 </v-btn>
 
                 <v-btn
                   text
                   @click="commands.redo"
                 >
-                  <v-icon>redo</v-icon>
+                  <v-icon>mdi-redo</v-icon>
                 </v-btn>
               </v-btn-toggle>
               <v-divider vertical />
@@ -52,14 +52,14 @@
                   :class="{ 'v-btn--active': isActive.bold() }"
                   @click="commands.bold"
                 >
-                  <v-icon>format_bold</v-icon>
+                  <v-icon>mdi-format-bold</v-icon>
                 </v-btn>
                 <v-btn
                   text
                   :class="{ 'v-btn--active': isActive.italic() }"
                   @click="commands.italic"
                 >
-                  <v-icon>format_italic</v-icon>
+                  <v-icon>mdi-format-italic</v-icon>
                 </v-btn>
 
                 <v-btn
@@ -67,48 +67,92 @@
                   :class="{ 'v-btn--active': isActive.underline() }"
                   @click="commands.underline"
                 >
-                  <v-icon>format_underline</v-icon>
+                  <v-icon>mdi-format-underline</v-icon>
                 </v-btn>
                 <v-btn
                   text
                   @click="commands.link({href: selectedText})"
                 >
-                  <v-icon>link</v-icon>
+                  <v-icon>mdi-link</v-icon>
                 </v-btn>
               </v-btn-toggle>
-
+              <v-menu
+                :fixed="true"
+                offset-y
+              >
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    text
+                    v-on="on"
+                  >
+                    <v-icon>mdi-format-header-1</v-icon>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-btn
+                        text
+                        :class="{ 'v-btn--active': isActive.heading({ level: 1 }) }"
+                        @click="commands.heading({ level: 1 })"
+                      >
+                        <v-icon>mdi-format-header-1</v-icon>
+                      </v-btn>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-btn
+                        text
+                        :class="{ 'v-btn--active': isActive.heading({ level: 2 }) }"
+                        @click="commands.heading({ level: 2 })"
+                      >
+                        <v-icon>mdi-format-header-2</v-icon>
+                      </v-btn>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-btn
+                        text
+                        :class="{ 'v-btn--active': isActive.heading({ level: 3 }) }"
+                        @click="commands.heading({ level: 3 })"
+                      >
+                        <v-icon>mdi-format-header-3</v-icon>
+                      </v-btn>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-btn
+                        text
+                        :class="{ 'v-btn--active': isActive.heading({ level: 4 }) }"
+                        @click="commands.heading({ level: 4 })"
+                      >
+                        <v-icon>mdi-format-header-4</v-icon>
+                      </v-btn>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-btn
+                        text
+                        :class="{ 'v-btn--active': isActive.heading({ level: 5 }) }"
+                        @click="commands.heading({ level: 5 })"
+                      >
+                        <v-icon>mdi-format-header-5</v-icon>
+                      </v-btn>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
               <v-btn-toggle>
-                <v-btn
-                  text
-                  :class="{ 'v-btn--active': isActive.heading({ level: 1 }) }"
-                  @click="commands.heading({ level: 1 })"
-                >
-                  H1
-                </v-btn>
-
-                <v-btn
-                  text
-                  :class="{ 'v-btn--active': isActive.heading({ level: 2 }) }"
-                  @click="commands.heading({ level: 2 })"
-                >
-                  H2
-                </v-btn>
-
-                <v-btn
-                  text
-                  :class="{ 'v-btn--active': isActive.heading({ level: 3 }) }"
-                  @click="commands.heading({ level: 3 })"
-                >
-                  H3
-                </v-btn>
-                <v-divider vertical />
-
                 <v-btn
                   text
                   :class="{ 'v-btn--active': isActive.bullet_list() }"
                   @click="commands.bullet_list"
                 >
-                  <v-icon>format_list_bulleted</v-icon>
+                  <v-icon>mdi-format-list-bulleted</v-icon>
                 </v-btn>
 
                 <v-btn
@@ -116,16 +160,98 @@
                   :class="{ 'v-btn--active': isActive.ordered_list() }"
                   @click="commands.ordered_list"
                 >
-                  <v-icon>format_list_numbered</v-icon>
+                  <v-icon>mdi-format-list-numbered</v-icon>
                 </v-btn>
                 <v-divider vertical />
-
+                <v-menu
+                  :fixed="true"
+                  offset-y
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                      class="hidden-xs-only"
+                      text
+                      v-on="on"
+                    >
+                      <v-icon>mdi-table</v-icon>
+                    </v-btn>
+                  </template>
+                  <v-list dense>
+                    <v-btn
+                      class="hidden-xs-only"
+                      text
+                      @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })"
+                    >
+                      <v-icon>mdi-table-plus</v-icon>
+                    </v-btn>
+                    <span v-if="isActive.table()">
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.addRowBefore"
+                      >
+                        <v-icon>mdi-table-row-plus-before</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.addRowAfter"
+                      >
+                        <v-icon>mdi-table-row-plus-after</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.deleteRow"
+                      >
+                        <v-icon>mdi-table-row-remove</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.addColumnBefore"
+                      >
+                        <v-icon>mdi-table-column-plus-after</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.addColumnBefore"
+                      >
+                        <v-icon>mdi-table-column-plus-before</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.deleteColumn"
+                      >
+                        <v-icon>mdi-table-column-remove</v-icon>
+                      </v-btn>
+                      <v-divider />
+                      <!-- <v-subheader>Actions</v-subheader> -->
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.toggleCellMerge"
+                      >
+                        <v-icon>mdi-table-merge-cells</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.deleteTable"
+                      >
+                        <v-icon>mdi-table-remove</v-icon>
+                      </v-btn>
+                    </span>
+                  </v-list>
+                </v-menu>
                 <v-btn
                   text
                   :class="{ 'v-btn--active': isActive.blockquote() }"
                   @click="commands.blockquote"
                 >
-                  <v-icon>format_quote</v-icon>
+                  <v-icon>mdi-format-quote-open</v-icon>
                 </v-btn>
 
                 <v-btn
@@ -133,14 +259,14 @@
                   :class="{ 'v-btn--active': isActive.code_block() }"
                   @click="commands.code_block"
                 >
-                  <v-icon>code</v-icon>
+                  <v-icon>mdi-code-tags</v-icon>
                 </v-btn>
 
                 <v-btn
                   text
                   @click="commands.horizontal_rule"
                 >
-                  <v-icon>remove</v-icon>
+                  <v-icon>mdi-minus</v-icon>
                 </v-btn>
               </v-btn-toggle>
             </v-toolbar>
@@ -387,13 +513,12 @@ export default {
         background-color: #adf;
         pointer-events: none;
       }
-
     }
 
-      .resize-cursor {
-        cursor: ew-resize;
-        cursor: col-resize;
-      }
+    .resize-cursor {
+      cursor: ew-resize;
+      cursor: col-resize;
+    }
   }
 }
 </style>

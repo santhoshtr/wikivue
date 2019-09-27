@@ -12,7 +12,7 @@
           text
           @click="shown = false"
         >
-          <v-icon>close</v-icon>
+          <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>

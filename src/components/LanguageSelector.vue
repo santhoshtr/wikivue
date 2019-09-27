@@ -11,7 +11,7 @@
       @click.stop="dialog = true"
     >
       <v-icon>
-        translate
+        mdi-translate
       </v-icon>
       {{ $vuetify.breakpoint.smAndUp?selectedLanguageAutonym:contentLanguage }}
     </v-btn>
@@ -28,14 +28,14 @@
             icon
             @click="dialog = false"
           >
-            <v-icon>arrow_back</v-icon>
+            <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
           <v-text-field
             v-model="searchQuery"
             flat
             single-line
             hide-details
-            prepend-inner-icon="search"
+            prepend-inner-icon="mdi-search"
             @input="onSearch"
             class="language-search"
             label="Select language"
@@ -45,7 +45,7 @@
               icon
               @click="dialog = false"
             >
-              <v-icon>close</v-icon>
+              <v-icon>mdi-close</v-icon>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>

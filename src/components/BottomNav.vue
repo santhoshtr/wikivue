@@ -9,7 +9,7 @@
       <article-revisions />
 
       <v-btn value="bookmark">
-        <v-icon>bookmark</v-icon>
+        <v-icon>mdi-bookmark</v-icon>
       </v-btn>
 
       <article-languages />
@@ -19,7 +19,7 @@
         value="tocbutton"
         @click="showToc"
       >
-        <v-icon>toc</v-icon>
+        <v-icon>mdi-table-of-contents</v-icon>
       </v-btn>
     </v-bottom-navigation>
     <v-navigation-drawer

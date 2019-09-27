@@ -42,7 +42,7 @@
             :to="item.title"
           >
             <v-list-item-icon>
-              <v-icon>description</v-icon>
+              <v-icon>mdi-file-document-box</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title v-text="item.title" />
@@ -66,7 +66,7 @@
             v-else
             large
           >
-            description
+            mdi-file-document-box
           </v-icon>
         </v-list-item-avatar>
         <v-list-item-content>

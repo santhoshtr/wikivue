@@ -17,7 +17,7 @@
           <span
             slot="badge"
           >{{ $store.state.article.languagecount }}</span>
-          <v-icon>translate</v-icon>
+          <v-icon>mdi-translate</v-icon>
         </v-badge>
       </v-btn>
     </template>
@@ -28,14 +28,14 @@
             icon
             @click="dialog = false"
           >
-            <v-icon>arrow_back</v-icon>
+            <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
           <v-text-field
             v-model="searchQuery"
             flat
             single-line
             hide-details
-            prepend-inner-icon="search"
+            prepend-inner-icon="mdi-magnify"
             @input="onSearch"
             class="language-search"
             label="Select language"
@@ -45,7 +45,7 @@
               icon
               @click="dialog = false"
             >
-              <v-icon>close</v-icon>
+              <v-icon>mdi-close</v-icon>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>

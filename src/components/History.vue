@@ -9,7 +9,7 @@
         value="languages"
         v-on="on"
       >
-        <v-icon>history</v-icon>
+        <v-icon>mdi-history</v-icon>
       </v-btn>
     </template>
     <v-card>
@@ -19,7 +19,7 @@
             icon
             @click="dialog = false"
           >
-            <v-icon>arrow_back</v-icon>
+            <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
           <v-toolbar-title v-i18n="'article-history-title'" />
           <div class="flex-grow-1" />
@@ -28,7 +28,7 @@
               icon
               @click="dialog = false"
             >
-              <v-icon>close</v-icon>
+              <v-icon>mdi-close</v-icon>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>

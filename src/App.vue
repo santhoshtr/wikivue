@@ -107,12 +107,12 @@
     data: () => ({
       drawer: false,
       items: [
-        { icon: 'apps', msg: 'menu-home', href:"/" },
-        { icon: 'casino', msg: 'menu-random', href:"/page/random" },
-        { icon: 'place', msg: 'menu-nearby', href:"/nearby" },
-        { icon: 'star', msg: 'menu-watchlist', href:"/user/watchlist" },
-        { icon: 'recent_actors', msg: 'menu-contributions', href:"/user/contributions" },
-        { icon: 'help', msg: 'menu-about', href:"/about" },
+        { icon: 'mdi-home', msg: 'menu-home', href:"/" },
+        { icon: 'mdi-dice-5', msg: 'menu-random', href:"/page/random" },
+        { icon: 'mdi-map-marker-circle', msg: 'menu-nearby', href:"/nearby" },
+        { icon: 'mdi-star', msg: 'menu-watchlist', href:"/user/watchlist" },
+        { icon: 'mdi-account-check', msg: 'menu-contributions', href:"/user/contributions" },
+        { icon: 'mdi-information', msg: 'menu-about', href:"/about" },
       ],
     }),
   }
