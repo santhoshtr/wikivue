@@ -191,6 +191,7 @@ export default {
       if (this.loaded) {
         this.layout();
         this.previewShown = false;
+        this.selectedImage = null;
         if (!this.isPreview) {
           setTimeout(() => this.listen(), 1000);
           // Push the article to history
