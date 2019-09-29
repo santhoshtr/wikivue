@@ -49,7 +49,7 @@
               v-if="lastmodifier"
             >
               <v-icon small>
-                history
+                mdi-history
               </v-icon>
               {{ $i18n('article-lastmodified',lastmodifier.user, lastmodified) }}
             </v-btn>
@@ -62,7 +62,7 @@
               target="__blank"
               v-if="loaded && article.geo"
             >
-              <v-icon>location_on</v-icon>
+              <v-icon>mdi-map-marker</v-icon>
             </v-btn>
             <v-btn
               small
