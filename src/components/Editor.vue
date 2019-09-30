@@ -7,6 +7,7 @@
       <v-tabs
         class="elevation-1"
         grow
+        @change="onTabChange"
       >
         <v-tabs-slider />
 
@@ -163,89 +164,13 @@
                   <v-icon>mdi-format-list-numbered</v-icon>
                 </v-btn>
                 <v-divider vertical />
-                <v-menu
-                  :fixed="true"
-                  offset-y
+                <v-btn
+                  class="hidden-xs-only"
+                  text
+                  @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })"
                 >
-                  <template v-slot:activator="{ on }">
-                    <v-btn
-                      class="hidden-xs-only"
-                      text
-                      v-on="on"
-                    >
-                      <v-icon>mdi-table</v-icon>
-                    </v-btn>
-                  </template>
-                  <v-list dense>
-                    <v-btn
-                      class="hidden-xs-only"
-                      text
-                      @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })"
-                    >
-                      <v-icon>mdi-table-plus</v-icon>
-                    </v-btn>
-                    <span v-if="isActive.table()">
-                      <v-btn
-                        class="hidden-xs-only"
-                        text
-                        @click="commands.addRowBefore"
-                      >
-                        <v-icon>mdi-table-row-plus-before</v-icon>
-                      </v-btn>
-                      <v-btn
-                        class="hidden-xs-only"
-                        text
-                        @click="commands.addRowAfter"
-                      >
-                        <v-icon>mdi-table-row-plus-after</v-icon>
-                      </v-btn>
-                      <v-btn
-                        class="hidden-xs-only"
-                        text
-                        @click="commands.deleteRow"
-                      >
-                        <v-icon>mdi-table-row-remove</v-icon>
-                      </v-btn>
-                      <v-btn
-                        class="hidden-xs-only"
-                        text
-                        @click="commands.addColumnBefore"
-                      >
-                        <v-icon>mdi-table-column-plus-after</v-icon>
-                      </v-btn>
-                      <v-btn
-                        class="hidden-xs-only"
-                        text
-                        @click="commands.addColumnBefore"
-                      >
-                        <v-icon>mdi-table-column-plus-before</v-icon>
-                      </v-btn>
-                      <v-btn
-                        class="hidden-xs-only"
-                        text
-                        @click="commands.deleteColumn"
-                      >
-                        <v-icon>mdi-table-column-remove</v-icon>
-                      </v-btn>
-                      <v-divider />
-                      <!-- <v-subheader>Actions</v-subheader> -->
-                      <v-btn
-                        class="hidden-xs-only"
-                        text
-                        @click="commands.toggleCellMerge"
-                      >
-                        <v-icon>mdi-table-merge-cells</v-icon>
-                      </v-btn>
-                      <v-btn
-                        class="hidden-xs-only"
-                        text
-                        @click="commands.deleteTable"
-                      >
-                        <v-icon>mdi-table-remove</v-icon>
-                      </v-btn>
-                    </span>
-                  </v-list>
-                </v-menu>
+                  <v-icon>mdi-table-plus</v-icon>
+                </v-btn>
                 <v-btn
                   text
                   :class="{ 'v-btn--active': isActive.blockquote() }"
@@ -275,40 +200,105 @@
             :editor="editor"
             v-slot="{ commands, isActive, getMarkAttrs, menu }"
           >
-            <v-form
-              class="contexttool"
-              :class="{ 'is-active': isActive.link() }"
-              @submit.prevent="setLinkUrl(commands.link, linkUrl)"
-            >
-              <v-toolbar
-                dense
-                flat
+            <v-sheet elevation="1">
+              <v-form
+                class="contexttool"
+                v-if=" isActive.link()"
+                :class="{ 'is-active': isActive.link() }"
+                @submit.prevent="setLinkUrl(commands.link, linkUrl)"
               >
-                <v-icon>mdi-link</v-icon>
-                <v-text-field
-                  solo
+                <v-toolbar
+                  dense
                   flat
-                  filled
-                  placeholder="Title"
-                  hide-details
-                  :value="getMarkAttrs('link').href"
-                />
-
-                <v-btn
-                  icon
-                  @click="commands.link({})"
                 >
-                  <v-icon>mdi-delete</v-icon>
+                  <v-icon>mdi-link</v-icon>
+                  <v-text-field
+                    solo
+                    flat
+                    filled
+                    placeholder="Title"
+                    hide-details
+                    :value="getMarkAttrs('link').href"
+                  />
+                  <v-btn
+                    icon
+                    @click="commands.link({})"
+                  >
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                  <v-btn
+                    icon
+                    :href="getMarkAttrs('link').href"
+                    target="_blank"
+                  >
+                    <v-icon>mdi-open-in-new</v-icon>
+                  </v-btn>
+                </v-toolbar>
+              </v-form>
+              <v-list
+                dense
+                v-else-if="isActive.table()"
+                class="contexttool"
+                :class="{ 'is-active': isActive.table()}"
+              >
+                <v-btn
+                  class="hidden-xs-only"
+                  text
+                  @click="commands.addRowBefore"
+                >
+                  <v-icon>mdi-table-row-plus-before</v-icon>
                 </v-btn>
                 <v-btn
-                  icon
-                  :href="getMarkAttrs('link').href"
-                  target="_blank"
+                  class="hidden-xs-only"
+                  text
+                  @click="commands.addRowAfter"
                 >
-                  <v-icon>mdi-open-in-new</v-icon>
+                  <v-icon>mdi-table-row-plus-after</v-icon>
                 </v-btn>
-              </v-toolbar>
-            </v-form>
+                <v-btn
+                  class="hidden-xs-only"
+                  text
+                  @click="commands.deleteRow"
+                >
+                  <v-icon>mdi-table-row-remove</v-icon>
+                </v-btn>
+                <v-btn
+                  class="hidden-xs-only"
+                  text
+                  @click="commands.addColumnBefore"
+                >
+                  <v-icon>mdi-table-column-plus-after</v-icon>
+                </v-btn>
+                <v-btn
+                  class="hidden-xs-only"
+                  text
+                  @click="commands.addColumnBefore"
+                >
+                  <v-icon>mdi-table-column-plus-before</v-icon>
+                </v-btn>
+                <v-btn
+                  class="hidden-xs-only"
+                  text
+                  @click="commands.deleteColumn"
+                >
+                  <v-icon>mdi-table-column-remove</v-icon>
+                </v-btn>
+                <v-btn
+                  class="hidden-xs-only"
+                  text
+                  @click="commands.toggleCellMerge"
+                >
+                  <v-icon>mdi-table-merge-cells</v-icon>
+                </v-btn>
+                <v-btn
+                  class="hidden-xs-only"
+                  text
+                  @click="commands.deleteTable"
+                >
+                  <v-icon>mdi-table-remove</v-icon>
+                </v-btn>
+              </v-list>
+            </v-sheet>
           </editor-menu-bubble>
           <editor-content
             class="editor__content"
@@ -428,7 +418,11 @@ export default {
     },
     onEditorUpdate({ getHTML }) {
       this.html = getHTML();
-      debounce(this.html2wikitext, 2000)(this.html);
+    },
+    onTabChange(tabId) {
+      if (tabId === "tab-wikitext") {
+        this.html2wikitext(this.html);
+      }
     },
     html2wikitext(html) {
       const api = `https://${this.contentLanguage}.wikipedia.org/api/rest_v1/transform/html/to/wikitext`;
@@ -455,18 +449,13 @@ export default {
   position: relative;
   .contexttool {
     z-index: 20;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.2s, visibility 0.2s;
-
-    &.is-active {
-      align-items: center;
-      display: block;
-      position: absolute;
-      opacity: 1;
-      box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
-      border-radius: 4px;
-    }
+    align-items: center;
+    display: block;
+    position: absolute;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+      0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+      0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
   }
   .editor__content {
     table {
