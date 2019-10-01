@@ -195,7 +195,7 @@ export default {
         this.loaded = true;
       });
     },
-    init: function(task, targetLanguage) {
+    init: function(task='explore', targetLanguage) {
       this.task = task;
       this.targetLanguage = targetLanguage;
     },
