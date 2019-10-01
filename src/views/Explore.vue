@@ -17,7 +17,7 @@
             md="12"
           >
             <h2 class="title">
-              Choose your interested topics
+              Choose your topics of interest
             </h2>
           </v-col>
         </v-row>
@@ -67,7 +67,7 @@
       justify-center
       wrap
       row
-      class="ma-auto"
+      class="ma-1"
       align-center
     >
       <v-row>
@@ -85,7 +85,7 @@
             v-if="task==='translate'"
             class="title"
           >
-            Articles from selected topic to translate to {{ targetLanguage }}
+            {{ selectedTopic }} articles to translate from {{ autonym(contentLanguage) }} to {{ autonym(targetLanguage) }}
           </h2>
         </v-col>
       </v-row>
@@ -102,21 +102,22 @@
             :to="task==='explore'?`/page/${contentLanguage}/${article.itemLabel.value}`:`//en.wikipedia.org/wiki/Special:CX?page=${article.itemLabel.value}&from=${contentLanguage}&to=${targetLanguage}`"
           >
             <v-img
-              :src="article.image? article.image.value:require('@/assets/Wikipedia logo version 2.svg?lazy')"
+              :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
+              :src="article.image? `${article.image.value}?width=300`:require('@/assets/Wikipedia logo version 2.svg?lazy')"
               cover
               aspect-ratio="2.5"
             />
-            <v-card-title>
+            <v-card-title class="px-1">
               <h3
-                class="title mb-0 overflow-y-hidden"
+                class="title overflow-y-hidden"
                 v-text="article.itemLabel.value"
               />
             </v-card-title>
             <v-card-text
               v-if="article.itemDescription"
-              class="extract text-xs-left overflow-y-hidden"
+              class="extract px-1 text-xs-left overflow-y-hidden"
             >
-              <h4>{{ article.itemDescription.value }}</h4>
+              <span>{{ article.itemDescription.value }}</span>
             </v-card-text>
           </v-card>
         </v-col>
@@ -127,6 +128,8 @@
 
 <script>
 import topics from "../wiki/topics.json";
+import languagedata from "@wikimedia/language-data";
+
 import {
   fetchTopicsInCategory,
   fetchTopicsInCategoryForTranslate
@@ -140,16 +143,21 @@ export default {
     selected: null,
     articles: [],
     task: "explore",
-    loaded: false,
+    loaded: true,
     targetLanguage: null
   }),
   computed: {
     ...mapState({
       contentLanguage: state => state.app.contentLanguage
-    })
+    }),
+    selectedTopic: function(){
+        const topic= topics.find(item=>item.wd==this.selected)
+        return topic.name;
+    }
   },
   watch: {
     selected: function() {
+        console.log(this.task)
       if (this.task === "explore") {
         this.fetchArticles(this.selected);
       }
@@ -166,28 +174,38 @@ export default {
   methods: {
     fetchArticles: function(selected) {
       this.loaded = false;
-      fetchTopicsInCategory(selected, this.contentLanguage, 20).then(
+      this.articles=[];
+      fetchTopicsInCategory(selected, this.contentLanguage, 30).then(
         response => {
-          this.articles = response.data.results.bindings;
+          this.articles = this.deduplicate(response.data.results.bindings);
           this.loaded = true;
         }
       );
     },
     fetchArticlesForTranslate: function(selected, targetLanguage) {
       this.loaded = false;
+      this.articles=[];
       fetchTopicsInCategoryForTranslate(
         selected,
         this.contentLanguage,
-        20,
+        30,
         targetLanguage
       ).then(response => {
-        this.articles = response.data.results.bindings;
+        this.articles = this.deduplicate(response.data.results.bindings);
         this.loaded = true;
       });
     },
     init: function(task, targetLanguage) {
       this.task = task;
       this.targetLanguage = targetLanguage;
+    },
+    autonym: function(lang) {
+      return languagedata.getAutonym(lang);
+    },
+    deduplicate: function(arr) {
+      return arr.filter(
+        (v, i, a) => a.findIndex(t => t.item.value === v.item.value) === i
+      );
     }
   },
   beforeRouteEnter(to, from, next) {

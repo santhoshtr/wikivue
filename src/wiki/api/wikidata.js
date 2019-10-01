@@ -8,13 +8,13 @@ function query(sparqlQuery) {
 
 
 function fetchTopicsInCategory(category, language, count = 10) {
-    const sparqlQuery = `SELECT ?categoryLabel ?item ?itemLabel ?itemDescription ?image
+    const sparqlQuery = `SELECT DISTINCT ?categoryLabel ?item ?itemLabel ?itemDescription ?image
     WHERE
     {
       VALUES ?category {
         wd:${category}
       }
-      ?item wdt:P31 ?category. # Item is of type an item in the above list of categories
+      ?item p:P31/ps:P31/wdt:P279* ?category. # Item is of type or subtype an item in the above list of categories
       ?item wikibase:statements ?statementcount. # Statement count - some indicator of relevance, richness?
       ?article schema:about ?item ; schema:isPartOf <https://${language}.wikipedia.org/>. # Exist in ${language}
       OPTIONAL {?item wdt:P18 ?image }
@@ -26,7 +26,7 @@ function fetchTopicsInCategory(category, language, count = 10) {
 }
 
 function fetchTopicsInCategoryForTranslate(category, language, count = 10, targetLanguage) {
-    const sparqlQuery = `SELECT ?categoryLabel ?item ?itemLabel ?itemDescription ?image
+    const sparqlQuery = `SELECT DISTINCT ?categoryLabel ?item ?itemLabel ?itemDescription ?image
     WHERE
     {
       VALUES ?category {
@@ -42,7 +42,6 @@ function fetchTopicsInCategoryForTranslate(category, language, count = 10, targe
     ORDER BY DESC(?statementcount)
     LIMIT ${count}`;
     return query(sparqlQuery)
-
 }
 
 export { fetchTopicsInCategory, fetchTopicsInCategoryForTranslate }
