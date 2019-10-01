@@ -8,6 +8,7 @@ const routerOptions = [
   { path: '/page/random', name: 'random', component: 'Article', meta: { random: true } },
   { path: '/edit', name: 'edit', component: 'Edit', params: true },
   { path: '/explore', name: 'explore', component: 'Explore', params: true },
+  { path: '/explore/task/translate/:target', name: 'explore-translate-task', component: 'Explore', params: true,  meta: { task: 'translate' } },
   { path: '*', name: '404', component: '404', params: true }
 ]
 

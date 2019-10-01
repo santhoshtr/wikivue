@@ -56,7 +56,13 @@
       </v-item-group>
     </v-container>
     <!--- Articles in that category --->
-
+    <v-progress-linear
+      :active="!loaded"
+      :indeterminate="!loaded"
+      color="blue"
+      absolute
+      top
+    />
     <v-layout
       justify-center
       wrap
@@ -69,8 +75,17 @@
           cols="12"
           md="12"
         >
-          <h2 class="title">
+          <h2
+            v-if="task==='explore'"
+            class="title"
+          >
             Articles from selected topic
+          </h2>
+          <h2
+            v-if="task==='translate'"
+            class="title"
+          >
+            Articles from selected topic to translate to {{ targetLanguage }}
           </h2>
         </v-col>
       </v-row>
@@ -84,7 +99,7 @@
         >
           <v-card
             class="ma-2"
-            :to="`/page/${contentLanguage}/${article.itemLabel.value}`"
+            :to="task==='explore'?`/page/${contentLanguage}/${article.itemLabel.value}`:`//en.wikipedia.org/wiki/Special:CX?page=${article.itemLabel.value}&from=${contentLanguage}&to=${targetLanguage}`"
           >
             <v-img
               :src="article.image? article.image.value:require('@/assets/Wikipedia logo version 2.svg?lazy')"
@@ -112,7 +127,10 @@
 
 <script>
 import topics from "../wiki/topics.json";
-import { fetchTopicsInCategory } from "../wiki/api/wikidata";
+import {
+  fetchTopicsInCategory,
+  fetchTopicsInCategoryForTranslate
+} from "../wiki/api/wikidata";
 import { mapGetters, mapState, mapMutations } from "vuex";
 
 export default {
@@ -120,7 +138,10 @@ export default {
   data: () => ({
     topics,
     selected: null,
-    articles: []
+    articles: [],
+    task: "explore",
+    loaded: false,
+    targetLanguage: null
   }),
   computed: {
     ...mapState({
@@ -129,18 +150,73 @@ export default {
   },
   watch: {
     selected: function() {
-      this.fetchArticles(this.selected);
+      if (this.task === "explore") {
+        this.fetchArticles(this.selected);
+      }
+      if (this.task === "translate") {
+        this.fetchArticlesForTranslate(this.selected, this.targetLanguage);
+      }
+    },
+    task: function() {
+      if (this.task === "translate") {
+        this.fetchArticlesForTranslate(this.selected, this.targetLanguage);
+      }
     }
   },
   methods: {
     fetchArticles: function(selected) {
+      this.loaded = false;
       fetchTopicsInCategory(selected, this.contentLanguage, 20).then(
         response => {
           this.articles = response.data.results.bindings;
-          console.log(this.articles);
+          this.loaded = true;
         }
       );
+    },
+    fetchArticlesForTranslate: function(selected, targetLanguage) {
+      this.loaded = false;
+      fetchTopicsInCategoryForTranslate(
+        selected,
+        this.contentLanguage,
+        20,
+        targetLanguage
+      ).then(response => {
+        this.articles = response.data.results.bindings;
+        this.loaded = true;
+      });
+    },
+    init: function(task, targetLanguage) {
+      this.task = task;
+      this.targetLanguage = targetLanguage;
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    // called before the route that renders this component is confirmed.
+    // does NOT have access to `this` component instance,
+    // because it has not been created yet when this guard is called!
+    const task = to.meta.task;
+    const language = to.params.target;
+    next(vm => {
+      vm.init(task, language);
+    });
+  },
+  beforeRouteUpdate(to, from, next) {
+    // called when the route that renders this component has changed,
+    // but this component is reused in the new route.
+    // For example, for a route with dynamic params `/foo/:id`, when we
+    // navigate between `/foo/1` and `/foo/2`, the same `Foo` component instance
+    // will be reused, and this hook will be called when that happens.
+    // has access to `this` component instance.
+    const task = to.meta.task;
+    const language = to.params.target;
+    this.init(task, language);
+    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    // called when the route that renders this component is about to
+    // be navigated away from.
+    // has access to `this` component instance.
+    next();
   }
 };
 </script>
