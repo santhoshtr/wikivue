@@ -17,9 +17,11 @@
           class="pa-1"
         >
           <v-img
+            eager
             class="banner-img ma-0 px-5"
             :height="isPreview? '100px' : '200px'"
             gradient="to bottom right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4) "
+            :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
             :src="bannerImageUrl"
           >
             <v-card-title class="white--text ma-0 pa-0">
