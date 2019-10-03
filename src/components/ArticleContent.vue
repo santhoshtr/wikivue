@@ -183,6 +183,7 @@ export default {
     ...mapGetters("app", ["contentLanguageDir"]),
     ...mapState({
       contentLanguage: state => state.app.contentLanguage,
+      articleLanguages: state => state.article.metadata.language_links,
       preview: state => state.preview
     })
   },
@@ -201,11 +202,23 @@ export default {
             description: this.article.description
           });
         }
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           this.$refs.article.focus();
-          this.$root.$emit('pageLoaded')
+          this.$root.$emit("pageLoaded");
         });
       }
+    },
+    contentLanguage: function() {
+      let titleInChangedLanguage = this.article.title;
+      const articleInChangedLanguage = this.articleLanguages.find(item =>
+        item.lang === this.contentLanguage
+      );
+      if (articleInChangedLanguage) {
+        titleInChangedLanguage = articleInChangedLanguage.titles.normalized;
+      }
+      this.$router.push(
+        `/page/${this.contentLanguage}/${titleInChangedLanguage}`
+      );
     }
   },
   methods: {
@@ -311,9 +324,7 @@ export default {
       const to = url.pathname;
       if (window.location.pathname !== to && event.preventDefault) {
         event.preventDefault();
-        this.$router.push(
-          `/page/${this.$store.state.app.contentLanguage}/${link.title}`
-        );
+        this.$router.push(`/page/${this.contentLanguage}/${link.title}`);
       }
     },
     referenceClickHandler(referenceLink, event) {
@@ -332,7 +343,7 @@ export default {
         event.preventDefault();
         this.selectedImage = new URL(imageLink.href).pathname.split("/").pop();
       }
-    },
+    }
   }
 };
 </script>
@@ -356,5 +367,4 @@ export default {
 .section-anchor:hover {
   text-decoration: none;
 }
-
 </style>
