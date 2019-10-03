@@ -2,92 +2,87 @@
   <header
     class="artcle-header"
   >
-    <v-layout
-      column
-      class="mt-0"
+    <v-flex
+      xs12
+      sm12
+      md12
+      lg12
     >
-      <v-flex
-        xs12
-        sm12
-        md12
-        lg12
+      <v-card
+        flat
+        class="pa-1"
       >
-        <v-card
-          flat
-          class="pa-1"
+        <v-img
+          eager
+          class="banner-img ma-0 px-5"
+          :height="isPreview? '100px' : '200px'"
+          gradient="to bottom right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4) "
+          :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
+          :src="bannerImageUrl"
         >
-          <v-img
-            eager
-            class="banner-img ma-0 px-5"
-            :height="isPreview? '100px' : '200px'"
-            gradient="to bottom right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4) "
-            :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
-            :src="bannerImageUrl"
+          <v-card-title class="white--text ma-0 pa-0">
+            <h1
+              class=" white--text"
+            >
+              {{ article.title }}
+            </h1>
+          </v-card-title>
+          <v-card-text
+            class="ma-0 pa-0 white--text"
           >
-            <v-card-title class="white--text ma-0 pa-0">
-              <h1
-                class=" white--text"
-              >
-                {{ article.title }}
-              </h1>
-            </v-card-title>
-            <v-card-text
-              class="ma-0 pa-0 white--text"
+            <h3
+              class=" white--text font-weight-regular"
             >
-              <h3
-                class=" white--text font-weight-regular"
-              >
-                {{ description }}
-              </h3>
-            </v-card-text>
-          </v-img>
-          <v-card-actions
-            class="mx-0 pa-0 hidden-sm-and-down"
+              {{ description }}
+            </h3>
+          </v-card-text>
+        </v-img>
+        <v-card-actions
+          class="mx-0 pa-0 hidden-sm-and-down"
+        >
+          <v-btn
+            text
+            class="  body-2 font-weight-regular"
+            :to="`/page/${contentLanguage}/${title}?oldid=${revision}`"
+            v-if="lastmodifier"
           >
-            <v-btn
-              text
-              class="  body-2 font-weight-regular"
-              :to="`/page/${contentLanguage}/${title}?oldid=${revision}`"
-              v-if="lastmodifier"
-            >
-              <v-icon small>
-                mdi-history
-              </v-icon>
-              {{ $i18n('article-lastmodified',lastmodifier.user, lastmodified) }}
-            </v-btn>
-            <div class="flex-grow-1" />
-            <v-btn
-              small
-              text
-              class="font-weight-regular"
-              :href="locationLink(article)"
-              target="__blank"
-              v-if="loaded && article.geo"
-            >
-              <v-icon>mdi-map-marker</v-icon>
-            </v-btn>
-            <v-btn
-              small
-              text
-              class="font-weight-regular"
-              :href="`https://www.wikidata.org/wiki/${article.wikidataId}`"
-              v-if="loaded && article.wikidataId"
-              target="__blank"
-            >
-              <v-img
-                src="../assets/Wikidata-logo.svg"
-                max-width="24"
-              />
-            </v-btn>
-            <audio
-              controls
-              v-if="loaded && article.pronunciation"
-              :src="article.pronunciation.url"
+            <v-icon small>
+              mdi-history
+            </v-icon>
+            {{ $i18n('article-lastmodified',lastmodifier.user, lastmodified) }}
+          </v-btn>
+          <div class="flex-grow-1" />
+          <v-btn
+            small
+            text
+            class="font-weight-regular"
+            :href="locationLink(article)"
+            target="__blank"
+            v-if="loaded && article.geo"
+          >
+            <v-icon>mdi-map-marker</v-icon>
+          </v-btn>
+          <v-btn
+            small
+            text
+            class="font-weight-regular"
+            :href="`https://www.wikidata.org/wiki/${article.wikidataId}`"
+            v-if="loaded && article.wikidataId"
+            target="__blank"
+          >
+            <v-img
+              src="../assets/Wikidata-logo.svg"
+              max-width="24"
             />
-          </v-card-actions>
-        </v-card>
-      </v-flex>
-    </v-layout>
+          </v-btn>
+          <audio
+            controls
+            v-if="loaded && article.pronunciation"
+            :src="article.pronunciation.url"
+          />
+        </v-card-actions>
+      </v-card>
+    </v-flex>
   </header>
 </template>
 
