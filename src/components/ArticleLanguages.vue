@@ -7,10 +7,11 @@
   >
     <template v-slot:activator="{ on }">
       <v-btn
+        text
         value="languages"
         v-on="on"
       >
-        <v-badge
+        <!-- <v-badge
           right
           color="blue"
         >
@@ -18,7 +19,8 @@
             slot="badge"
           >{{ $store.state.article.languagecount }}</span>
           <v-icon>mdi-translate</v-icon>
-        </v-badge>
+        </v-badge> -->
+        <v-icon>mdi-translate</v-icon>
       </v-btn>
     </template>
     <v-card>

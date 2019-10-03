@@ -12,6 +12,24 @@
     />
     <v-layout
       row
+    >
+      <v-flex
+        xs12
+      >
+        <article-header
+          :article="article"
+          :is-preview="isPreview"
+        />
+        <div
+          class="error"
+          :if="error"
+        >
+          {{ error }}
+        </div>
+      </v-flex>
+    </v-layout>
+    <v-layout
+      row
       fill-height
     >
       <v-flex
@@ -36,16 +54,6 @@
           style="outline: none;"
           tabindex="0"
         >
-          <article-header
-            :article="article"
-            :is-preview="isPreview"
-          />
-          <div
-            class="error"
-            :if="error"
-          >
-            {{ error }}
-          </div>
           <v-sheet class="content">
             <section
               v-for="section in sections"

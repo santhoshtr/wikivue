@@ -55,7 +55,7 @@ export default {
   },
   computed:{
     bottomNav(){
-      return !!this.$store.state.article.title
+      return !!this.$store.state.article.title &&  this.$vuetify.breakpoint.smAndDown
     },
     toc(){
       return this.$store.state.article.toc

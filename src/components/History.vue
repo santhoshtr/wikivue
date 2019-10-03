@@ -6,6 +6,7 @@
   >
     <template v-slot:activator="{ on }">
       <v-btn
+        text
         value="languages"
         v-on="on"
       >

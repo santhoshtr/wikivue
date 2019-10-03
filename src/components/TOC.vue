@@ -53,7 +53,7 @@ export default {
 </script>
 
 
-<style scoped>
+<style>
 .toc {
     font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,"Times New Roman", Times, serif;
     font-size: 1.2em;
