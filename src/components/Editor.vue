@@ -72,7 +72,8 @@
                 </v-btn>
                 <v-btn
                   text
-                  @click="commands.link({href: selectedText})"
+                  :class="{ 'v-btn--active': isActive.wikilink() }"
+                  @click="commands.wikilink({title: selectedText})"
                 >
                   <v-icon>mdi-link</v-icon>
                 </v-btn>
@@ -164,13 +165,91 @@
                   <v-icon>mdi-format-list-numbered</v-icon>
                 </v-btn>
                 <v-divider vertical />
-                <v-btn
-                  class="hidden-xs-only"
-                  text
-                  @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })"
+                <v-menu
+                  :fixed="true"
+                  offset-y
                 >
-                  <v-icon>mdi-table-plus</v-icon>
-                </v-btn>
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                      class="hidden-xs-only"
+                      text
+                      v-on="on"
+                      :class="{ 'v-btn--active': isActive.table() }"
+                    >
+                      <v-icon>mdi-table</v-icon>
+                    </v-btn>
+                  </template>
+                  <v-list dense>
+                    <span v-if="!isActive.table()">
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })"
+                      >
+                        <v-icon>mdi-table-plus</v-icon>
+                      </v-btn>
+                    </span>
+                    <span v-if="isActive.table()">
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.addRowBefore"
+                      >
+                        <v-icon>mdi-table-row-plus-before</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.addRowAfter"
+                      >
+                        <v-icon>mdi-table-row-plus-after</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.deleteRow"
+                      >
+                        <v-icon>mdi-table-row-remove</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.addColumnBefore"
+                      >
+                        <v-icon>mdi-table-column-plus-after</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.addColumnBefore"
+                      >
+                        <v-icon>mdi-table-column-plus-before</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.deleteColumn"
+                      >
+                        <v-icon>mdi-table-column-remove</v-icon>
+                      </v-btn>
+                      <v-divider />
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.toggleCellMerge"
+                      >
+                        <v-icon>mdi-table-merge-cells</v-icon>
+                      </v-btn>
+                      <v-btn
+                        class="hidden-xs-only"
+                        text
+                        @click="commands.deleteTable"
+                      >
+                        <v-icon>mdi-table-remove</v-icon>
+                      </v-btn>
+                    </span>
+                  </v-list>
+                </v-menu>
                 <v-btn
                   text
                   :class="{ 'v-btn--active': isActive.blockquote() }"
@@ -200,104 +279,39 @@
             :editor="editor"
             v-slot="{ commands, isActive, getMarkAttrs, menu }"
           >
-            <v-sheet elevation="1">
-              <v-form
-                class="contexttool"
-                v-if=" isActive.link()"
-                :class="{ 'is-active': isActive.link() }"
-                @submit.prevent="setLinkUrl(commands.link, linkUrl)"
-              >
-                <v-toolbar
-                  dense
-                  flat
-                >
-                  <v-icon>mdi-link</v-icon>
-                  <v-text-field
-                    solo
-                    flat
-                    filled
-                    placeholder="Title"
-                    hide-details
-                    :value="getMarkAttrs('link').href"
-                  />
-                  <v-btn
-                    icon
-                    @click="commands.link({})"
-                  >
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    :href="getMarkAttrs('link').href"
-                    target="_blank"
-                  >
-                    <v-icon>mdi-open-in-new</v-icon>
-                  </v-btn>
-                </v-toolbar>
-              </v-form>
-              <v-list
+            <v-sheet
+              class="contexttool"
+              :style="`left: ${menu.left}px; top: ${menu.top}px;`"
+              elevation="1"
+            >
+              <v-toolbar
                 dense
-                v-else-if="isActive.table()"
-                class="contexttool"
-                :class="{ 'is-active': isActive.table()}"
+                v-if=" isActive.wikilink()"
+                :class="{ 'is-active': isActive.wikilink() }"
               >
+                <v-icon>mdi-link</v-icon>
+                <v-text-field
+                  solo
+                  flat
+                  filled
+                  placeholder="Title"
+                  hide-details
+                  :value="getMarkAttrs('wikilink').title"
+                />
                 <v-btn
-                  class="hidden-xs-only"
-                  text
-                  @click="commands.addRowBefore"
+                  icon
+                  @click="commands.wikilink({})"
                 >
-                  <v-icon>mdi-table-row-plus-before</v-icon>
+                  <v-icon>mdi-delete</v-icon>
                 </v-btn>
                 <v-btn
-                  class="hidden-xs-only"
-                  text
-                  @click="commands.addRowAfter"
+                  icon
+                  :href="getMarkAttrs('wikilink').href"
+                  target="_blank"
                 >
-                  <v-icon>mdi-table-row-plus-after</v-icon>
+                  <v-icon>mdi-open-in-new</v-icon>
                 </v-btn>
-                <v-btn
-                  class="hidden-xs-only"
-                  text
-                  @click="commands.deleteRow"
-                >
-                  <v-icon>mdi-table-row-remove</v-icon>
-                </v-btn>
-                <v-btn
-                  class="hidden-xs-only"
-                  text
-                  @click="commands.addColumnBefore"
-                >
-                  <v-icon>mdi-table-column-plus-after</v-icon>
-                </v-btn>
-                <v-btn
-                  class="hidden-xs-only"
-                  text
-                  @click="commands.addColumnBefore"
-                >
-                  <v-icon>mdi-table-column-plus-before</v-icon>
-                </v-btn>
-                <v-btn
-                  class="hidden-xs-only"
-                  text
-                  @click="commands.deleteColumn"
-                >
-                  <v-icon>mdi-table-column-remove</v-icon>
-                </v-btn>
-                <v-btn
-                  class="hidden-xs-only"
-                  text
-                  @click="commands.toggleCellMerge"
-                >
-                  <v-icon>mdi-table-merge-cells</v-icon>
-                </v-btn>
-                <v-btn
-                  class="hidden-xs-only"
-                  text
-                  @click="commands.deleteTable"
-                >
-                  <v-icon>mdi-table-remove</v-icon>
-                </v-btn>
-              </v-list>
+              </v-toolbar>
             </v-sheet>
           </editor-menu-bubble>
           <editor-content
@@ -339,7 +353,7 @@ import {
   EditorContent,
   EditorMenuBar,
   EditorMenuBubble,
-  WikiEditor
+  WikiEditor,
 } from "../plugins/editor";
 
 export default {
@@ -355,6 +369,11 @@ export default {
       html: "Update content to see changes",
       wikitext: "Update the content to see changes",
       linkUrl: null,
+      editor: new WikiEditor({
+          content: '',
+          onInit: this.onEditorInit,
+          onUpdate: this.onEditorUpdate,
+        }),
       content: `
           <h2>
             Title
@@ -376,7 +395,7 @@ export default {
             <br />
             – somebody
           </blockquote>
-          <p>Some <a href="target">link</a></p>
+          <p>Some <a rel="mw:WikiLink" title="targetTitle" href="./targetTitle">link</a></p>
            <table>
               <tr>
                 <th colspan="3" data-colwidth="100,0,0">Wide header</th>
@@ -395,17 +414,13 @@ export default {
         `
     };
   },
+  created() {
+      this.editor.setContent(this.content)
+  },
   computed: {
     ...mapState({
       contentLanguage: state => state.app.contentLanguage
     }),
-    editor: function() {
-      return new WikiEditor({
-        content: this.content,
-        onInit: this.onEditorInit,
-        onUpdate: this.onEditorUpdate
-      });
-    },
     selectedText: function() {
       const { selection, state } = this.editor;
       const { from, to } = selection;
@@ -447,17 +462,17 @@ export default {
 <style lang="less">
 .editor {
   position: relative;
+  padding: 10px;
   .contexttool {
     z-index: 20;
-    align-items: center;
-    display: block;
     position: absolute;
-    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
-      0px 8px 10px 1px rgba(0, 0, 0, 0.14),
-      0px 3px 14px 2px rgba(0, 0, 0, 0.12);
-    border-radius: 4px;
+    display: flex;
+    transform: translateX(-50%);
+    margin-top: 0.5em;
   }
+
   .editor__content {
+    padding: 10px;
     table {
       border-collapse: collapse;
       table-layout: fixed;

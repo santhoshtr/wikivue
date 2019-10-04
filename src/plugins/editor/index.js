@@ -17,6 +17,7 @@ import TableRow from './nodes/TableRow'
 import Bold from './marks/Bold'
 import Code from './marks/Code'
 import Italic from './marks/Italic'
+import WikiLink from './marks/WikiLink'
 import Link from './marks/Link'
 import Strike from './marks/Strike'
 import Underline from './marks/Underline'
@@ -35,6 +36,7 @@ class WikiEditor extends Editor {
                 new HorizontalRule(),
                 new ListItem(),
                 new OrderedList(),
+                new WikiLink(),
                 new Link(),
                 new Image(),
                 new Bold(),

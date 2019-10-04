@@ -5,7 +5,7 @@ import { getMarkAttrs } from 'tiptap-utils'
 export default class Link extends Mark {
 
   get name() {
-    return 'link'
+    return 'wikilink'
   }
 
   get schema() {
@@ -14,26 +14,35 @@ export default class Link extends Mark {
         href: {
           default: null,
         },
+        title: {
+          default: null,
+        }
       },
       inclusive: false,
       parseDOM: [
         {
-          tag: 'a[href]',
+          tag: 'a[rel="mw:WikiLink"]',
           getAttrs: dom => ({
-            href: dom.getAttribute('href'),
+            href: this.getLinkTarget(dom.getAttribute('title')),
+            title: dom.getAttribute('title'),
           }),
         },
       ],
-      toDOM: node => ['a', {
-        ...node.attrs,
-        rel: 'noopener noreferrer nofollow',
-      }, 0],
+      toDOM: node => [
+        'a',
+        {
+          ...node.attrs,
+          rel: 'mw:WikiLink',
+          href: this.getLinkTarget(node.attrs.title)
+        },
+        0
+      ],
     }
   }
 
   commands({ type }) {
     return attrs => {
-      if (attrs.href) {
+      if (attrs.href || attrs.title) {
         return updateMark(type, attrs)
       }
 
@@ -51,6 +60,10 @@ export default class Link extends Mark {
     ]
   }
 
+  getLinkTarget(title){
+    return `./${title}`
+  }
+
   get plugins() {
     return [
       new Plugin({
@@ -58,7 +71,6 @@ export default class Link extends Mark {
           handleClick: (view, pos, event) => {
             const { schema } = view.state
             const attrs = getMarkAttrs(view.state, schema.marks.link)
-
             if (attrs.href && event.ctrlKey && event.target instanceof HTMLAnchorElement) {
               event.stopPropagation()
               window.open(attrs.href)
