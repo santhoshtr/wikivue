@@ -10,7 +10,7 @@
     clearable
     item-text="title"
     item-value="title"
-    placeholder="Search"
+    :placeholder="$i18n('header-search')"
     return-object
     auto-select-first
     attach=".search"
