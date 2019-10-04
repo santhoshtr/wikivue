@@ -19,7 +19,7 @@
           :height="isPreview? '100px' : '200px'"
           gradient="to bottom right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4) "
           :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
-          :src="bannerImageUrl"
+          :src="bannerImageUrl || require('@/assets/Wikipedia logo version 2.svg?lazy')"
         >
           <v-card-title class="white--text ma-0">
             <h1
@@ -51,16 +51,21 @@
           md3
           lg3
         >
-          <v-img
-            eager
-            class="banner-img mp-5"
-            :height="isPreview? '100px' : '150px'"
-            width="100%"
-            :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
-            :src="bannerImageUrl"
-            cover
-            position="top left"
-          />
+          <v-sheet
+            min-width="100%"
+            min-height="100%"
+          >
+            <v-img
+              eager
+              v-if="bannerImageUrl"
+              class="banner-img mp-5"
+              :height="isPreview? '100px' : '150px'"
+              width="100%"
+              :src="bannerImageUrl"
+              contain
+              position="right center"
+            />
+          </v-sheet>
         </v-flex>
         <v-flex
           md9
@@ -87,6 +92,7 @@
             </v-card-text>
             <v-card-text
               class="ma-0 py-0 align-end"
+              v-if="!isPreview"
             >
               <h3
                 class="body-2 font-weight-thin"
@@ -202,7 +208,7 @@ export default {
     },
     bannerImageUrl: function(){
       const imgURL = this.article.image && this.article.image.urls && this.article.image.urls[1024];
-      return imgURL || require('@/assets/Wikipedia logo version 2.svg?lazy');
+      return imgURL;
     },
     revision: function(){
       return this.article.history.lastrevision
