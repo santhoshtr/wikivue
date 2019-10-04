@@ -1,5 +1,5 @@
 {
-  "name": "Wikipedia",
+  "name": "wikipedia",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,7 +15,7 @@
     "debounce": "^1.2.0",
     "prosemirror-history": "^1.0.4",
     "register-service-worker": "^1.6.2",
-    "tiptap": "^1.25.0",
+    "tiptap": "^1.26.1",
     "vue": "^2.6.10",
     "vue-banana-i18n": "^1.0.4",
     "vue-router": "^3.1.3",
