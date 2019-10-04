@@ -109,6 +109,7 @@
       items: [
         { icon: 'mdi-home', msg: 'menu-home', href:"/" },
         { icon: 'mdi-dice-5', msg: 'menu-random', href:"/page/random" },
+        { icon: 'mdi-compass', msg: 'menu-explore', href:"/explore" },
         { icon: 'mdi-map-marker-circle', msg: 'menu-nearby', href:"/nearby" },
         { icon: 'mdi-star', msg: 'menu-watchlist', href:"/user/watchlist" },
         { icon: 'mdi-account-check', msg: 'menu-contributions', href:"/user/contributions" },
