@@ -23,7 +23,7 @@
               :to="'Category:'+item.titles.display"
             >
               <v-list-item-title>
-                <v-icon>bookmark_border</v-icon>
+                <v-icon>mdi-tag</v-icon>
                 {{ item.titles.display }}
               </v-list-item-title>
             </v-list-item>
