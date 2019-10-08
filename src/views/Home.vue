@@ -7,30 +7,40 @@
     align-center
   >
     <v-card
-      max-width="400px"
+      max-width="300px"
       min-width="300px"
       :to="`/page/${contentLanguage}/${article.normalizedtitle}`"
       class="ma-2 overflow-y-hidden"
-      height="50vh"
+      height="300px"
       v-for="article in [...tfa, ...mostreadArticles]"
       :key="article.pageid"
     >
       <v-img
         :src="article.thumbnail? article.thumbnail.source:require('@/assets/Wikipedia logo version 2.svg?lazy')"
         cover
-        aspect-ratio="2.5"
-      />
-
-      <v-card-title>
-        <h3
-          class="headline mb-0"
-          v-html="article.displaytitle"
-        />
-      </v-card-title>
-      <v-card-text class="extract text-xs-left overflow-y-hidden mb-2 pb-2">
-        <h4>{{ article.description }}</h4>
-        <p v-html="article.extract_html" />
-      </v-card-text>
+        height="300px"
+      >
+        <v-row
+          class="fill-height align-end "
+          style="opacity: 0.85;"
+        >
+          <v-col class="px-2 py-0 ma-0">
+            <v-card-title
+              class="pa-0 px-2 grey darken-3 white--text overflow-hidden text-no-wrap"
+            >
+              <h3
+                class="headline mb-0"
+                v-html="article.displaytitle"
+              />
+            </v-card-title>
+            <v-card-text
+              class="extract px-2 text-xs-left overflow-hidden text-no-wrap grey darken-3 white--text"
+            >
+              <h4>{{ article.description }}</h4>
+            </v-card-text>
+          </v-col>
+        </v-row>
+      </v-img>
     </v-card>
   </v-layout>
 </template>

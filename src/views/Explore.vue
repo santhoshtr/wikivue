@@ -45,7 +45,7 @@
                   >
                     <v-col class="px-2 py-0 ma-0">
                       <v-card-title
-                        class="pa-0 grey darken-3 "
+                        class="pa-0 grey darken-3"
                         style="opacity: 0.85;"
                       >
                         <v-btn icon>
@@ -125,18 +125,18 @@
               >
                 <v-col class="px-2 py-0 ma-0">
                   <v-card-title
-                    class="pa-0 px-2 grey darken-3 white--text "
+                    class="pa-0 px-2 grey darken-3 white--text overflow-hidden text-no-wrap"
                   >
                     <h3
-                      class="title overflow-y-hidden "
+                      class="title overflow-hidden "
                       v-text="article.itemLabel.value"
                     />
                   </v-card-title>
                   <v-card-text
                     v-if="article.itemDescription"
-                    class="extract px-2 text-xs-left overflow-y-hidden grey darken-3 white--text"
+                    class="extract px-2 text-xs-left overflow-hidden text-no-wrap grey darken-3 white--text"
                   >
-                    <span>{{ article.itemDescription.value }}</span>
+                    <h4>{{ article.itemDescription.value }}</h4>
                   </v-card-text>
                 </v-col>
               </v-row>
