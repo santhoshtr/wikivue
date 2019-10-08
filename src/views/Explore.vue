@@ -35,20 +35,32 @@
             >
               <v-card @click="toggle">
                 <v-img
-                  :src="item.image"
-                  height="80"
+                  :src="`${item.image}?width=300`"
+                  height="100"
                   width="100%"
                   cover
-                />
-                <v-card-title class="pa-0">
-                  <v-btn icon>
-                    <v-icon>{{ active ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
-                  </v-btn>
-                  <h3
-                    class="title mb-0 overflow-y-hidden"
-                    v-text="item.name"
-                  />
-                </v-card-title>
+                >
+                  <v-row
+                    class="fill-height align-end"
+                  >
+                    <v-col class="px-2 py-0 ma-0">
+                      <v-card-title
+                        class="pa-0 grey darken-3 "
+                        style="opacity: 0.85;"
+                      >
+                        <v-btn icon>
+                          <v-icon class="white--text">
+                            {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
+                          </v-icon>
+                        </v-btn>
+                        <h3
+                          class="title mb-0 overflow-y-hidden white--text"
+                          v-text="item.name"
+                        />
+                      </v-card-title>
+                    </v-col>
+                  </v-row>
+                </v-img>
               </v-card>
             </v-item>
           </v-col>
@@ -105,20 +117,30 @@
               :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
               :src="article.image? `${article.image.value}?width=300`:require('@/assets/Wikipedia logo version 2.svg?lazy')"
               cover
-              aspect-ratio="2.5"
-            />
-            <v-card-title class="px-1">
-              <h3
-                class="title overflow-y-hidden"
-                v-text="article.itemLabel.value"
-              />
-            </v-card-title>
-            <v-card-text
-              v-if="article.itemDescription"
-              class="extract px-1 text-xs-left overflow-y-hidden"
+              height="200px"
             >
-              <span>{{ article.itemDescription.value }}</span>
-            </v-card-text>
+              <v-row
+                class="fill-height align-end "
+                style="opacity: 0.85;"
+              >
+                <v-col class="px-2 py-0 ma-0">
+                  <v-card-title
+                    class="pa-0 px-2 grey darken-3 white--text "
+                  >
+                    <h3
+                      class="title overflow-y-hidden "
+                      v-text="article.itemLabel.value"
+                    />
+                  </v-card-title>
+                  <v-card-text
+                    v-if="article.itemDescription"
+                    class="extract px-2 text-xs-left overflow-y-hidden grey darken-3 white--text"
+                  >
+                    <span>{{ article.itemDescription.value }}</span>
+                  </v-card-text>
+                </v-col>
+              </v-row>
+            </v-img>
           </v-card>
         </v-col>
       </v-row>
@@ -157,7 +179,6 @@ export default {
   },
   watch: {
     selected: function() {
-        console.log(this.task)
       if (this.task === "explore") {
         this.fetchArticles(this.selected);
       }
