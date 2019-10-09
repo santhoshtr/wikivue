@@ -128,6 +128,7 @@
           <article-preview
             :preview="preview"
             :show="previewShown"
+            @close="previewShown = !previewShown"
           />
         </article>
       </v-flex>
@@ -274,16 +275,8 @@ export default {
       for (let i = 0; i < links.length; i++) {
         const link = links[i];
         link.addEventListener("click", event =>
-          this.wikilinkClickHandler(link, event)
+          this.wikilinkHoverHandler(link, event)
         );
-        if (this.$vuetify.breakpoint.mdAndUp) {
-          link.addEventListener("mouseover", event =>
-            this.wikilinkHoverHandler(link, event)
-          );
-        }
-        link.addEventListener("mouseout", event => {
-          this.previewShown = false;
-        });
       }
 
       const references = document.querySelectorAll("section a[href^='#cite']");
@@ -308,18 +301,11 @@ export default {
       const to = url.pathname;
       if (window.location.pathname !== to && event.preventDefault) {
         event.preventDefault();
-        setTimeout(() => {
-          this.$store.dispatch("preview/fetch", {
-            title: link.title,
-            language: this.contentLanguage
-          });
-        }, 500);
-        // Still hovered.
-        setTimeout(() => {
-          if (link.matches(":hover") && this.loaded) {
-            this.previewShown = true;
-          }
-        }, 1500);
+        this.$store.dispatch("preview/fetch", {
+          title: link.title,
+          language: this.contentLanguage
+        });
+        this.previewShown=true;
       }
     },
     wikilinkClickHandler(link, event) {

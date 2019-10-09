@@ -1,9 +1,16 @@
 <template>
   <v-bottom-sheet
-    hide-overlay
+    :fullscreen="fullscreen"
     v-model="shown"
   >
-    <v-sheet class="article-preview">
+    <v-btn
+      small
+      block
+      @click="onRead"
+    >
+      <v-icon>mdi-arrow-collapse-up</v-icon>Read article
+    </v-btn>
+    <v-sheet class="article-preview m1-1">
       <preview-content
         :article="preview"
         :is-preview="true"
@@ -13,30 +20,52 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 
 export default {
   name: "ArticlePreview",
   data: () => ({
-    shown: false
+    shown: false,
+    fullscreen: false
   }),
   props: {
     preview: {
       type: Object,
       default: () => null
     },
-    show:{
+    show: {
       type: Boolean,
-      default:false
+      default: false
     }
   },
   components: {
     // Recursive component - must be named and imported like this to
     // avoid many issues in build.
-    'preview-content':  () => import('./ArticleContent')
+    "preview-content": () => import("./ArticleContent")
+  },
+  computed: {
+    ...mapState({
+      contentLanguage: state => state.app.contentLanguage
+    })
   },
   watch: {
     show: function() {
       this.shown = this.show;
+    },
+    shown: function() {
+      if (!this.shown) {
+        this.$emit("close");
+      }
+    }
+  },
+  methods: {
+    onRead: function() {
+      this.fullscreen = true;
+      setTimeout(() => {
+        this.shown = false;
+        this.fullscreen = false;
+      }, 100);
+      this.$router.push(`/page/${this.contentLanguage}/${this.preview.title}`);
     }
   }
 };
