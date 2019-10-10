@@ -79,71 +79,69 @@
       justify-center
       wrap
       row
-      class="ma-1"
+      class="ma-auto"
       align-center
     >
-      <v-row>
-        <v-col
-          cols="12"
-          md="12"
+      <v-container>
+        <h2
+          v-if="task==='explore'"
+          class="title"
         >
-          <h2
-            v-if="task==='explore'"
-            class="title"
-          >
-            Articles from selected topic
-          </h2>
-          <h2
-            v-if="task==='translate'"
-            class="title"
-          >
-            {{ selectedTopic }} articles to translate from {{ autonym(contentLanguage) }} to {{ autonym(targetLanguage) }}
-          </h2>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
-          v-for="article in articles"
-          :key="article.item.value"
-          cols="12"
-          md="3"
-          sm="4"
+          Articles from selected topic
+        </h2>
+        <h2
+          v-if="task==='translate'"
+          class="title"
         >
-          <v-card
-            class="ma-2"
-            :to="task==='explore'?`/page/${contentLanguage}/${article.itemLabel.value}`:`//en.wikipedia.org/wiki/Special:CX?page=${article.itemLabel.value}&from=${contentLanguage}&to=${targetLanguage}`"
+          {{ selectedTopic }} articles to translate from {{ autonym(contentLanguage) }} to {{ autonym(targetLanguage) }}
+        </h2>
+
+        <v-row>
+          <v-col
+            v-for="article in articles"
+            :key="article.item.value"
+            cols="12"
+            md="3"
+            sm="4"
           >
-            <v-img
-              :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
-              :src="article.image? `${article.image.value}?width=300`:require('@/assets/Wikipedia logo version 2.svg?lazy')"
-              cover
-              height="200px"
+            <v-card
+              class="ma-2"
+              height="300px"
+              :to="task==='explore'?`/page/${contentLanguage}/${article.itemLabel.value}`:`//en.wikipedia.org/wiki/Special:CX?page=${article.itemLabel.value}&from=${contentLanguage}&to=${targetLanguage}`"
             >
-              <v-row
-                class="fill-height align-end "
-                style="opacity: 0.85;"
+              <v-img
+                :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
+                :src="article.image? `${article.image.value}?width=300`:require('@/assets/Wikipedia logo version 2.svg?lazy')"
+                cover
+                width="100%"
+                height="300px"
               >
-                <v-col class="px-2 py-0 ma-0">
-                  <v-card-title
-                    class="pa-0 px-2 grey darken-3 white--text overflow-hidden text-no-wrap"
-                  >
-                    <h3
-                      class="title overflow-hidden "
-                      v-text="article.itemLabel.value"
-                    />
-                  </v-card-title>
-                  <v-card-text
-                    v-if="article.itemDescription"
-                    class="extract px-2 text-xs-left overflow-hidden text-no-wrap grey darken-3 white--text"
-                  >
-                    <h4>{{ article.itemDescription.value }}</h4>
-                  </v-card-text>
-                </v-col>
-              </v-row>
-            </v-img>
-          </v-card>
-        </v-col>
-      </v-row>
+                <v-row
+                  class="fill-height align-end "
+                  style="opacity: 0.85;"
+                >
+                  <v-col class="px-2 py-0 ma-0">
+                    <v-card-title
+                      class="pa-0 px-2 grey darken-3 white--text overflow-hidden text-no-wrap"
+                    >
+                      <h3
+                        class="title overflow-hidden "
+                        v-text="article.itemLabel.value"
+                      />
+                    </v-card-title>
+                    <v-card-text
+                      v-if="article.itemDescription"
+                      class="extract px-2 text-xs-left overflow-hidden text-no-wrap grey darken-3 white--text"
+                    >
+                      <h4>{{ article.itemDescription.value }}</h4>
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+              </v-img>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-layout>
   </v-layout>
 </template>
