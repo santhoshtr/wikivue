@@ -107,7 +107,8 @@
             <v-card
               class="ma-2"
               height="300px"
-              :to="task==='explore'?`/page/${contentLanguage}/${article.itemLabel.value}`:`//en.wikipedia.org/wiki/Special:CX?page=${article.itemLabel.value}&from=${contentLanguage}&to=${targetLanguage}`"
+              :to="task==='explore' && `/page/${contentLanguage}/${article.itemLabel.value}`"
+              :href="task==='translate' && `https://en.wikipedia.org/wiki/Special:CX?page=${article.itemLabel.value}&from=${contentLanguage}&to=${targetLanguage}`"
             >
               <v-img
                 :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
