@@ -1,7 +1,10 @@
 <template>
-  <v-container
-    fluid
-    class="my-0 py-0"
+  <article
+    :lang="contentLanguage"
+    :dir="contentLanguageDir"
+    ref="article"
+    style="outline: none;"
+    tabindex="0"
   >
     <v-progress-linear
       :active="!loaded"
@@ -39,7 +42,13 @@
         lg3
         hidden-sm-and-down
       >
-        <table-of-contents :toc="toc" />
+        <v-sheet
+          style="height:100%;"
+          class="px-2"
+        >
+          <table-of-contents :toc="toc" />
+          <v-sheet />
+        </v-sheet>
       </v-flex>
       <v-flex
         xs12
@@ -47,24 +56,51 @@
         md9
         lg9
       >
-        <article
-          :lang="contentLanguage"
-          :dir="contentLanguageDir"
-          ref="article"
-          style="outline: none;"
-          tabindex="0"
-        >
-          <v-sheet class="content">
-            <section
-              v-for="section in sections"
-              :key="`section-${section.id}`"
-              :id="section.anchor"
-              class="py-4 px-2 ma-0"
+        <v-sheet class="content px-3">
+          <section
+            v-for="section in sections"
+            :key="`section-${section.id}`"
+            :id="section.anchor"
+            class="py-4 px-2 ma-0"
+          >
+            <a
+              :href="`#${section.anchor}`"
+              class="section-anchor text--primary"
             >
-              <a
-                :href="`#${section.anchor}`"
-                class="section-anchor text--primary"
-              >
+              <h2
+                v-if="section.toclevel===1"
+                v-html="section.heading"
+              />
+              <h3
+                v-else
+                v-html="section.heading"
+              />
+            </a>
+            <v-layout
+              row
+              fill-height
+              class="pa-0 ma-0"
+            >
+              <div
+                class="flex md8 lg8 xs12 sm12"
+                v-html="section.content"
+              />
+              <aside
+                class="flex px-2 md4 lg4 hidden-sm-and-down section-aside"
+                v-html="section.aside"
+              />
+            </v-layout>
+          </section>
+          <v-expansion-panels
+            accordion
+            class="mb-5"
+          >
+            <v-expansion-panel
+              v-for="(section,i) in collapsibleSections"
+              :key="`section-collapsible-${i}`"
+              :id="section.anchor"
+            >
+              <v-expansion-panel-header>
                 <h2
                   v-if="section.toclevel===1"
                   v-html="section.heading"
@@ -73,67 +109,32 @@
                   v-else
                   v-html="section.heading"
                 />
-              </a>
-              <v-layout
-                row
-                fill-height
-                class="pa-0 ma-0"
-              >
-                <div
-                  class="flex md8 lg8 xs12 sm12"
-                  v-html="section.content"
-                />
-                <aside
-                  class="flex px-2 md4 lg4 hidden-sm-and-down section-aside"
-                  v-html="section.aside"
-                />
-              </v-layout>
-            </section>
-            <v-expansion-panels
-              accordion
-              class="mb-5"
-            >
-              <v-expansion-panel
-                v-for="(section,i) in collapsibleSections"
-                :key="`section-collapsible-${i}`"
-                :id="section.anchor"
-              >
-                <v-expansion-panel-header>
-                  <h2
-                    v-if="section.toclevel===1"
-                    v-html="section.heading"
-                  />
-                  <h3
-                    v-else
-                    v-html="section.heading"
-                  />
-                </v-expansion-panel-header>
-                <v-expansion-panel-content v-html="section.content" />
-              </v-expansion-panel>
-            </v-expansion-panels>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content v-html="section.content" />
+            </v-expansion-panel>
+          </v-expansion-panels>
 
-            <v-divider />
-            <template v-if="loaded">
-              <article-footer :article="article" />
-            </template>
-          </v-sheet>
-          <reference
-            :reference="selectedReference"
-            :if="selectedReference"
-          />
-          <image-viewer
-            :if="selectedImage"
-            :imgsrc="selectedImage"
-          />
-          <article-preview
-            :preview="preview"
-            :show="previewShown"
-            @close="previewShown = !previewShown"
-          />
-        </article>
+          <v-divider />
+          <template v-if="loaded">
+            <article-footer :article="article" />
+          </template>
+        </v-sheet>
+        <reference
+          :reference="selectedReference"
+          :if="selectedReference"
+        />
+        <image-viewer
+          :if="selectedImage"
+          :imgsrc="selectedImage"
+        />
+        <article-preview
+          :preview="preview"
+          :show="previewShown"
+          @close="previewShown = !previewShown"
+        />
       </v-flex>
     </v-layout>
-  </v-container>
+  </article>
 </template>
 
 <script>

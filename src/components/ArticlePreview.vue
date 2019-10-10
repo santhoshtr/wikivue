@@ -10,7 +10,7 @@
     >
       <v-icon>mdi-arrow-collapse-up</v-icon>Read article
     </v-btn>
-    <v-sheet class="article-preview m1-1">
+    <v-sheet class="article-preview pt-1">
       <preview-content
         :article="preview"
         :is-preview="true"
