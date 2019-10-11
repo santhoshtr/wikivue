@@ -3,7 +3,7 @@
     :lang="contentLanguage"
     :dir="contentLanguageDir"
     ref="article"
-    style="outline: none;"
+    :style="$vuetify.breakpoint.smAndDown && 'overflow:hidden;'"
     tabindex="0"
   >
     <v-progress-linear
@@ -42,13 +42,7 @@
         lg3
         hidden-sm-and-down
       >
-        <v-sheet
-          style="height:100%;"
-          class="px-2"
-        >
-          <table-of-contents :toc="toc" />
-          <v-sheet />
-        </v-sheet>
+        <table-of-contents :toc="toc" />
       </v-flex>
       <v-flex
         xs12
