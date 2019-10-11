@@ -1,14 +1,26 @@
 @import url('./fonts/Libertinus/Libertinus.css');
-@import url('./fonts/Rachana/Rachana.css');
+@import url('./fonts/Manjari/Manjari.css');
+@import url('./fonts/Gayathri/Gayathri.css');
 
 // Common, Also Latin.
 article {
     font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,
         "Times New Roman", Times, serif;
 
-    p {
-        line-height: 1.5;
+    .toc {
+        font-family: "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
         font-size: 1.2em;
+    }
+
+    section {
+        h2, h3, h4 {
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            line-height: 1.5;
+            font-size: 1.2em;
+        }
     }
 
     header {
@@ -22,6 +34,7 @@ article {
         }
     }
 }
+
 // Indic scripts
 article:lang(anp),
 article:lang(as),
@@ -67,15 +80,29 @@ article:lang(te) {
 }
 
 article:lang(ml) {
-    font-family: "Rachana", "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
+    font-family: "Manjari", "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
 
-    p {
-        line-height: 1.4;
-        font-size: 1.3em;
+    .toc {
+        font-family: "Manjari", "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
+        font-size: 1.2em;
     }
+    section {
+        p {
+            line-height: 1.4;
+            font-size: 1.2em;
+        }
+
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: "Gayathri", sans;
+        }
+    }
+
     header {
         h1 {
-            font-family: "Rachana", "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
+            font-family: "Gayathri", "Libertinus Serif", "Gentium", Georgia, Cambria, "Times New Roman", Times, serif;
 
             font-weight: 100;
             line-height: 1.4;

@@ -1,6 +1,6 @@
 <template>
   <v-sheet
-    class="toc fill-height py-2 px-4"
+    class="toc fill-height ml-4 py-2 px-4"
     v-if="toc.length>1"
   >
     <h1
@@ -55,8 +55,6 @@ export default {
 
 <style>
 .toc {
-    font-family: "Libertinus Serif", "Gentium", Georgia, Cambria,"Times New Roman", Times, serif;
-    font-size: 1.2em;
     position: sticky;
     top: 0;
     width: 100%;
