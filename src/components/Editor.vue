@@ -347,8 +347,6 @@
 
 <script>
 import { mapGetters, mapState, mapMutations } from "vuex";
-import axios from "axios";
-import debounce from "debounce";
 import {
   EditorContent,
   EditorMenuBar,
@@ -416,6 +414,7 @@ export default {
   },
   created() {
       this.editor.setContent(this.content)
+      this.editor.contentLanguage=this.contentLanguage;
   },
   computed: {
     ...mapState({
@@ -436,14 +435,10 @@ export default {
     },
     onTabChange(tabId) {
       if (tabId === "tab-wikitext") {
-        this.html2wikitext(this.html);
+        this.editor.html2wikitext(this.html).then((wikitext)=>{
+          this.wikitext=wikitext;
+        });
       }
-    },
-    html2wikitext(html) {
-      const api = `https://${this.contentLanguage}.wikipedia.org/api/rest_v1/transform/html/to/wikitext`;
-      axios.post(api, { html, scrub_wikitext: true }).then(response => {
-        this.wikitext = response.data;
-      });
     },
     hideLinkMenu() {
       this.linkUrl = null;
