@@ -19,7 +19,7 @@ The user interface of Wikipedia evolved [very slowly](https://www.versionmuseum.
 moved very fast and a new generation of users started their digital life in it, the current interface of Wikipedia is not pleasent or attractive.
 
 This project attempts to build a modern fresh interface using latest web technologies, using some design principles suitable for such a content heavy website. 
-This web application is built just using Wikipedia's public APIs. It does not attempt to have every feature the Wikipedia aquited over the several years, instead it just focus on basic usecases.
+This web application is built just using Wikipedia's public APIs. It does not attempt to have every feature the Wikipedia acquired over the several years, instead it just focus on basic usecases.
 
 Once done, it should also be a proof that applications with varying complexities and design principles are possible on top of Wikipedia APIs. 
 
