@@ -1,11 +1,5 @@
 <template>
-  <v-layout
-    justify-center
-    wrap
-    row
-    class="ma-auto"
-    align-center
-  >
+  <v-layout justify-center wrap row class="ma-auto" align-center>
     <v-card
       max-width="300px"
       min-width="300px"
@@ -16,22 +10,20 @@
       :key="article.pageid"
     >
       <v-img
-        :src="article.thumbnail? article.thumbnail.source:require('@/assets/Wikipedia logo version 2.svg?lazy')"
+        :src="
+          article.thumbnail
+            ? article.thumbnail.source
+            : require('@/assets/Wikipedia logo version 2.svg?lazy')
+        "
         cover
         height="300px"
       >
-        <v-row
-          class="fill-height align-end "
-          style="opacity: 0.85;"
-        >
+        <v-row class="fill-height align-end " style="opacity: 0.85;">
           <v-col class="px-2 py-0 ma-0">
             <v-card-title
               class="pa-0 px-2 grey darken-3 white--text overflow-hidden text-no-wrap"
             >
-              <h3
-                class="headline mb-0"
-                v-html="article.displaytitle"
-              />
+              <h3 class="headline mb-0" v-html="article.displaytitle" />
             </v-card-title>
             <v-card-text
               class="extract px-2 text-xs-left overflow-hidden text-no-wrap grey darken-3 white--text"
@@ -47,7 +39,7 @@
 
 <script>
 import axios from "axios";
-import { mapGetters, mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "Home",
@@ -74,10 +66,12 @@ export default {
       const year = today.getFullYear();
       const month = ("0" + (today.getMonth() + 1)).slice(-2);
       const date = ("0" + today.getDate()).slice(-2);
-      const api = `https://${this.contentLanguage}.wikipedia.org/api/rest_v1/feed/featured/${year}/${month}/${date}`;
+      const api = `https://${
+        this.contentLanguage
+      }.wikipedia.org/api/rest_v1/feed/featured/${year}/${month}/${date}`;
       axios.get(api).then(response => {
         this.mostreadArticles = response.data.mostread.articles;
-        this.tfa = response.data.tfa? [response.data.tfa] : [];
+        this.tfa = response.data.tfa ? [response.data.tfa] : [];
       });
     }
   }

@@ -1,14 +1,7 @@
 <template>
   <div class="editor">
-    <v-container
-      fluid
-      class="pa-0"
-    >
-      <v-tabs
-        class="elevation-1"
-        grow
-        @change="onTabChange"
-      >
+    <v-container fluid class="pa-0">
+      <v-tabs class="elevation-1" grow @change="onTabChange">
         <v-tabs-slider />
 
         <v-tab :href="`#tab-editor`">
@@ -21,27 +14,14 @@
           <v-icon>mdi-code-braces</v-icon>
         </v-tab>
         <v-tab-item :value="'tab-editor'">
-          <editor-menu-bar
-            :editor="editor"
-            v-slot="{ commands, isActive }"
-          >
-            <v-toolbar
-              dense
-              flat
-              elevation="1"
-            >
+          <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+            <v-toolbar dense flat elevation="1">
               <v-btn-toggle>
-                <v-btn
-                  text
-                  @click="commands.undo"
-                >
+                <v-btn text @click="commands.undo">
                   <v-icon>mdi-undo</v-icon>
                 </v-btn>
 
-                <v-btn
-                  text
-                  @click="commands.redo"
-                >
+                <v-btn text @click="commands.redo">
                   <v-icon>mdi-redo</v-icon>
                 </v-btn>
               </v-btn-toggle>
@@ -73,20 +53,14 @@
                 <v-btn
                   text
                   :class="{ 'v-btn--active': isActive.wikilink() }"
-                  @click="commands.wikilink({title: selectedText})"
+                  @click="commands.wikilink({ title: selectedText })"
                 >
                   <v-icon>mdi-link</v-icon>
                 </v-btn>
               </v-btn-toggle>
-              <v-menu
-                :fixed="true"
-                offset-y
-              >
+              <v-menu :fixed="true" offset-y>
                 <template v-slot:activator="{ on }">
-                  <v-btn
-                    text
-                    v-on="on"
-                  >
+                  <v-btn text v-on="on">
                     <v-icon>mdi-format-header-1</v-icon>
                   </v-btn>
                 </template>
@@ -95,7 +69,9 @@
                     <v-list-tile-content>
                       <v-btn
                         text
-                        :class="{ 'v-btn--active': isActive.heading({ level: 1 }) }"
+                        :class="{
+                          'v-btn--active': isActive.heading({ level: 1 })
+                        }"
                         @click="commands.heading({ level: 1 })"
                       >
                         <v-icon>mdi-format-header-1</v-icon>
@@ -106,7 +82,9 @@
                     <v-list-tile-content>
                       <v-btn
                         text
-                        :class="{ 'v-btn--active': isActive.heading({ level: 2 }) }"
+                        :class="{
+                          'v-btn--active': isActive.heading({ level: 2 })
+                        }"
                         @click="commands.heading({ level: 2 })"
                       >
                         <v-icon>mdi-format-header-2</v-icon>
@@ -117,7 +95,9 @@
                     <v-list-tile-content>
                       <v-btn
                         text
-                        :class="{ 'v-btn--active': isActive.heading({ level: 3 }) }"
+                        :class="{
+                          'v-btn--active': isActive.heading({ level: 3 })
+                        }"
                         @click="commands.heading({ level: 3 })"
                       >
                         <v-icon>mdi-format-header-3</v-icon>
@@ -128,7 +108,9 @@
                     <v-list-tile-content>
                       <v-btn
                         text
-                        :class="{ 'v-btn--active': isActive.heading({ level: 4 }) }"
+                        :class="{
+                          'v-btn--active': isActive.heading({ level: 4 })
+                        }"
                         @click="commands.heading({ level: 4 })"
                       >
                         <v-icon>mdi-format-header-4</v-icon>
@@ -139,7 +121,9 @@
                     <v-list-tile-content>
                       <v-btn
                         text
-                        :class="{ 'v-btn--active': isActive.heading({ level: 5 }) }"
+                        :class="{
+                          'v-btn--active': isActive.heading({ level: 5 })
+                        }"
                         @click="commands.heading({ level: 5 })"
                       >
                         <v-icon>mdi-format-header-5</v-icon>
@@ -165,10 +149,7 @@
                   <v-icon>mdi-format-list-numbered</v-icon>
                 </v-btn>
                 <v-divider vertical />
-                <v-menu
-                  :fixed="true"
-                  offset-y
-                >
+                <v-menu :fixed="true" offset-y>
                   <template v-slot:activator="{ on }">
                     <v-btn
                       class="hidden-xs-only"
@@ -184,7 +165,13 @@
                       <v-btn
                         class="hidden-xs-only"
                         text
-                        @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })"
+                        @click="
+                          commands.createTable({
+                            rowsCount: 3,
+                            colsCount: 3,
+                            withHeaderRow: false
+                          })
+                        "
                       >
                         <v-icon>mdi-table-plus</v-icon>
                       </v-btn>
@@ -266,10 +253,7 @@
                   <v-icon>mdi-code-tags</v-icon>
                 </v-btn>
 
-                <v-btn
-                  text
-                  @click="commands.horizontal_rule"
-                >
+                <v-btn text @click="commands.horizontal_rule">
                   <v-icon>mdi-minus</v-icon>
                 </v-btn>
               </v-btn-toggle>
@@ -286,7 +270,7 @@
             >
               <v-toolbar
                 dense
-                v-if=" isActive.wikilink()"
+                v-if="isActive.wikilink()"
                 :class="{ 'is-active': isActive.wikilink() }"
               >
                 <v-icon>mdi-link</v-icon>
@@ -298,10 +282,7 @@
                   hide-details
                   :value="getMarkAttrs('wikilink').title"
                 />
-                <v-btn
-                  icon
-                  @click="commands.wikilink({})"
-                >
+                <v-btn icon @click="commands.wikilink({})">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
                 <v-btn
@@ -314,10 +295,7 @@
               </v-toolbar>
             </v-sheet>
           </editor-menu-bubble>
-          <editor-content
-            class="editor__content"
-            :editor="editor"
-          />
+          <editor-content class="editor__content" :editor="editor" />
         </v-tab-item>
         <v-tab-item :value="'tab-html'">
           <v-card>
@@ -335,23 +313,19 @@
         </v-tab-item>
       </v-tabs>
       <v-row>
-        <v-col
-          cols="12"
-          sm="12"
-          class="editor px-4"
-        />
+        <v-col cols="12" sm="12" class="editor px-4" />
       </v-row>
     </v-container>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 import {
   EditorContent,
   EditorMenuBar,
   EditorMenuBubble,
-  WikiEditor,
+  WikiEditor
 } from "../plugins/editor";
 
 export default {
@@ -368,10 +342,10 @@ export default {
       wikitext: "Update the content to see changes",
       linkUrl: null,
       editor: new WikiEditor({
-          content: '',
-          onInit: this.onEditorInit,
-          onUpdate: this.onEditorUpdate,
-        }),
+        content: "",
+        onInit: this.onEditorInit,
+        onUpdate: this.onEditorUpdate
+      }),
       content: `
           <h2>
             Title
@@ -413,8 +387,8 @@ export default {
     };
   },
   created() {
-      this.editor.setContent(this.content)
-      this.editor.contentLanguage=this.contentLanguage;
+    this.editor.setContent(this.content);
+    this.editor.contentLanguage = this.contentLanguage;
   },
   computed: {
     ...mapState({
@@ -435,8 +409,8 @@ export default {
     },
     onTabChange(tabId) {
       if (tabId === "tab-wikitext") {
-        this.editor.html2wikitext(this.html).then((wikitext)=>{
-          this.wikitext=wikitext;
+        this.editor.html2wikitext(this.html).then(wikitext => {
+          this.wikitext = wikitext;
         });
       }
     },

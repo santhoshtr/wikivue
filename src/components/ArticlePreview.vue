@@ -1,20 +1,10 @@
 <template>
-  <v-bottom-sheet
-    :fullscreen="fullscreen"
-    v-model="shown"
-  >
-    <v-btn
-      small
-      block
-      @click="onRead"
-    >
+  <v-bottom-sheet :fullscreen="fullscreen" v-model="shown">
+    <v-btn small block @click="onRead">
       <v-icon>mdi-arrow-collapse-up</v-icon>Read article
     </v-btn>
     <v-sheet class="article-preview pt-1">
-      <preview-content
-        :article="preview"
-        :is-preview="true"
-      />
+      <preview-content :article="preview" :is-preview="true" />
     </v-sheet>
   </v-bottom-sheet>
 </template>

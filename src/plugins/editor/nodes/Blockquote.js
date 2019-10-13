@@ -1,39 +1,33 @@
-import { Node } from 'tiptap'
-import { wrappingInputRule, toggleWrap } from 'tiptap-commands'
+import { Node } from "tiptap";
+import { wrappingInputRule, toggleWrap } from "tiptap-commands";
 
 export default class Blockquote extends Node {
-
   get name() {
-    return 'blockquote'
+    return "blockquote";
   }
 
   get schema() {
     return {
-      content: 'block*',
-      group: 'block',
+      content: "block*",
+      group: "block",
       defining: true,
       draggable: false,
-      parseDOM: [
-        { tag: 'blockquote' },
-      ],
-      toDOM: () => ['blockquote', 0],
-    }
+      parseDOM: [{ tag: "blockquote" }],
+      toDOM: () => ["blockquote", 0]
+    };
   }
 
   commands({ type, schema }) {
-    return () => toggleWrap(type, schema.nodes.paragraph)
+    return () => toggleWrap(type, schema.nodes.paragraph);
   }
 
   keys({ type }) {
     return {
-      'Ctrl->': toggleWrap(type),
-    }
+      "Ctrl->": toggleWrap(type)
+    };
   }
 
   inputRules({ type }) {
-    return [
-      wrappingInputRule(/^\s*>\s$/, type),
-    ]
+    return [wrappingInputRule(/^\s*>\s$/, type)];
   }
-
 }

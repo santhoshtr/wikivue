@@ -1,14 +1,12 @@
-import { Node } from 'tiptap'
-import TableNodes from './TableNodes'
+import { Node } from "tiptap";
+import TableNodes from "./TableNodes";
 
 export default class TableHeader extends Node {
-
   get name() {
-    return 'table_header'
+    return "table_header";
   }
 
   get schema() {
-    return TableNodes.table_header
+    return TableNodes.table_header;
   }
-
 }

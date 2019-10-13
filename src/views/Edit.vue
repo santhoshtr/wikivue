@@ -8,7 +8,7 @@ import Editor from "../components/Editor";
 export default {
   name: "Edit",
   components: {
-    Editor,
+    Editor
   }
 };
 </script>

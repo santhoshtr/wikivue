@@ -1,25 +1,24 @@
-import { Extension, Plugin } from 'tiptap'
-import { Decoration, DecorationSet } from 'prosemirror-view'
+import { Extension, Plugin } from "tiptap";
+import { Decoration, DecorationSet } from "prosemirror-view";
 
 export default class Placeholder extends Extension {
-
   get name() {
-    return 'placeholder'
+    return "placeholder";
   }
 
   get defaultOptions() {
     return {
-      emptyNodeClass: 'is-empty',
-      emptyNodeText: 'Write something …',
+      emptyNodeClass: "is-empty",
+      emptyNodeText: "Write something …",
       showOnlyWhenEditable: true,
-      showOnlyCurrent: true,
-    }
+      showOnlyCurrent: true
+    };
   }
 
   get update() {
     return view => {
-      view.updateState(view.state)
-    }
+      view.updateState(view.state);
+    };
   }
 
   get plugins() {
@@ -27,38 +26,40 @@ export default class Placeholder extends Extension {
       new Plugin({
         props: {
           decorations: ({ doc, plugins, selection }) => {
-            const editablePlugin = plugins.find(plugin => plugin.key.startsWith('editable$'))
-            const editable = editablePlugin.props.editable()
-            const active = editable || !this.options.showOnlyWhenEditable
-            const { anchor } = selection
-            const decorations = []
+            const editablePlugin = plugins.find(plugin =>
+              plugin.key.startsWith("editable$")
+            );
+            const editable = editablePlugin.props.editable();
+            const active = editable || !this.options.showOnlyWhenEditable;
+            const { anchor } = selection;
+            const decorations = [];
 
             if (!active) {
-              return false
+              return false;
             }
 
             doc.descendants((node, pos) => {
-              const hasAnchor = anchor >= pos && anchor <= (pos + node.nodeSize)
-              const isEmpty = node.content.size === 0
+              const hasAnchor = anchor >= pos && anchor <= pos + node.nodeSize;
+              const isEmpty = node.content.size === 0;
 
               if ((hasAnchor || !this.options.showOnlyCurrent) && isEmpty) {
                 const decoration = Decoration.node(pos, pos + node.nodeSize, {
                   class: this.options.emptyNodeClass,
-                  'data-empty-text': typeof this.options.emptyNodeText === 'function'
-                    ? this.options.emptyNodeText(node)
-                    : this.options.emptyNodeText,
-                })
-                decorations.push(decoration)
+                  "data-empty-text":
+                    typeof this.options.emptyNodeText === "function"
+                      ? this.options.emptyNodeText(node)
+                      : this.options.emptyNodeText
+                });
+                decorations.push(decoration);
               }
 
-              return false
-            })
+              return false;
+            });
 
-            return DecorationSet.create(doc, decorations)
-          },
-        },
-      }),
-    ]
+            return DecorationSet.create(doc, decorations);
+          }
+        }
+      })
+    ];
   }
-
 }

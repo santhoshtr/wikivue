@@ -1,66 +1,64 @@
-import { Node } from 'tiptap'
-import low from 'lowlight/lib/core'
-import { toggleBlockType, setBlockType, textblockTypeInputRule } from 'tiptap-commands'
-import HighlightPlugin from '../plugins/Highlight'
+import { Node } from "tiptap";
+import low from "lowlight/lib/core";
+import {
+  toggleBlockType,
+  setBlockType,
+  textblockTypeInputRule
+} from "tiptap-commands";
+import HighlightPlugin from "../plugins/Highlight";
 
 export default class CodeBlockHighlight extends Node {
-
   constructor(options = {}) {
-    super(options)
+    super(options);
     try {
       Object.entries(this.options.languages).forEach(([name, mapping]) => {
-        low.registerLanguage(name, mapping)
-      })
+        low.registerLanguage(name, mapping);
+      });
     } catch (err) {
-      throw new Error('Invalid syntax highlight definitions: define at least one highlight.js language mapping')
+      throw new Error(
+        "Invalid syntax highlight definitions: define at least one highlight.js language mapping"
+      );
     }
   }
 
   get name() {
-    return 'code_block'
+    return "code_block";
   }
 
   get defaultOptions() {
     return {
-      languages: {},
-    }
+      languages: {}
+    };
   }
 
   get schema() {
     return {
-      content: 'text*',
-      marks: '',
-      group: 'block',
+      content: "text*",
+      marks: "",
+      group: "block",
       code: true,
       defining: true,
       draggable: false,
-      parseDOM: [
-        { tag: 'pre', preserveWhitespace: 'full' },
-      ],
-      toDOM: () => ['pre', ['code', 0]],
-    }
+      parseDOM: [{ tag: "pre", preserveWhitespace: "full" }],
+      toDOM: () => ["pre", ["code", 0]]
+    };
   }
 
   commands({ type, schema }) {
-    return () => toggleBlockType(type, schema.nodes.paragraph)
+    return () => toggleBlockType(type, schema.nodes.paragraph);
   }
 
   keys({ type }) {
     return {
-      'Shift-Ctrl-\\': setBlockType(type),
-    }
+      "Shift-Ctrl-\\": setBlockType(type)
+    };
   }
 
   inputRules({ type }) {
-    return [
-      textblockTypeInputRule(/^```$/, type),
-    ]
+    return [textblockTypeInputRule(/^```$/, type)];
   }
 
   get plugins() {
-    return [
-      HighlightPlugin({ name: this.name }),
-    ]
+    return [HighlightPlugin({ name: this.name })];
   }
-
 }

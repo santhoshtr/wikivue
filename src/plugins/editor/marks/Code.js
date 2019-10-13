@@ -1,42 +1,34 @@
-import { Mark } from 'tiptap'
-import { toggleMark, markInputRule, markPasteRule } from 'tiptap-commands'
+import { Mark } from "tiptap";
+import { toggleMark, markInputRule, markPasteRule } from "tiptap-commands";
 
 export default class Code extends Mark {
-
   get name() {
-    return 'code'
+    return "code";
   }
 
   get schema() {
     return {
-      excludes: '_',
-      parseDOM: [
-        { tag: 'code' },
-      ],
-      toDOM: () => ['code', 0],
-    }
+      excludes: "_",
+      parseDOM: [{ tag: "code" }],
+      toDOM: () => ["code", 0]
+    };
   }
 
   keys({ type }) {
     return {
-      'Mod-`': toggleMark(type),
-    }
+      "Mod-`": toggleMark(type)
+    };
   }
 
   commands({ type }) {
-    return () => toggleMark(type)
+    return () => toggleMark(type);
   }
 
   inputRules({ type }) {
-    return [
-      markInputRule(/(?:`)([^`]+)(?:`)$/, type),
-    ]
+    return [markInputRule(/(?:`)([^`]+)(?:`)$/, type)];
   }
 
   pasteRules({ type }) {
-    return [
-      markPasteRule(/(?:`)([^`]+)(?:`)/g, type),
-    ]
+    return [markPasteRule(/(?:`)([^`]+)(?:`)/g, type)];
   }
-
 }

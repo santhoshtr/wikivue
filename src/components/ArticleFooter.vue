@@ -1,8 +1,5 @@
 <template>
-  <v-layout
-    row
-    class="mx-0 pa-0"
-  >
+  <v-layout row class="mx-0 pa-0">
     <categories :categories="categories" />
   </v-layout>
 </template>

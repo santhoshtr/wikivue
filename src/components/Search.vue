@@ -3,9 +3,9 @@
     v-model="article"
     id="wikip-search"
     :items="articles"
-    :loading="isLoading?'blue':false"
+    :loading="isLoading ? 'blue' : false"
     :search-input.sync="search"
-    :menu-props="{ maxHeight:'80vh' }"
+    :menu-props="{ maxHeight: '80vh' }"
     hide-selected
     clearable
     item-text="title"
@@ -33,9 +33,7 @@
         <v-subheader v-if="articlesHistory.length">
           Recently viewed articles
         </v-subheader>
-        <v-list-item-group
-          color="primary"
-        >
+        <v-list-item-group color="primary">
           <v-list-item
             v-for="(item, i) in articlesHistory"
             :key="i"
@@ -58,14 +56,8 @@
       </template>
       <template v-else>
         <v-list-item-avatar>
-          <img
-            v-if="data.item.thumbnail"
-            :src="data.item.thumbnail.source"
-          >
-          <v-icon
-            v-else
-            large
-          >
+          <img v-if="data.item.thumbnail" :src="data.item.thumbnail.source" />
+          <v-icon v-else large>
             mdi-file-document-box
           </v-icon>
         </v-list-item-avatar>
@@ -82,27 +74,27 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex';
-import LanguageSelector from './LanguageSelector';
+import { mapState, mapMutations } from "vuex";
+import LanguageSelector from "./LanguageSelector";
 import debounce from "debounce";
 import axios from "axios";
 
 export default {
   name: "Search",
-   components: {
-     LanguageSelector
+  components: {
+    LanguageSelector
   },
   data: () => ({
     articles: [], // search results
     isLoading: false,
     article: null,
     search: "",
-    drawer: false,
+    drawer: false
   }),
   watch: {
-    $route(to, from) {
-     const contentLanguage = to.meta.language || this.contentLanguage;
-     this.$store.commit('app/setContentLanguage', contentLanguage)
+    $route(to) {
+      const contentLanguage = to.meta.language || this.contentLanguage;
+      this.$store.commit("app/setContentLanguage", contentLanguage);
     },
     search(value) {
       if (!value) {
@@ -115,7 +107,7 @@ export default {
   computed: {
     ...mapState({
       contentLanguage: state => state.app.contentLanguage,
-      articlesHistory: state => state.app.articlesHistory.slice().reverse(),
+      articlesHistory: state => state.app.articlesHistory.slice().reverse()
     })
   },
   methods: {
@@ -124,11 +116,13 @@ export default {
         this.$router.push({
           path: `/page/${this.contentLanguage || "en"}/${selected.title}`
         });
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0);
       }
     },
     wikiSearch: async function(value) {
-      const api = `https://${this.contentLanguage}.wikipedia.org/w/api.php?action=query&generator=prefixsearch&gpssearch=${value}&prop=pageimages|description&piprop=thumbnail&pithumbsize=50&pilimit=10&format=json&formatversion=2&origin=*`;
+      const api = `https://${
+        this.contentLanguage
+      }.wikipedia.org/w/api.php?action=query&generator=prefixsearch&gpssearch=${value}&prop=pageimages|description&piprop=thumbnail&pithumbsize=50&pilimit=10&format=json&formatversion=2&origin=*`;
       // Handle empty value
       if (!value) {
         this.articles = [];
@@ -145,10 +139,7 @@ export default {
         })
         .finally(() => (this.isLoading = false));
     },
-     ...mapMutations([
-      'setContentLanguage'
-    ])
+    ...mapMutations(["setContentLanguage"])
   }
 };
 </script>
-

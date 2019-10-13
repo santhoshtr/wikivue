@@ -1,38 +1,17 @@
 <template>
-  <v-layout
-    justify-center
-    wrap
-    row
-    class="ma-auto"
-    align-center
-  >
+  <v-layout justify-center wrap row class="ma-auto" align-center>
     <v-container>
-      <v-item-group
-        mandatory
-        v-model="selected"
-      >
+      <v-item-group mandatory v-model="selected">
         <v-row>
-          <v-col
-            cols="12"
-            md="12"
-          >
+          <v-col cols="12" md="12">
             <h2 class="title">
               Choose your topics of interest
             </h2>
           </v-col>
         </v-row>
         <v-row>
-          <v-col
-            v-for="item in topics"
-            :key="item.wd"
-            cols="12"
-            md="2"
-            sm="4"
-          >
-            <v-item
-              :value="item.wd"
-              v-slot:default="{ active, toggle }"
-            >
+          <v-col v-for="item in topics" :key="item.wd" cols="12" md="2" sm="4">
+            <v-item :value="item.wd" v-slot:default="{ active, toggle }">
               <v-card @click="toggle">
                 <v-img
                   :src="`${item.image}?width=300`"
@@ -40,9 +19,7 @@
                   width="100%"
                   cover
                 >
-                  <v-row
-                    class="fill-height align-end"
-                  >
+                  <v-row class="fill-height align-end">
                     <v-col class="px-2 py-0 ma-0">
                       <v-card-title
                         class="pa-0 grey darken-3"
@@ -50,7 +27,7 @@
                       >
                         <v-btn icon>
                           <v-icon class="white--text">
-                            {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
+                            {{ active ? "mdi-heart" : "mdi-heart-outline" }}
                           </v-icon>
                         </v-btn>
                         <h3
@@ -75,25 +52,14 @@
       absolute
       top
     />
-    <v-layout
-      justify-center
-      wrap
-      row
-      class="ma-auto"
-      align-center
-    >
+    <v-layout justify-center wrap row class="ma-auto" align-center>
       <v-container>
-        <h2
-          v-if="task==='explore'"
-          class="title"
-        >
+        <h2 v-if="task === 'explore'" class="title">
           Articles from selected topic
         </h2>
-        <h2
-          v-if="task==='translate'"
-          class="title"
-        >
-          {{ selectedTopic }} articles to translate from {{ autonym(contentLanguage) }} to {{ autonym(targetLanguage) }}
+        <h2 v-if="task === 'translate'" class="title">
+          {{ selectedTopic }} articles to translate from
+          {{ autonym(contentLanguage) }} to {{ autonym(targetLanguage) }}
         </h2>
 
         <v-row>
@@ -107,20 +73,31 @@
             <v-card
               class="ma-2"
               height="300px"
-              :to="task==='explore' && `/page/${contentLanguage}/${article.itemLabel.value}`"
-              :href="task==='translate' && `https://en.wikipedia.org/wiki/Special:CX?page=${article.itemLabel.value}&from=${contentLanguage}&to=${targetLanguage}`"
+              :to="
+                task === 'explore' &&
+                  `/page/${contentLanguage}/${article.itemLabel.value}`
+              "
+              :href="
+                task === 'translate' &&
+                  `https://en.wikipedia.org/wiki/Special:CX?page=${
+                    article.itemLabel.value
+                  }&from=${contentLanguage}&to=${targetLanguage}`
+              "
             >
               <v-img
-                :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
-                :src="article.image? `${article.image.value}?width=300`:require('@/assets/Wikipedia logo version 2.svg?lazy')"
+                :lazy-src="
+                  require('@/assets/Wikipedia logo version 2.svg?lazy')
+                "
+                :src="
+                  article.image
+                    ? `${article.image.value}?width=300`
+                    : require('@/assets/Wikipedia logo version 2.svg?lazy')
+                "
                 cover
                 width="100%"
                 height="300px"
               >
-                <v-row
-                  class="fill-height align-end "
-                  style="opacity: 0.85;"
-                >
+                <v-row class="fill-height align-end " style="opacity: 0.85;">
                   <v-col class="px-2 py-0 ma-0">
                     <v-card-title
                       class="pa-0 px-2 grey darken-3 white--text overflow-hidden text-no-wrap"
@@ -155,7 +132,7 @@ import {
   fetchTopicsInCategory,
   fetchTopicsInCategoryForTranslate
 } from "../wiki/api/wikidata";
-import { mapGetters, mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "Explore",
@@ -171,9 +148,9 @@ export default {
     ...mapState({
       contentLanguage: state => state.app.contentLanguage
     }),
-    selectedTopic: function(){
-        const topic= topics.find(item=>item.wd==this.selected)
-        return topic.name;
+    selectedTopic: function() {
+      const topic = topics.find(item => item.wd == this.selected);
+      return topic.name;
     }
   },
   watch: {
@@ -194,7 +171,7 @@ export default {
   methods: {
     fetchArticles: function(selected) {
       this.loaded = false;
-      this.articles=[];
+      this.articles = [];
       fetchTopicsInCategory(selected, this.contentLanguage, 30).then(
         response => {
           this.articles = this.deduplicate(response.data.results.bindings);
@@ -204,7 +181,7 @@ export default {
     },
     fetchArticlesForTranslate: function(selected, targetLanguage) {
       this.loaded = false;
-      this.articles=[];
+      this.articles = [];
       fetchTopicsInCategoryForTranslate(
         selected,
         this.contentLanguage,
@@ -215,7 +192,7 @@ export default {
         this.loaded = true;
       });
     },
-    init: function(task='explore', targetLanguage) {
+    init: function(task = "explore", targetLanguage) {
       this.task = task;
       this.targetLanguage = targetLanguage;
     },

@@ -1,17 +1,10 @@
 <template>
-  <v-dialog
-    fullscreen
-    hide-overlay
-    v-model="shown"
-  >
+  <v-dialog fullscreen hide-overlay v-model="shown">
     <v-toolbar>
       <v-toolbar-title>Image</v-toolbar-title>
       <div class="flex-grow-1" />
       <v-toolbar-items>
-        <v-btn
-          text
-          @click="shown = false"
-        >
+        <v-btn text @click="shown = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar-items>
@@ -33,36 +26,36 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "ImageViewer",
   data: () => ({
-      shown: false,
+    shown: false
   }),
-  computed:{
+  computed: {
     ...mapState({
       media: state => state.article.media
     }),
-    image: function(){
-        if(this.media.items){
-            return this.media.items.find(item=>{
-                return item.titles && item.titles.canonical===this.imgsrc;
-            })
-        }
-        return null;
+    image: function() {
+      if (this.media.items) {
+        return this.media.items.find(item => {
+          return item.titles && item.titles.canonical === this.imgsrc;
+        });
+      }
+      return null;
     }
   },
   props: {
     imgsrc: {
       type: String,
-      default: null,
+      default: null
     }
   },
-  watch:{
-      image:function(){
-          this.shown=!!this.imgsrc
-      }
+  watch: {
+    image: function() {
+      this.shown = !!this.imgsrc;
+    }
   }
 };
 </script>

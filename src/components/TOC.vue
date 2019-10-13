@@ -1,12 +1,6 @@
 <template>
-  <v-sheet
-    class="toc fill-height ml-4 py-2 px-4"
-    v-if="toc.length>1"
-  >
-    <h1
-      class="title px-2"
-      v-i18n="'toc-heading'"
-    />
+  <v-sheet class="toc fill-height ml-4 py-2 px-4" v-if="toc.length > 1">
+    <h1 class="title px-2" v-i18n="'toc-heading'" />
     <v-treeview
       activatable
       selection-type="independent"
@@ -21,15 +15,15 @@
 
 <script>
 export default {
-  name: 'TOC',
+  name: "TOC",
   props: {
     toc: {
       type: Array,
-      default: ()=>([])
+      default: () => []
     }
   },
   data: () => ({
-    activeToc: [],
+    activeToc: []
   }),
   computed: {
     selectedToc() {
@@ -43,25 +37,24 @@ export default {
     selectedToc: "gotoSection"
   },
   methods: {
-   gotoSection(anchor) {
+    gotoSection(anchor) {
       if (anchor) {
-        this.$router.push(`#${anchor}`)
+        this.$router.push(`#${anchor}`);
       }
     }
   }
-}
+};
 </script>
-
 
 <style>
 .toc {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    max-height: 100vh;
-    max-width: 100%;
-    overflow-y: auto;
-    scrollbar-width: thin;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  max-height: 100vh;
+  max-width: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 .v-treeview-node__content {
   cursor: pointer;

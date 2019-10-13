@@ -1,8 +1,5 @@
 <template>
-  <v-layout
-    justify-center
-    align-center
-  >
+  <v-layout justify-center align-center>
     <v-btn
       text
       rounded
@@ -10,10 +7,10 @@
       class="px-0"
       @click.stop="dialog = true"
     >
-      <v-icon>
-        mdi-translate
-      </v-icon>
-      {{ $vuetify.breakpoint.smAndUp?selectedLanguageAutonym:contentLanguage }}
+      <v-icon>mdi-translate</v-icon>
+      {{
+        $vuetify.breakpoint.smAndUp ? selectedLanguageAutonym : contentLanguage
+      }}
     </v-btn>
 
     <v-dialog
@@ -24,10 +21,7 @@
     >
       <v-card>
         <v-toolbar flat>
-          <v-btn
-            icon
-            @click="dialog = false"
-          >
+          <v-btn icon @click="dialog = false">
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
           <v-text-field
@@ -41,34 +35,25 @@
             label="Select language"
           />
           <v-toolbar-items>
-            <v-btn
-              icon
-              @click="dialog = false"
-            >
+            <v-btn icon @click="dialog = false">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <v-container
-          grid-list-md
-          text-center
-        >
+        <v-container grid-list-md text-center>
           <v-item-group>
             <v-row>
               <v-col
-                v-for="(autonym, code) in (filteredLanguages || contentLanguages)"
+                v-for="(autonym, code) in filteredLanguages || contentLanguages"
                 :key="code"
                 cols="12"
                 md="4"
                 lg="3"
               >
                 <v-item>
-                  <v-btn
-                    text
-                    @click="selectLanguage(code, autonym)"
-                  >
-                    {{ autonym }}
-                  </v-btn>
+                  <v-btn text @click="selectLanguage(code, autonym)">{{
+                    autonym
+                  }}</v-btn>
                 </v-item>
               </v-col>
             </v-row>
@@ -81,7 +66,7 @@
 
 <script>
 import languagedata from "@wikimedia/language-data";
-import { mapGetters,mapState, mapMutations } from 'vuex';
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "LanguageSelector",
@@ -97,28 +82,28 @@ export default {
     searchQuery: ""
   }),
   computed: {
-    ...mapGetters('app',[
-      'contentLanguages'
-    ]),
+    ...mapGetters("app", ["contentLanguages"]),
     ...mapState({
-      contentLanguage: state => state.app.contentLanguage,
+      contentLanguage: state => state.app.contentLanguage
     }),
-    selectedLanguageAutonym:function(){
+    selectedLanguageAutonym: function() {
       return languagedata.getAutonym(this.contentLanguage);
     }
   },
   methods: {
-    selectLanguage: function(language, autonym) {
-      this.$store.commit('app/setContentLanguage',language)
+    selectLanguage: function(language) {
+      this.$store.commit("app/setContentLanguage", language);
       this.dialog = false;
     },
     onSearch: function() {
       this.filteredLanguages = {};
       Object.keys(this.contentLanguages).forEach(key => {
         if (
-          key.toLowerCase() === this.searchQuery.toLowerCase()||
+          key.toLowerCase() === this.searchQuery.toLowerCase() ||
           (this.contentLanguages[key] &&
-            this.contentLanguages[key].toLowerCase().startsWith(this.searchQuery.toLowerCase()))
+            this.contentLanguages[key]
+              .toLowerCase()
+              .startsWith(this.searchQuery.toLowerCase()))
         ) {
           this.filteredLanguages[key] = this.contentLanguages[key];
         }

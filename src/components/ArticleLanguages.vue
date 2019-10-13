@@ -6,11 +6,7 @@
     transition="dialog-bottom-transition"
   >
     <template v-slot:activator="{ on }">
-      <v-btn
-        text
-        value="languages"
-        v-on="on"
-      >
+      <v-btn text value="languages" v-on="on">
         <!-- <v-badge
           right
           color="blue"
@@ -26,10 +22,7 @@
     <v-card>
       <v-container grid-list-md>
         <v-toolbar flat>
-          <v-btn
-            icon
-            @click="dialog = false"
-          >
+          <v-btn icon @click="dialog = false">
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
           <v-text-field
@@ -43,29 +36,25 @@
             label="Select language"
           />
           <v-toolbar-items>
-            <v-btn
-              icon
-              @click="dialog = false"
-            >
+            <v-btn icon @click="dialog = false">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <v-list
-          two-line
-          subheader
-        >
+        <v-list two-line subheader>
           <v-list-item-group color="primary">
             <v-list-item
-              v-for="(item, index) in (filteredLanguages ||articleLanguages)"
+              v-for="(item, index) in filteredLanguages || articleLanguages"
               :key="index"
-              @click="selectLanguage(item.lang, item.titles.normalized )"
+              @click="selectLanguage(item.lang, item.titles.normalized)"
             >
               <v-list-item-content>
                 <v-list-item-title class="title">
                   {{ item.titles.normalized }}
                 </v-list-item-title>
-                <v-list-item-subtitle>{{ autonym(item.lang) }}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{
+                  autonym(item.lang)
+                }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
@@ -77,7 +66,7 @@
 
 <script>
 import languagedata from "@wikimedia/language-data";
-import { mapGetters, mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "ArticleLanguages",

@@ -13,43 +13,19 @@
       absolute
       top
     />
-    <v-layout
-      row
-    >
-      <v-flex
-        xs12
-      >
-        <article-header
-          :article="article"
-          :is-preview="isPreview"
-        />
-        <div
-          class="error"
-          :if="error"
-        >
+    <v-layout row>
+      <v-flex xs12>
+        <article-header :article="article" :is-preview="isPreview" />
+        <div class="error" :if="error">
           {{ error }}
         </div>
       </v-flex>
     </v-layout>
-    <v-layout
-      row
-      fill-height
-    >
-      <v-flex
-        xs2
-        sm2
-        md3
-        lg3
-        hidden-sm-and-down
-      >
+    <v-layout row fill-height>
+      <v-flex xs2 sm2 md3 lg3 hidden-sm-and-down>
         <table-of-contents :toc="toc" />
       </v-flex>
-      <v-flex
-        xs12
-        sm12
-        md9
-        lg9
-      >
+      <v-flex xs12 sm12 md9 lg9>
         <v-sheet class="content px-3">
           <section
             v-for="section in sections"
@@ -61,48 +37,26 @@
               :href="`#${section.anchor}`"
               class="section-anchor text--primary"
             >
-              <h2
-                v-if="section.toclevel===1"
-                v-html="section.heading"
-              />
-              <h3
-                v-else
-                v-html="section.heading"
-              />
+              <h2 v-if="section.toclevel === 1" v-html="section.heading" />
+              <h3 v-else v-html="section.heading" />
             </a>
-            <v-layout
-              row
-              fill-height
-              class="pa-0 ma-0"
-            >
-              <div
-                class="flex md8 lg8 xs12 sm12"
-                v-html="section.content"
-              />
+            <v-layout row fill-height class="pa-0 ma-0">
+              <div class="flex md8 lg8 xs12 sm12" v-html="section.content" />
               <aside
                 class="flex px-2 md4 lg4 hidden-sm-and-down section-aside"
                 v-html="section.aside"
               />
             </v-layout>
           </section>
-          <v-expansion-panels
-            accordion
-            class="mb-5"
-          >
+          <v-expansion-panels accordion class="mb-5">
             <v-expansion-panel
-              v-for="(section,i) in collapsibleSections"
+              v-for="(section, i) in collapsibleSections"
               :key="`section-collapsible-${i}`"
               :id="section.anchor"
             >
               <v-expansion-panel-header>
-                <h2
-                  v-if="section.toclevel===1"
-                  v-html="section.heading"
-                />
-                <h3
-                  v-else
-                  v-html="section.heading"
-                />
+                <h2 v-if="section.toclevel === 1" v-html="section.heading" />
+                <h3 v-else v-html="section.heading" />
               </v-expansion-panel-header>
               <v-expansion-panel-content v-html="section.content" />
             </v-expansion-panel>
@@ -113,14 +67,8 @@
             <article-footer :article="article" />
           </template>
         </v-sheet>
-        <reference
-          :reference="selectedReference"
-          :if="selectedReference"
-        />
-        <image-viewer
-          :if="selectedImage"
-          :imgsrc="selectedImage"
-        />
+        <reference :reference="selectedReference" :if="selectedReference" />
+        <image-viewer :if="selectedImage" :imgsrc="selectedImage" />
         <article-preview
           :preview="preview"
           :show="previewShown"
@@ -137,7 +85,7 @@ import ArticleHeader from "./ArticleHeader";
 import ArticleFooter from "./ArticleFooter";
 
 import wikipage from "../wiki/page";
-import { mapGetters, mapState, mapMutations } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import { setTimeout } from "timers";
 
 export default {
@@ -214,8 +162,8 @@ export default {
     },
     contentLanguage: function() {
       let titleInChangedLanguage = this.article.title;
-      const articleInChangedLanguage = this.articleLanguages.find(item =>
-        item.lang === this.contentLanguage
+      const articleInChangedLanguage = this.articleLanguages.find(
+        item => item.lang === this.contentLanguage
       );
       if (articleInChangedLanguage) {
         titleInChangedLanguage = articleInChangedLanguage.titles.normalized;
@@ -300,7 +248,7 @@ export default {
           title: link.title,
           language: this.contentLanguage
         });
-        this.previewShown=true;
+        this.previewShown = true;
       }
     },
     wikilinkClickHandler(link, event) {

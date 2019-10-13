@@ -1,14 +1,15 @@
 import axios from "axios";
 
 function query(sparqlQuery) {
-    const endpointUrl = `https://query.wikidata.org/sparql?query=${encodeURIComponent(sparqlQuery)}`;
-    const headers = { 'Accept': 'application/sparql-results+json' };
-    return axios.get(endpointUrl, { headers });
+  const endpointUrl = `https://query.wikidata.org/sparql?query=${encodeURIComponent(
+    sparqlQuery
+  )}`;
+  const headers = { Accept: "application/sparql-results+json" };
+  return axios.get(endpointUrl, { headers });
 }
 
-
 function fetchTopicsInCategory(category, language, count = 10) {
-    const sparqlQuery = `SELECT DISTINCT ?categoryLabel ?item ?itemLabel ?itemDescription ?image
+  const sparqlQuery = `SELECT DISTINCT ?categoryLabel ?item ?itemLabel ?itemDescription ?image
     WHERE
     {
       VALUES ?category {
@@ -20,11 +21,16 @@ function fetchTopicsInCategory(category, language, count = 10) {
       SERVICE wikibase:label {bd:serviceParam wikibase:language "${language}" .}
     }
     LIMIT ${count}`;
-    return query(sparqlQuery)
+  return query(sparqlQuery);
 }
 
-function fetchTopicsInCategoryForTranslate(category, language, count = 10, targetLanguage) {
-    const sparqlQuery = `SELECT DISTINCT ?categoryLabel ?item ?itemLabel ?itemDescription ?image
+function fetchTopicsInCategoryForTranslate(
+  category,
+  language,
+  count = 10,
+  targetLanguage
+) {
+  const sparqlQuery = `SELECT DISTINCT ?categoryLabel ?item ?itemLabel ?itemDescription ?image
     WHERE
     {
       VALUES ?category {
@@ -37,7 +43,7 @@ function fetchTopicsInCategoryForTranslate(category, language, count = 10, targe
       SERVICE wikibase:label {bd:serviceParam wikibase:language "${language}" .}
     }
     LIMIT ${count}`;
-    return query(sparqlQuery)
+  return query(sparqlQuery);
 }
 
-export { fetchTopicsInCategory, fetchTopicsInCategoryForTranslate }
+export { fetchTopicsInCategory, fetchTopicsInCategoryForTranslate };

@@ -16,22 +16,12 @@
     >
       <v-card class="pa-5">
         <v-card-title>
-          <span
-            class="headline"
-            v-i18n="msg"
-          />
+          <span class="headline" v-i18n="msg" />
         </v-card-title>
         <v-card-text>
-          <v-container
-            grid-list-md
-            text-center
-          >
+          <v-container grid-list-md text-center>
             <v-row class="pa-3">
-              <v-col
-                class="d-flex"
-                cols="12"
-                sm="4"
-              >
+              <v-col class="d-flex" cols="12" sm="4">
                 <v-select
                   v-model="selectedTheme"
                   :items="themes"
@@ -45,10 +35,7 @@
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1" />
-          <v-btn
-            large
-            @click="dialog = false"
-          >
+          <v-btn large @click="dialog = false">
             Close
           </v-btn>
         </v-card-actions>
@@ -58,8 +45,6 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapMutations } from "vuex";
-
 export default {
   name: "AppSettings",
   data: () => ({

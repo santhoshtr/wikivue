@@ -1,22 +1,17 @@
 const state = {
-    user: null // Current user
+  user: null // Current user
 };
 
-const mutations = {
-}
+const mutations = {};
 
-const getters = {
+const getters = {};
 
-}
-
-const actions = {
-}
-
+const actions = {};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state,
+  getters,
+  actions,
+  mutations
+};

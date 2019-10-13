@@ -1,11 +1,6 @@
 <template>
   <v-sheet>
-    <v-bottom-navigation
-      v-if="bottomNav"
-      grow
-      app
-      hide-on-scroll
-    >
+    <v-bottom-navigation v-if="bottomNav" grow app hide-on-scroll>
       <article-revisions />
 
       <v-btn value="bookmark">
@@ -14,11 +9,7 @@
 
       <article-languages />
 
-      <v-btn
-        v-show="tocButtonShown"
-        value="tocbutton"
-        @click="showToc"
-      >
+      <v-btn v-show="tocButtonShown" value="tocbutton" @click="showToc">
         <v-icon>mdi-table-of-contents</v-icon>
       </v-btn>
     </v-bottom-navigation>
@@ -35,11 +26,10 @@
   </v-sheet>
 </template>
 
-
 <script>
 import TableOfContents from "./TOC";
-import ArticleLanguages from "./ArticleLanguages"
-import ArticleRevisions from "./History"
+import ArticleLanguages from "./ArticleLanguages";
+import ArticleRevisions from "./History";
 
 export default {
   name: "BottomNav",
@@ -50,24 +40,28 @@ export default {
   },
   data() {
     return {
-      tocShown: false,
+      tocShown: false
     };
   },
-  computed:{
-    bottomNav(){
-      return !!this.$store.state.article.title &&  this.$vuetify.breakpoint.smAndDown
+  computed: {
+    bottomNav() {
+      return (
+        !!this.$store.state.article.title && this.$vuetify.breakpoint.smAndDown
+      );
     },
-    toc(){
-      return this.$store.state.article.toc
+    toc() {
+      return this.$store.state.article.toc;
     },
-    tocButtonShown(){
-      return this.$vuetify.breakpoint.smAndDown && this.toc && this.toc.length>2;
+    tocButtonShown() {
+      return (
+        this.$vuetify.breakpoint.smAndDown && this.toc && this.toc.length > 2
+      );
     }
   },
   methods: {
-    showToc(){
-      this.tocShown=true;
-    },
+    showToc() {
+      this.tocShown = true;
+    }
   }
 };
 </script>
