@@ -1,5 +1,5 @@
 export default {
-  parse(section, contentLanguage, noAside) {
+  parse(section, contentLanguage, expanded) {
     const wrapper = document.createElement("div");
     wrapper.innerHTML = section;
 
@@ -21,7 +21,7 @@ export default {
 
     const aside = document.createElement("aside");
 
-    if (!noAside) {
+    if (!expanded) {
       const hatnotes = wrapper.querySelectorAll("div.hatnote");
       const amboxes = wrapper.querySelectorAll(".ambox");
       const infobox = wrapper.querySelectorAll(".infobox");
@@ -31,7 +31,10 @@ export default {
       const leftSideImages = wrapper.querySelectorAll("figure.mw-halign-left");
       const smallFigures = wrapper.querySelectorAll("figure.mw-default-size");
       const rightTables = wrapper.querySelectorAll("table[align='right']");
-      const navboxes = wrapper.querySelectorAll("table.vertical-navbox");
+      const navboxes = [
+        ...wrapper.querySelectorAll("table.vertical-navbox"),
+        ...wrapper.querySelectorAll("div.navbox")
+      ];
 
       const sideItems = [
         ...hatnotes,
@@ -40,13 +43,18 @@ export default {
         ...rightSideImages,
         ...leftSideImages,
         ...smallFigures,
-        ...rightTables,
-        ...navboxes
+        ...rightTables
       ];
+
+      // Remove navboxes - They are looong tables.
+      for (let i = 0; i < navboxes.length; i++) {
+        navboxes[i].remove();
+      }
+
       for (let i = 0; i < sideItems.length; i++) {
         if (sideItems[i].matches("table")) {
           const tableWrapper = document.createElement("div");
-          tableWrapper.className += " table-wrapper";
+          tableWrapper.className += "table-wrapper";
           tableWrapper.appendChild(sideItems[i].cloneNode(true));
           aside.appendChild(tableWrapper);
         } else {
