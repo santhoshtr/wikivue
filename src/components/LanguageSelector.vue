@@ -1,16 +1,8 @@
 <template>
   <v-layout justify-center align-center>
-    <v-btn
-      text
-      rounded
-      :title="selectedLanguageAutonym"
-      class="px-0"
-      @click.stop="dialog = true"
-    >
+    <v-btn text :title="selectedLanguageAutonym" @click.stop="dialog = true">
       <v-icon>mdi-translate</v-icon>
-      {{
-        $vuetify.breakpoint.smAndUp ? selectedLanguageAutonym : contentLanguage
-      }}
+      {{ selectedLanguageAutonym }}
     </v-btn>
 
     <v-dialog

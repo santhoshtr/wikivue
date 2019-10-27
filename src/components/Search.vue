@@ -13,9 +13,10 @@
     :placeholder="$i18n('header-search')"
     return-object
     auto-select-first
+    append-icon="mdi-microphone"
     attach=".search"
-    flat
-    solo
+    rounded
+    filled
     single-line
     hide-details
     label="Search"
@@ -27,7 +28,10 @@
       <v-list>
         <v-list-item>
           <v-list-item-title>
-            What do you want to know?
+            <v-row class="align-center">
+              <v-col> What do you want to know? </v-col>
+              <v-col> <language-selector /></v-col>
+            </v-row>
           </v-list-item-title>
         </v-list-item>
         <v-subheader v-if="articlesHistory.length">
@@ -66,9 +70,6 @@
           <v-list-item-subtitle v-html="data.item.description" />
         </v-list-item-content>
       </template>
-    </template>
-    <template v-slot:append>
-      <language-selector />
     </template>
   </v-autocomplete>
 </template>

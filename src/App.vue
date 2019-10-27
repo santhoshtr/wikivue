@@ -38,9 +38,8 @@
       app
       hide-on-scroll
       elevate-on-scroll
-      class="pa-0"
     >
-      <v-btn text @click.stop="drawer = !drawer" class="px-0 mx-0">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer">
         <v-img
           :aspect-ratio="1 / 1"
           width="32"
@@ -49,9 +48,11 @@
           class="mx-sm-1 mx-md-2 mx-lg-2 pa-0"
           src="@/assets/Wikipedia logo version 2.svg?lazy"
         />
-        <brand />
-      </v-btn>
+      </v-app-bar-nav-icon>
+      <brand />
+      <v-spacer v-if="$vuetify.breakpoint.lgAndUp" />
       <search />
+      <v-spacer v-if="$vuetify.breakpoint.lgAndUp" />
     </v-app-bar>
     <v-content>
       <router-view />
@@ -157,18 +158,18 @@ export default {
   text-transform: none !important;
 }
 
-// Floating search bar
-.v-toolbar.v-app-bar.v-app-bar--elevate-on-scroll {
-  &.v-app-bar--is-scrolled {
-    margin: 16px !important;
-    border-radius: 8px;
+// // Floating search bar
+// .v-toolbar.v-app-bar.v-app-bar--elevate-on-scroll {
+//   &.v-app-bar--is-scrolled {
+//     margin: 16px !important;
+//     border-radius: 8px;
 
-    .v-toolbar__content {
-      padding: 0;
-    }
-  }
-  &.v-app-bar--hide-shadow {
-    margin-top: 0 !important;
-  }
-}
+//     .v-toolbar__content {
+//       padding: 0;
+//     }
+//   }
+//   &.v-app-bar--hide-shadow {
+//     margin-top: 0 !important;
+//   }
+// }
 </style>
