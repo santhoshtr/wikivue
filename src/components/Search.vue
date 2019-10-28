@@ -13,7 +13,7 @@
     :placeholder="$i18n('header-search')"
     return-object
     auto-select-first
-    append-icon="mdi-microphone"
+    prepend-inner-icon="mdi-magnify"
     attach=".search"
     rounded
     filled
@@ -29,7 +29,7 @@
         <v-list-item>
           <v-list-item-title>
             <v-row class="align-center">
-              <v-col> What do you want to know? </v-col>
+              <v-col> What would you like to know? </v-col>
               <v-col> <language-selector /></v-col>
             </v-row>
           </v-list-item-title>
@@ -76,14 +76,12 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import LanguageSelector from "./LanguageSelector";
-import debounce from "debounce";
 import axios from "axios";
 
 export default {
   name: "Search",
   components: {
-    LanguageSelector
+    LanguageSelector: () => import("./LanguageSelector")
   },
   data: () => ({
     articles: [], // search results
@@ -101,8 +99,7 @@ export default {
       if (!value) {
         return;
       }
-      // Debounce the input
-      debounce(this.wikiSearch, 1000)(value);
+      this.wikiSearch(value);
     }
   },
   computed: {
