@@ -111,13 +111,11 @@
 
 <script>
 import { mapState } from "vuex";
-import ArticleLanguages from "./ArticleLanguages";
-import ArticleRevisions from "./History";
 export default {
   name: "ArticleHeader",
   components: {
-    ArticleRevisions,
-    ArticleLanguages
+    ArticleRevisions: () => import("./History"),
+    ArticleLanguages: () => import("./ArticleLanguages")
   },
   props: {
     article: {

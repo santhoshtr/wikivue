@@ -21,7 +21,7 @@
             flat
             single-line
             hide-details
-            prepend-inner-icon="mdi-search"
+            prepend-inner-icon="mdi-magnify"
             @input="onSearch"
             class="language-search"
             label="Select language"

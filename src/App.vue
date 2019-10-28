@@ -75,18 +75,16 @@
 <script>
 import Search from "./components/Search";
 import Footer from "./components/Footer";
-import BottomNav from "./components/BottomNav";
 import Brand from "./components/Brand";
-import AppSettings from "./components/Settings";
 import { mapGetters } from "vuex";
 
 export default {
   components: {
-    AppSettings,
+    AppSettings: () => import("./components/Settings"),
     Brand,
     Search,
     Footer,
-    BottomNav
+    BottomNav: () => import("./components/BottomNav")
   },
   computed: {
     ...mapGetters("app", ["uiLanguageDir"])
