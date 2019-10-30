@@ -1,33 +1,32 @@
 <template>
   <v-container fluid grid-list-xl>
     <v-layout justify-center row>
-      <v-flex xs12 sm12 md9 lg9>
+      <v-flex xs12 sm12 md9 lg9 v-if="tfa">
         <h2><v-icon>mdi-star-circle</v-icon>Featured article</h2>
         <v-card
-          :to="`/page/${contentLanguage}/${article.normalizedtitle}`"
+          :to="`/page/${contentLanguage}/${tfa.normalizedtitle}`"
           class="overflow-hidden"
-          v-for="article in [...tfa]"
-          :key="article.pageid"
         >
           <v-row class="overflow-hidden">
             <v-col class="pa-0 ma-0" cols="12" lg="4" md="4" sm="4">
               <v-img
                 :src="
-                  article.thumbnail
-                    ? article.thumbnail.source
+                  tfa.thumbnail
+                    ? tfa.thumbnail.source
                     : require('@/assets/Wikipedia logo version 2.svg?lazy')
                 "
+                height="300"
                 cover
               >
               </v-img>
             </v-col>
             <v-col class="pa-0 ma-0" cols="12" lg="8" md="8" sm="6">
               <v-card-title>
-                <h3 class="headline" v-html="article.displaytitle" />
+                <h3 class="headline" v-html="tfa.displaytitle" />
               </v-card-title>
               <v-card-text>
-                <h4>{{ article.description }}</h4>
-                <p class="body" v-html="article.extract_html"></p>
+                <h4>{{ tfa.description }}</h4>
+                <p class="body" v-html="tfa.extract_html"></p>
               </v-card-text>
             </v-col>
           </v-row>
@@ -86,7 +85,7 @@ export default {
   name: "Home",
   data: () => ({
     mostreadArticles: [],
-    tfa: []
+    tfa: null
   }),
   computed: {
     ...mapState({
@@ -112,7 +111,7 @@ export default {
       }.wikipedia.org/api/rest_v1/feed/featured/${year}/${month}/${date}`;
       axios.get(api).then(response => {
         this.mostreadArticles = response.data.mostread.articles;
-        this.tfa = response.data.tfa ? [response.data.tfa] : [];
+        this.tfa = response.data.tfa;
       });
     }
   }
