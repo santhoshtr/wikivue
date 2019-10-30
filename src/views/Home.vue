@@ -32,6 +32,8 @@
           </v-row>
         </v-card>
       </v-flex>
+    </v-layout>
+    <v-layout justify-center row>
       <v-flex xs12 sm12 md9 lg9>
         <h2><v-icon>mdi-trending-up</v-icon>Trending</h2>
         <v-slide-group multiple>
