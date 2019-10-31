@@ -2,7 +2,7 @@
   <v-layout>
     <v-list-item @click.stop="dialog = true">
       <v-list-item-icon>
-        <v-icon>mdi-settings</v-icon>
+        <v-icon>mdi-settings-outline</v-icon>
       </v-list-item-icon>
       <v-list-item-content>
         <v-list-item-title v-i18n="msg" />

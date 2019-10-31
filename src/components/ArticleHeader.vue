@@ -70,11 +70,14 @@
           <div class="flex-grow-1" />
           <v-toolbar-items>
             <v-btn small text>
-              <v-icon>mdi-pencil</v-icon>
+              <v-icon>mdi-lightbulb-on-outline</v-icon>
+            </v-btn>
+            <v-btn small text>
+              <v-icon>mdi-pencil-outline</v-icon>
             </v-btn>
             <article-revisions />
             <v-btn small text>
-              <v-icon>mdi-forum</v-icon>
+              <v-icon>mdi-forum-outline</v-icon>
             </v-btn>
             <article-languages />
             <v-btn
@@ -85,7 +88,7 @@
               target="__blank"
               v-if="loaded && article.geo"
             >
-              <v-icon>mdi-map-marker</v-icon>
+              <v-icon>mdi-map-marker-outline</v-icon>
             </v-btn>
             <v-btn
               small

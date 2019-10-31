@@ -92,17 +92,21 @@ export default {
   data: () => ({
     drawer: false,
     items: [
-      { icon: "mdi-home", msg: "menu-home", href: "/" },
-      { icon: "mdi-dice-5", msg: "menu-random", href: "/page/random" },
-      { icon: "mdi-compass", msg: "menu-explore", href: "/explore" },
+      { icon: "mdi-home-outline", msg: "menu-home", href: "/" },
+      { icon: "mdi-dice-5-outline", msg: "menu-random", href: "/page/random" },
+      { icon: "mdi-compass-outline", msg: "menu-explore", href: "/explore" },
       { icon: "mdi-map-marker-circle", msg: "menu-nearby", href: "/nearby" },
-      { icon: "mdi-star", msg: "menu-watchlist", href: "/user/watchlist" },
       {
-        icon: "mdi-account-check",
+        icon: "mdi-star-outline",
+        msg: "menu-watchlist",
+        href: "/user/watchlist"
+      },
+      {
+        icon: "mdi-account-check-outline",
         msg: "menu-contributions",
         href: "/user/contributions"
       },
-      { icon: "mdi-information", msg: "menu-about", href: "/about" }
+      { icon: "mdi-information-outline", msg: "menu-about", href: "/about" }
     ],
     refreshing: false,
     registration: null,

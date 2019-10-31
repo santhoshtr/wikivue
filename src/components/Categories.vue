@@ -18,7 +18,7 @@
               :to="'Category:' + item.titles.display"
             >
               <v-list-item-title>
-                <v-icon>mdi-tag</v-icon>
+                <v-icon>mdi-tag-outline</v-icon>
                 {{ item.titles.display }}
               </v-list-item-title>
             </v-list-item>
