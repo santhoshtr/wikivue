@@ -1,81 +1,86 @@
 <template>
   <v-container fluid grid-list-xl>
-    <v-layout justify-center row>
-      <v-flex xs12 sm12 md9 lg9 v-if="tfa">
-        <h2><v-icon>mdi-star-circle</v-icon>Featured article</h2>
-        <v-card
-          :to="`/page/${contentLanguage}/${tfa.normalizedtitle}`"
-          class="overflow-hidden"
-        >
-          <v-row class="overflow-hidden">
-            <v-col class="pa-0 ma-0" cols="12" lg="4" md="4" sm="4">
-              <v-img
-                :src="
-                  tfa.thumbnail
-                    ? tfa.thumbnail.source
-                    : require('@/assets/Wikipedia logo version 2.svg?lazy')
-                "
-                height="300"
-                cover
-              >
-              </v-img>
-            </v-col>
-            <v-col class="pa-0 ma-0" cols="12" lg="8" md="8" sm="6">
-              <v-card-title>
-                <h3 class="headline" v-html="tfa.displaytitle" />
-              </v-card-title>
-              <v-card-text>
-                <h4>{{ tfa.description }}</h4>
-                <p class="body" v-html="tfa.extract_html"></p>
-              </v-card-text>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-flex>
-    </v-layout>
-    <v-layout justify-center row>
-      <v-flex xs12 sm12 md9 lg9>
-        <h2><v-icon>mdi-trending-up</v-icon>Trending</h2>
-        <v-slide-group multiple>
-          <v-slide-item
-            v-for="article in [...mostreadArticles]"
-            :key="article.pageid"
+    <article>
+      <v-layout justify-center row>
+        <v-flex xs12 sm12 md10 lg10 v-if="tfa">
+          <h2><v-icon>mdi-star-circle</v-icon>Featured article</h2>
+          <v-card
+            :to="`/page/${contentLanguage}/${tfa.normalizedtitle}`"
+            class="overflow-hidden"
+            outlined
           >
-            <v-card
-              max-width="300px"
-              min-width="300px"
-              :to="`/page/${contentLanguage}/${article.normalizedtitle}`"
-              class="ma-2 overflow-y-hidden"
+            <v-row class="overflow-hidden">
+              <v-col class="pa-0 ma-0" cols="12" lg="4" md="4" sm="4">
+                <v-img
+                  :src="
+                    tfa.thumbnail
+                      ? tfa.thumbnail.source
+                      : require('@/assets/Wikipedia logo version 2.svg?lazy')
+                  "
+                  height="300"
+                  cover
+                >
+                </v-img>
+              </v-col>
+              <v-col class="pa-0 ma-0" cols="12" lg="8" md="8" sm="6">
+                <v-card-title>
+                  <h3 class="headline" v-html="tfa.displaytitle" />
+                </v-card-title>
+                <v-card-text>
+                  <p class="body-1" v-html="tfa.extract_html"></p>
+                </v-card-text>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-flex>
+      </v-layout>
+      <v-layout justify-center row>
+        <v-flex xs12 sm12 md10 lg10>
+          <h2><v-icon>mdi-trending-up</v-icon>Trending</h2>
+          <v-slide-group>
+            <v-slide-item
+              v-for="article in [...mostreadArticles]"
+              :key="article.pageid"
             >
-              <v-img
-                :src="
-                  article.thumbnail
-                    ? article.thumbnail.source
-                    : require('@/assets/Wikipedia logo version 2.svg?lazy')
-                "
-                cover
-                height="300px"
+              <v-card
+                max-width="250px"
+                min-width="250px"
+                max-height="250px"
+                min-height="250px"
+                :to="`/page/${contentLanguage}/${article.normalizedtitle}`"
+                class="ma-2 overflow-y-hidden"
+                outlined
               >
-                <v-row class="fill-height align-end " style="opacity: 0.85;">
-                  <v-col class="px-2 py-0 ma-0">
-                    <v-card-title
-                      class="pa-0 px-2 grey darken-3 white--text overflow-hidden text-no-wrap"
-                    >
-                      <h3 class="headline mb-0" v-html="article.displaytitle" />
-                    </v-card-title>
-                    <v-card-text
-                      class="extract px-2 text-xs-left overflow-hidden text-no-wrap grey darken-3 white--text"
-                    >
-                      <h4>{{ article.description }}</h4>
-                    </v-card-text>
-                  </v-col>
-                </v-row>
-              </v-img>
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
-      </v-flex>
-    </v-layout>
+                <v-img
+                  :src="
+                    article.thumbnail
+                      ? article.thumbnail.source
+                      : require('@/assets/Wikipedia logo version 2.svg?lazy')
+                  "
+                  cover
+                  height="250px"
+                >
+                  <v-row class="fill-height align-end " style="opacity: 0.85;">
+                    <v-col class="px-2 py-0 ma-0">
+                      <v-card-title
+                        class="pa-0 px-2 grey darken-3 white--text overflow-hidden text-no-wrap"
+                      >
+                        <h4 class="title" v-html="article.displaytitle" />
+                      </v-card-title>
+                      <v-card-text
+                        class="extract px-2 text-xs-left overflow-hidden text-no-wrap grey darken-3 white--text"
+                      >
+                        <h4 class="body-1">{{ article.description }}</h4>
+                      </v-card-text>
+                    </v-col>
+                  </v-row>
+                </v-img>
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-flex>
+      </v-layout>
+    </article>
   </v-container>
 </template>
 
