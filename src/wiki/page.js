@@ -20,7 +20,7 @@ export default {
     }
 
     const aside = document.createElement("aside");
-
+    let infoboxHTML;
     if (!expanded) {
       const hatnotes = wrapper.querySelectorAll("div.hatnote");
       const amboxes = wrapper.querySelectorAll(".ambox");
@@ -38,7 +38,7 @@ export default {
 
       const sideItems = [
         ...hatnotes,
-        ...infobox,
+        // ...infobox,
         ...amboxes,
         ...rightSideImages,
         ...leftSideImages,
@@ -51,10 +51,20 @@ export default {
         navboxes[i].remove();
       }
 
+      // Prepare for quickfacts
+      if (infobox && infobox.length) {
+        infobox[0].removeAttribute("style");
+        const tableWrapper = document.createElement("div");
+        tableWrapper.appendChild(infobox[0].cloneNode(true));
+        tableWrapper.className += "table-wrapper v-data-table theme--light";
+        infoboxHTML = tableWrapper.outerHTML;
+        infobox[0].remove();
+      }
+
       for (let i = 0; i < sideItems.length; i++) {
         if (sideItems[i].matches("table")) {
           const tableWrapper = document.createElement("div");
-          tableWrapper.className += "table-wrapper";
+          tableWrapper.className += "table-wrapper v-data-table";
           tableWrapper.appendChild(sideItems[i].cloneNode(true));
           aside.appendChild(tableWrapper);
         } else {
@@ -66,7 +76,8 @@ export default {
     }
     return {
       content: wrapper.innerHTML,
-      aside: aside.innerHTML
+      aside: aside.innerHTML,
+      infobox: infoboxHTML
     };
   },
 

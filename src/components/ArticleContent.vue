@@ -15,7 +15,11 @@
     />
     <v-layout row>
       <v-flex xs12>
-        <article-header :article="article" :is-preview="isPreview" />
+        <article-header
+          :article="article"
+          :is-preview="isPreview"
+          :quickfacts="quickfacts"
+        />
         <div class="error" :if="error">
           {{ error }}
         </div>
@@ -117,7 +121,8 @@ export default {
     selectedImage: null,
     sections: [],
     collapsibleSections: [],
-    previewShown: false
+    previewShown: false,
+    quickfacts: null
   }),
   computed: {
     loaded: function() {
@@ -176,6 +181,7 @@ export default {
   methods: {
     layout() {
       this.sections = [];
+      this.quickfacts = null;
       this.collapsibleSections = [];
       let sectionsCount;
       if (!this.article.sections) sectionsCount = 0;
@@ -187,6 +193,11 @@ export default {
       for (let i = 0; i < sectionsCount; i++) {
         const section = this.article.sections[i];
         const parseResult = this.parse(section, isCollapsing);
+        if (parseResult.infobox && !this.quickfacts) {
+          this.quickfacts = {
+            infobox: parseResult.infobox
+          };
+        }
         const sectionLayout = {
           id: section.id,
           anchor: section.anchor,

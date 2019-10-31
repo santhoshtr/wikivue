@@ -69,9 +69,32 @@
         <v-toolbar flat dense>
           <div class="flex-grow-1" />
           <v-toolbar-items>
-            <v-btn small text>
-              <v-icon>mdi-lightbulb-on-outline</v-icon>
-            </v-btn>
+            <v-dialog
+              v-if="quickfacts"
+              fullscreen
+              hide-overlay
+              transition="dialog-bottom-transition"
+              v-model="quickfactsDialog"
+              attach="article"
+            >
+              <template v-slot:activator="{ on }">
+                <v-btn small text v-on="on">
+                  <v-icon>mdi-lightbulb-on-outline</v-icon>
+                </v-btn>
+              </template>
+              <v-card>
+                <v-toolbar color="primary">
+                  <v-toolbar-title>Quick facts</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-toolbar-items>
+                    <v-btn icon @click="quickfactsDialog = false">
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </v-toolbar-items>
+                </v-toolbar>
+                <v-card-text v-html="quickfacts.infobox"> </v-card-text>
+              </v-card>
+            </v-dialog>
             <v-btn small text>
               <v-icon>mdi-pencil-outline</v-icon>
             </v-btn>
@@ -128,8 +151,15 @@ export default {
     isPreview: {
       type: Boolean,
       default: false
+    },
+    quickfacts: {
+      type: Object,
+      default: () => null
     }
   },
+  data: () => ({
+    quickfactsDialog: false
+  }),
   computed: {
     loaded: function() {
       return (
