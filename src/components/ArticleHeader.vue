@@ -28,11 +28,11 @@
       </v-card>
       <v-layout row fill-height v-if="$vuetify.breakpoint.mdAndUp">
         <v-flex md3 lg3>
-          <v-sheet min-width="100%" min-height="100%">
+          <v-sheet min-width="100%" min-height="100%" class="pt-5">
             <v-img
               eager
               v-if="bannerImageUrl"
-              class="banner-img mp-5"
+              class="banner-img ma-0"
               :height="isPreview ? '100px' : '150px'"
               width="100%"
               :src="bannerImageUrl"
