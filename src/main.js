@@ -8,21 +8,20 @@ import i18n from "vue-banana-i18n";
 
 Vue.config.productionTip = false;
 
-const locale = navigator.language.split("-")[0] || "en";
+const locale = "es"; //navigator.language.split("-")[0] || "en";
 const finalFallback = "en";
-const messages = {
-  [finalFallback]: require(`@/assets/i18n/${finalFallback}.json`)
-};
+const messages = {};
 
 try {
   messages[locale] = require(`@/assets/i18n/${locale}.json`);
 } catch {
-  // Not localised. We have loaded fallback locale.
+  // Not localized at all.
+  messages[finalFallback] = require(`@/assets/i18n/${finalFallback}.json`);
 }
 
 Vue.use(i18n, {
   locale,
-  finalFallback: "en",
+  finalFallback,
   messages
 });
 

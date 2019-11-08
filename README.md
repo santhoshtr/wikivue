@@ -37,7 +37,8 @@ Personal goal: As a Wikimedia Foundation engineer, have a modern system that all
 * [Vuetify](https://vuejs.org) - UI framwork based on Vue.
 * [Vuex](https://vuex.vuejs.org/) - state management pattern + library for Vue.js applications.
 * [Vue Router](https://router.vuejs.org/) - Router for Single Page Applications.
-* [Vue-Banana-i18n](https://github.com/santhoshtr/vue-banana-i18n) - The Banana i18n system(Wikipedia localization) vue bindings.
+* [Vue-Banana-i18n](https://github.com/santhoshtr/vue-banana-i18n) - The [Banana i18n](https://github.com/wikimedia/banana-**i18n**) system(Wikipedia localization) vue bindings.
+* [banana-i18n-loader](https://github.com/santhoshtr/banana-i18n-loader) - Webpack loader for Banana i18n sytem
 * [TipTap](https://tiptap.scrumpy.io/) - WYSIWYG editor based on [ProseMirror](https://prosemirror.net/)
 * [Material Design Icons](https://materialdesignicons.com/)
 * [Webpack](https://webpack.js.org/)

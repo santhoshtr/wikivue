@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   pwa: {
     themeColor: "#FFFFFF",
@@ -41,6 +43,15 @@ module.exports = {
     }
   },
   configureWebpack: {
+    module: {
+      rules: [
+        {
+          test: /\.json$/,
+          include: [path.resolve(__dirname, "src", "assets", "i18n")],
+          use: ["banana-i18n-loader"]
+        }
+      ]
+    },
     optimization: {
       splitChunks: {
         cacheGroups: {
