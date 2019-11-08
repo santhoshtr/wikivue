@@ -10,7 +10,9 @@ export default new Vuetify({
     iconfont: "mdi"
   },
   theme: {
-    dark: false,
+    dark:
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches,
     themes: {
       light: {
         primary: { base: colors.white },
