@@ -13,7 +13,7 @@
       absolute
       top
     />
-    <v-layout row>
+    <v-layout>
       <v-flex xs12>
         <article-header
           :article="article"
@@ -25,7 +25,7 @@
         </div>
       </v-flex>
     </v-layout>
-    <v-layout row fill-height>
+    <v-layout fill-height>
       <v-flex xs2 sm2 md3 lg3 hidden-sm-and-down>
         <table-of-contents :toc="toc" />
       </v-flex>
