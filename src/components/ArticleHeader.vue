@@ -26,7 +26,7 @@
         </v-img>
         <v-card-actions class="mx-0 pa-0 hidden-sm-and-down" />
       </v-card>
-      <v-layout row fill-height v-if="$vuetify.breakpoint.mdAndUp">
+      <v-layout fill-height v-if="$vuetify.breakpoint.mdAndUp">
         <v-flex md3 lg3>
           <v-sheet min-width="100%" min-height="100%" class="pt-5">
             <v-img
@@ -64,7 +64,7 @@
         </v-flex>
       </v-layout>
     </v-flex>
-    <v-layout row v-if="!isPreview">
+    <v-layout v-if="!isPreview">
       <v-flex xs12 sm12 md12 lg12>
         <v-toolbar flat dense>
           <div class="flex-grow-1" />

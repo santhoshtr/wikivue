@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="toc fill-height ml-4 py-2 px-4" v-if="toc.length > 1">
+  <v-sheet class="toc fill-height py-2 px-4" v-if="toc.length > 1">
     <h1 class="title px-2" v-i18n="'toc-heading'" />
     <v-treeview
       activatable
