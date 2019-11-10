@@ -79,7 +79,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-btn small text v-on="on">
-                  <v-icon>mdi-lightbulb-on-outline</v-icon>
+                  <v-icon>{{ mdiLightbulbOnOutline }}</v-icon>
                 </v-btn>
               </template>
               <v-card>
@@ -88,7 +88,7 @@
                   <v-spacer></v-spacer>
                   <v-toolbar-items>
                     <v-btn icon @click="quickfactsDialog = false">
-                      <v-icon>mdi-close</v-icon>
+                      <v-icon>{{ mdiClose }}</v-icon>
                     </v-btn>
                   </v-toolbar-items>
                 </v-toolbar>
@@ -96,11 +96,11 @@
               </v-card>
             </v-dialog>
             <v-btn small text>
-              <v-icon>mdi-pencil-outline</v-icon>
+              <v-icon>{{ mdiPencilOutline }}</v-icon>
             </v-btn>
             <article-revisions />
             <v-btn small text>
-              <v-icon>mdi-forum-outline</v-icon>
+              <v-icon>{{ mdiForumOutline }}</v-icon>
             </v-btn>
             <article-languages />
             <v-btn
@@ -111,7 +111,7 @@
               target="__blank"
               v-if="loaded && article.geo"
             >
-              <v-icon>mdi-map-marker-outline</v-icon>
+              <v-icon>{{ mdiMapMarkerOutline }}</v-icon>
             </v-btn>
             <v-btn
               small
@@ -137,6 +137,13 @@
 
 <script>
 import { mapState } from "vuex";
+import {
+  mdiClose,
+  mdiLightbulbOnOutline,
+  mdiPencilOutline,
+  mdiForumOutline,
+  mdiMapMarkerOutline
+} from "@mdi/js";
 export default {
   name: "ArticleHeader",
   components: {
@@ -158,7 +165,12 @@ export default {
     }
   },
   data: () => ({
-    quickfactsDialog: false
+    quickfactsDialog: false,
+    mdiClose,
+    mdiPencilOutline,
+    mdiForumOutline,
+    mdiMapMarkerOutline,
+    mdiLightbulbOnOutline
   }),
   computed: {
     loaded: function() {

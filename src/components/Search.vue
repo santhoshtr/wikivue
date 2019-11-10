@@ -13,7 +13,6 @@
     :placeholder="$i18n('header-search')"
     return-object
     auto-select-first
-    prepend-inner-icon="mdi-magnify"
     attach=".search"
     rounded
     filled
@@ -23,7 +22,9 @@
     class="search lg12"
     @change="onSelect"
   >
-    <template v-slot:prepend-inner />
+    <template v-slot:prepend-inner>
+      <v-icon>{{ mdiMagnify }}</v-icon>
+    </template>
     <template v-slot:no-data>
       <v-list>
         <v-list-item>
@@ -44,7 +45,7 @@
             :to="item.title"
           >
             <v-list-item-icon>
-              <v-icon>mdi-file-document-box</v-icon>
+              <v-icon>{{ mdiFileDocumentBox }}</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title v-text="item.title" />
@@ -62,7 +63,7 @@
         <v-list-item-avatar>
           <img v-if="data.item.thumbnail" :src="data.item.thumbnail.source" />
           <v-icon v-else large>
-            mdi-file-document-box
+            {{ mdiFileDocumentBox }}
           </v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
@@ -76,6 +77,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { mdiMagnify, mdiFileDocumentBox } from "@mdi/js";
 import axios from "axios";
 
 export default {
@@ -88,7 +90,9 @@ export default {
     isLoading: false,
     article: null,
     search: "",
-    drawer: false
+    drawer: false,
+    mdiMagnify,
+    mdiFileDocumentBox
   }),
   watch: {
     $route(to) {

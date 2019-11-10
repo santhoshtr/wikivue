@@ -14,30 +14,33 @@
           <span
             slot="badge"
           >{{ $store.state.article.languagecount }}</span>
-          <v-icon>mdi-translate</v-icon>
+          <v-icon>{{mdiTranslate}}</v-icon>
         </v-badge> -->
-        <v-icon>mdi-translate</v-icon>
+        <v-icon>{{ mdiTranslate }}</v-icon>
       </v-btn>
     </template>
     <v-card>
       <v-container grid-list-md>
         <v-toolbar flat>
           <v-btn icon @click="dialog = false">
-            <v-icon>mdi-arrow-left</v-icon>
+            <v-icon>{{ mdiArrowLeft }}</v-icon>
           </v-btn>
           <v-text-field
             v-model="searchQuery"
             flat
             single-line
             hide-details
-            prepend-inner-icon="mdi-magnify"
             @input="onSearch"
             class="language-search"
             label="Select language"
-          />
+          >
+            <template v-slot:prepend-inner>
+              <v-icon>{{ mdiMagnify }}</v-icon>
+            </template>
+          </v-text-field>
           <v-toolbar-items>
             <v-btn icon @click="dialog = false">
-              <v-icon>mdi-close</v-icon>
+              <v-icon>{{ mdiClose }}</v-icon>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
@@ -66,6 +69,7 @@
 
 <script>
 import languagedata from "@wikimedia/language-data";
+import { mdiClose, mdiArrowLeft, mdiMagnify, mdiTranslate } from "@mdi/js";
 import { mapState } from "vuex";
 
 export default {
@@ -73,7 +77,11 @@ export default {
   data: () => ({
     dialog: false,
     searchQuery: "",
-    filteredLanguages: null
+    filteredLanguages: null,
+    mdiClose,
+    mdiMagnify,
+    mdiArrowLeft,
+    mdiTranslate
   }),
   computed: {
     ...mapState({

@@ -2,20 +2,20 @@
   <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
     <template v-slot:activator="{ on }">
       <v-btn text value="languages" v-on="on">
-        <v-icon>mdi-history</v-icon>
+        <v-icon>{{ mdiHistory }}</v-icon>
       </v-btn>
     </template>
     <v-card>
       <v-container grid-list-md>
         <v-toolbar flat>
           <v-btn icon @click="dialog = false">
-            <v-icon>mdi-arrow-left</v-icon>
+            <v-icon>{{ mdiArrowleft }}</v-icon>
           </v-btn>
           <v-toolbar-title v-i18n="'article-history-title'" />
           <div class="flex-grow-1" />
           <v-toolbar-items>
             <v-btn icon @click="dialog = false">
-              <v-icon>mdi-close</v-icon>
+              <v-icon>{{ mdiClose }}</v-icon>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
@@ -49,9 +49,13 @@
 
 <script>
 import { mapState } from "vuex";
+import { mdiClose, mdiArrowleft, mdiHistory } from "@mdi/js";
 export default {
   data: () => ({
-    dialog: false
+    dialog: false,
+    mdiClose,
+    mdiArrowleft,
+    mdiHistory
   }),
   computed: {
     ...mapState({

@@ -1,7 +1,7 @@
 <template>
   <v-layout justify-center align-center>
     <v-btn text :title="selectedLanguageAutonym" @click.stop="dialog = true">
-      <v-icon>mdi-translate</v-icon>
+      <v-icon>{{ mdiTranslate }}</v-icon>
       {{ selectedLanguageAutonym }}
     </v-btn>
 
@@ -14,21 +14,24 @@
       <v-card>
         <v-toolbar flat>
           <v-btn icon @click="dialog = false">
-            <v-icon>mdi-arrow-left</v-icon>
+            <v-icon>{{ mdiArrowLeft }}</v-icon>
           </v-btn>
           <v-text-field
             v-model="searchQuery"
             flat
             single-line
             hide-details
-            prepend-inner-icon="mdi-magnify"
             @input="onSearch"
             class="language-search"
             label="Select language"
-          />
+          >
+            <template v-slot:prepend-inner>
+              <v-icon>{{ mdiMagnify }}</v-icon>
+            </template>
+          </v-text-field>
           <v-toolbar-items>
             <v-btn icon @click="dialog = false">
-              <v-icon>mdi-close</v-icon>
+              <v-icon>{{ mdiClose }}</v-icon>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
@@ -58,6 +61,7 @@
 
 <script>
 import languagedata from "@wikimedia/language-data";
+import { mdiClose, mdiArrowLeft, mdiMagnify, mdiTranslate } from "@mdi/js";
 import { mapGetters, mapState } from "vuex";
 
 export default {
@@ -71,7 +75,11 @@ export default {
   data: () => ({
     dialog: false,
     filteredLanguages: null,
-    searchQuery: ""
+    searchQuery: "",
+    mdiClose,
+    mdiMagnify,
+    mdiArrowLeft,
+    mdiTranslate
   }),
   computed: {
     ...mapGetters("app", ["contentLanguages"]),

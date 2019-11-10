@@ -18,7 +18,7 @@
               :to="'Category:' + item.titles.display"
             >
               <v-list-item-title>
-                <v-icon>mdi-tag-outline</v-icon>
+                <v-icon>mdiTagOutline</v-icon>
                 {{ item.titles.display }}
               </v-list-item-title>
             </v-list-item>
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { mdiTagOutline } from "@mdi/js";
+
 export default {
   name: "Categories",
   props: {
@@ -38,6 +40,9 @@ export default {
       default: () => []
     }
   },
+  data: () => ({
+    mdiTagOutline
+  }),
   computed: {
     categoriesToShow: function() {
       return this.categories.filter(category => category.hidden === false);

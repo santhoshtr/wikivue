@@ -66,7 +66,7 @@
         {{ snackBtnText }}
       </v-btn>
       <v-btn icon @click="snackWithButtons = false">
-        <v-icon>mdi-close</v-icon>
+        <v-icon>{{ mdiClose }}</v-icon>
       </v-btn>
     </v-snackbar>
   </v-app>
@@ -77,6 +77,16 @@ import Search from "./components/Search";
 import Footer from "./components/Footer";
 import Brand from "./components/Brand";
 import { mapGetters } from "vuex";
+import {
+  mdiClose,
+  mdiHomeOutline,
+  mdiDice5Outline,
+  mdiCompassOutline,
+  mdiMapMarkerCircle,
+  mdiStarOutline,
+  mdiAccountCheckOutline,
+  mdiInformationOutline
+} from "@mdi/js";
 
 export default {
   components: {
@@ -91,22 +101,23 @@ export default {
   },
   data: () => ({
     drawer: false,
+    mdiClose,
     items: [
-      { icon: "mdi-home-outline", msg: "menu-home", href: "/" },
-      { icon: "mdi-dice-5-outline", msg: "menu-random", href: "/page/random" },
-      { icon: "mdi-compass-outline", msg: "menu-explore", href: "/explore" },
-      { icon: "mdi-map-marker-circle", msg: "menu-nearby", href: "/nearby" },
+      { icon: mdiHomeOutline, msg: "menu-home", href: "/" },
+      { icon: mdiDice5Outline, msg: "menu-random", href: "/page/random" },
+      { icon: mdiCompassOutline, msg: "menu-explore", href: "/explore" },
+      { icon: mdiMapMarkerCircle, msg: "menu-nearby", href: "/nearby" },
       {
-        icon: "mdi-star-outline",
+        icon: mdiStarOutline,
         msg: "menu-watchlist",
         href: "/user/watchlist"
       },
       {
-        icon: "mdi-account-check-outline",
+        icon: mdiAccountCheckOutline,
         msg: "menu-contributions",
         href: "/user/contributions"
       },
-      { icon: "mdi-information-outline", msg: "menu-about", href: "/about" }
+      { icon: mdiInformationOutline, msg: "menu-about", href: "/about" }
     ],
     refreshing: false,
     registration: null,

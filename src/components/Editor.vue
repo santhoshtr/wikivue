@@ -5,24 +5,24 @@
         <v-tabs-slider />
 
         <v-tab :href="`#tab-editor`">
-          <v-icon>mdi-pencil</v-icon>
+          <v-icon>{{ mdiPencil }}</v-icon>
         </v-tab>
         <v-tab :href="`#tab-html`">
-          <v-icon>mdi-code-tags</v-icon>
+          <v-icon>{{ mdiCodeTags }}</v-icon>
         </v-tab>
         <v-tab :href="`#tab-wikitext`">
-          <v-icon>mdi-code-braces</v-icon>
+          <v-icon>{{ mdiCodeBraces }}</v-icon>
         </v-tab>
         <v-tab-item :value="'tab-editor'">
           <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
             <v-toolbar dense flat elevation="1">
               <v-btn-toggle>
                 <v-btn text @click="commands.undo">
-                  <v-icon>mdi-undo</v-icon>
+                  <v-icon>{{ mdiUndo }}</v-icon>
                 </v-btn>
 
                 <v-btn text @click="commands.redo">
-                  <v-icon>mdi-redo</v-icon>
+                  <v-icon>{{ mdiRedo }}</v-icon>
                 </v-btn>
               </v-btn-toggle>
               <v-divider vertical />
@@ -33,14 +33,14 @@
                   :class="{ 'v-btn--active': isActive.bold() }"
                   @click="commands.bold"
                 >
-                  <v-icon>mdi-format-bold</v-icon>
+                  <v-icon>{{ mdiFormatBold }}</v-icon>
                 </v-btn>
                 <v-btn
                   text
                   :class="{ 'v-btn--active': isActive.italic() }"
                   @click="commands.italic"
                 >
-                  <v-icon>mdi-format-italic</v-icon>
+                  <v-icon>{{ mdiFormatItalic }}</v-icon>
                 </v-btn>
 
                 <v-btn
@@ -48,20 +48,20 @@
                   :class="{ 'v-btn--active': isActive.underline() }"
                   @click="commands.underline"
                 >
-                  <v-icon>mdi-format-underline</v-icon>
+                  <v-icon>{{ mdiFormatUnderline }}</v-icon>
                 </v-btn>
                 <v-btn
                   text
                   :class="{ 'v-btn--active': isActive.wikilink() }"
                   @click="commands.wikilink({ title: selectedText })"
                 >
-                  <v-icon>mdi-link</v-icon>
+                  <v-icon>{{ mdiLink }}</v-icon>
                 </v-btn>
               </v-btn-toggle>
               <v-menu :fixed="true" offset-y>
                 <template v-slot:activator="{ on }">
                   <v-btn text v-on="on">
-                    <v-icon>mdi-format-header-1</v-icon>
+                    <v-icon>{{ mdiFormatHeader1 }}</v-icon>
                   </v-btn>
                 </template>
                 <v-list>
@@ -74,7 +74,7 @@
                         }"
                         @click="commands.heading({ level: 1 })"
                       >
-                        <v-icon>mdi-format-header-1</v-icon>
+                        <v-icon>{{ mdiFormatHeader1 }}</v-icon>
                       </v-btn>
                     </v-list-tile-content>
                   </v-list-tile>
@@ -87,7 +87,7 @@
                         }"
                         @click="commands.heading({ level: 2 })"
                       >
-                        <v-icon>mdi-format-header-2</v-icon>
+                        <v-icon>{{ mdiFormatHeader2 }}</v-icon>
                       </v-btn>
                     </v-list-tile-content>
                   </v-list-tile>
@@ -100,7 +100,7 @@
                         }"
                         @click="commands.heading({ level: 3 })"
                       >
-                        <v-icon>mdi-format-header-3</v-icon>
+                        <v-icon>{{ mdiFormatHeader3 }}</v-icon>
                       </v-btn>
                     </v-list-tile-content>
                   </v-list-tile>
@@ -113,7 +113,7 @@
                         }"
                         @click="commands.heading({ level: 4 })"
                       >
-                        <v-icon>mdi-format-header-4</v-icon>
+                        <v-icon>{{ mdiFormatHeader4 }}</v-icon>
                       </v-btn>
                     </v-list-tile-content>
                   </v-list-tile>
@@ -126,7 +126,7 @@
                         }"
                         @click="commands.heading({ level: 5 })"
                       >
-                        <v-icon>mdi-format-header-5</v-icon>
+                        <v-icon>{{ mdiFormatHeader5 }}</v-icon>
                       </v-btn>
                     </v-list-tile-content>
                   </v-list-tile>
@@ -138,7 +138,7 @@
                   :class="{ 'v-btn--active': isActive.bullet_list() }"
                   @click="commands.bullet_list"
                 >
-                  <v-icon>mdi-format-list-bulleted</v-icon>
+                  <v-icon>{{ mdiFormatListBulleted }}</v-icon>
                 </v-btn>
 
                 <v-btn
@@ -146,7 +146,7 @@
                   :class="{ 'v-btn--active': isActive.ordered_list() }"
                   @click="commands.ordered_list"
                 >
-                  <v-icon>mdi-format-list-numbered</v-icon>
+                  <v-icon>{{ mdiFormatListNumbered }}</v-icon>
                 </v-btn>
                 <v-divider vertical />
                 <v-menu :fixed="true" offset-y>
@@ -157,7 +157,7 @@
                       v-on="on"
                       :class="{ 'v-btn--active': isActive.table() }"
                     >
-                      <v-icon>mdi-table</v-icon>
+                      <v-icon>{{ mdiTable }}</v-icon>
                     </v-btn>
                   </template>
                   <v-list dense>
@@ -173,7 +173,7 @@
                           })
                         "
                       >
-                        <v-icon>mdi-table-plus</v-icon>
+                        <v-icon>{{ mdiTablePlus }}</v-icon>
                       </v-btn>
                     </span>
                     <span v-if="isActive.table()">
@@ -182,42 +182,42 @@
                         text
                         @click="commands.addRowBefore"
                       >
-                        <v-icon>mdi-table-row-plus-before</v-icon>
+                        <v-icon>{{ mdiTableRowPlusBefore }}</v-icon>
                       </v-btn>
                       <v-btn
                         class="hidden-xs-only"
                         text
                         @click="commands.addRowAfter"
                       >
-                        <v-icon>mdi-table-row-plus-after</v-icon>
+                        <v-icon>{{ mdiTableRowPlusAfter }}</v-icon>
                       </v-btn>
                       <v-btn
                         class="hidden-xs-only"
                         text
                         @click="commands.deleteRow"
                       >
-                        <v-icon>mdi-table-row-remove</v-icon>
+                        <v-icon>{{ mdiTableRowRemove }}</v-icon>
                       </v-btn>
                       <v-btn
                         class="hidden-xs-only"
                         text
                         @click="commands.addColumnBefore"
                       >
-                        <v-icon>mdi-table-column-plus-after</v-icon>
+                        <v-icon>{{ mdiTableColumnPlusAfter }}</v-icon>
                       </v-btn>
                       <v-btn
                         class="hidden-xs-only"
                         text
                         @click="commands.addColumnBefore"
                       >
-                        <v-icon>mdi-table-column-plus-before</v-icon>
+                        <v-icon>{{ mdiTableColumnPlusBefore }}</v-icon>
                       </v-btn>
                       <v-btn
                         class="hidden-xs-only"
                         text
                         @click="commands.deleteColumn"
                       >
-                        <v-icon>mdi-table-column-remove</v-icon>
+                        <v-icon>{{ mdiTableColumnRemove }}</v-icon>
                       </v-btn>
                       <v-divider />
                       <v-btn
@@ -225,14 +225,13 @@
                         text
                         @click="commands.toggleCellMerge"
                       >
-                        <v-icon>mdi-table-merge-cells</v-icon>
                       </v-btn>
                       <v-btn
                         class="hidden-xs-only"
                         text
                         @click="commands.deleteTable"
                       >
-                        <v-icon>mdi-table-remove</v-icon>
+                        <v-icon>{{ mdiTableRemove }}</v-icon>
                       </v-btn>
                     </span>
                   </v-list>
@@ -242,7 +241,7 @@
                   :class="{ 'v-btn--active': isActive.blockquote() }"
                   @click="commands.blockquote"
                 >
-                  <v-icon>mdi-format-quote-open</v-icon>
+                  <v-icon>{{ mdiFormatQuoteOpen }}</v-icon>
                 </v-btn>
 
                 <v-btn
@@ -250,11 +249,11 @@
                   :class="{ 'v-btn--active': isActive.code_block() }"
                   @click="commands.code_block"
                 >
-                  <v-icon>mdi-code-tags</v-icon>
+                  <v-icon>{{ mdiCodeTags }}</v-icon>
                 </v-btn>
 
                 <v-btn text @click="commands.horizontal_rule">
-                  <v-icon>mdi-minus</v-icon>
+                  <v-icon>{{ mdiMinus }}</v-icon>
                 </v-btn>
               </v-btn-toggle>
             </v-toolbar>
@@ -273,7 +272,7 @@
                 v-if="isActive.wikilink()"
                 :class="{ 'is-active': isActive.wikilink() }"
               >
-                <v-icon>mdi-link</v-icon>
+                <v-icon>{{ mdiLink }}</v-icon>
                 <v-text-field
                   solo
                   flat
@@ -283,14 +282,14 @@
                   :value="getMarkAttrs('wikilink').title"
                 />
                 <v-btn icon @click="commands.wikilink({})">
-                  <v-icon>mdi-delete</v-icon>
+                  <v-icon>{{ mdiDelete }}</v-icon>
                 </v-btn>
                 <v-btn
                   icon
                   :href="getMarkAttrs('wikilink').href"
                   target="_blank"
                 >
-                  <v-icon>mdi-open-in-new</v-icon>
+                  <v-icon>{{ mdiOpenInNew }}</v-icon>
                 </v-btn>
               </v-toolbar>
             </v-sheet>
@@ -321,6 +320,37 @@
 
 <script>
 import { mapState } from "vuex";
+import {
+  mdiCodeBraces,
+  mdiCodeTags,
+  mdiDelete,
+  mdiFormatBold,
+  mdiFormatHeader1,
+  mdiFormatHeader2,
+  mdiFormatHeader3,
+  mdiFormatHeader4,
+  mdiFormatHeader5,
+  mdiFormatItalic,
+  mdiFormatListBulleted,
+  mdiFormatListNumbered,
+  mdiFormatQuoteOpen,
+  mdiFormatUnderline,
+  mdiLink,
+  mdiMinus,
+  mdiOpenInNew,
+  mdiPencil,
+  mdiRedo,
+  mdiTable,
+  mdiTableColumnPlusAfter,
+  mdiTableColumnPlusBefore,
+  mdiTableColumnRemove,
+  mdiTablePlus,
+  mdiTableRemove,
+  mdiTableRowPlusAfter,
+  mdiTableRowPlusBefore,
+  mdiTableRowRemove,
+  mdiUndo
+} from "@mdi/js";
 import {
   EditorContent,
   EditorMenuBar,
@@ -383,7 +413,36 @@ export default {
                 <td>Six</td>
               </tr>
             </table>
-        `
+        `,
+      mdiCodeBraces,
+      mdiCodeTags,
+      mdiDelete,
+      mdiFormatBold,
+      mdiFormatHeader1,
+      mdiFormatHeader2,
+      mdiFormatHeader3,
+      mdiFormatHeader4,
+      mdiFormatHeader5,
+      mdiFormatItalic,
+      mdiFormatListBulleted,
+      mdiFormatListNumbered,
+      mdiFormatQuoteOpen,
+      mdiFormatUnderline,
+      mdiLink,
+      mdiMinus,
+      mdiOpenInNew,
+      mdiPencil,
+      mdiRedo,
+      mdiTable,
+      mdiTableColumnPlusAfter,
+      mdiTableColumnPlusBefore,
+      mdiTableColumnRemove,
+      mdiTablePlus,
+      mdiTableRemove,
+      mdiTableRowPlusAfter,
+      mdiTableRowPlusBefore,
+      mdiTableRowRemove,
+      mdiUndo
     };
   },
   created() {

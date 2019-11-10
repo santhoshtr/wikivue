@@ -4,13 +4,13 @@
       <article-revisions />
 
       <v-btn value="bookmark">
-        <v-icon>mdi-bookmark</v-icon>
+        <v-icon>{{ mdiBookmark }}</v-icon>
       </v-btn>
 
       <article-languages />
 
       <v-btn v-show="tocButtonShown" value="tocbutton" @click="showToc">
-        <v-icon>mdi-table-of-contents</v-icon>
+        <v-icon>{{ mdiTableOfContents }}</v-icon>
       </v-btn>
     </v-bottom-navigation>
     <v-navigation-drawer
@@ -30,6 +30,7 @@
 import TableOfContents from "./TOC";
 import ArticleLanguages from "./ArticleLanguages";
 import ArticleRevisions from "./History";
+import { mdiBookmark, mdiTableOfContents } from "@mdi/js";
 
 export default {
   name: "BottomNav",
@@ -38,11 +39,11 @@ export default {
     ArticleRevisions,
     ArticleLanguages
   },
-  data() {
-    return {
-      tocShown: false
-    };
-  },
+  data: () => ({
+    tocShown: false,
+    mdiBookmark,
+    mdiTableOfContents
+  }),
   computed: {
     bottomNav() {
       return (

@@ -5,7 +5,7 @@
       <div class="flex-grow-1" />
       <v-toolbar-items>
         <v-btn text @click="shown = false">
-          <v-icon>mdi-close</v-icon>
+          <v-icon>{{ mdiClose }}</v-icon>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -27,11 +27,13 @@
 
 <script>
 import { mapState } from "vuex";
+import { mdiClose } from "@mdi/js";
 
 export default {
   name: "ImageViewer",
   data: () => ({
-    shown: false
+    shown: false,
+    mdiClose
   }),
   computed: {
     ...mapState({
