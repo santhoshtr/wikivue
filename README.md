@@ -2,6 +2,8 @@ This is a [Vuejs](https://vuejs.org) powered modern, single page, progressive, o
 
 **Try**: [wikipedia.thottingal.in](https://wikipedia.thottingal.in)
 
+Also available in dat protocol:  dat://25689f3a757853a511474d38f0a6d6be2cd2b0cb161686d75fda5c1619137921 or [wikipedia.hashbase.io](wikipedia.hashbase.io)
+
 ## Features
 
 * Fully client side application using wikipedia web apis.
@@ -29,7 +31,7 @@ Personal goal: As a Wikimedia Foundation engineer, have a modern system that all
 
 * Develop a modular renderless WYSIWYG editor for Wikitext. Currently an editor based on ProseMirror is being attempted.
 * Define a modular data store and versioned Article content format so that a structured wikipedia article content can live in a distributed p2p web.
-* Make this reader application hostable with static web servers-This is done.
+
 
 ## Thanks
 
