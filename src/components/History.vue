@@ -9,7 +9,7 @@
       <v-container grid-list-md>
         <v-toolbar flat>
           <v-btn icon @click="dialog = false">
-            <v-icon>{{ mdiArrowleft }}</v-icon>
+            <v-icon>{{ mdiArrowLeft }}</v-icon>
           </v-btn>
           <v-toolbar-title v-i18n="'article-history-title'" />
           <div class="flex-grow-1" />
@@ -49,12 +49,12 @@
 
 <script>
 import { mapState } from "vuex";
-import { mdiClose, mdiArrowleft, mdiHistory } from "@mdi/js";
+import { mdiClose, mdiArrowLeft, mdiHistory } from "@mdi/js";
 export default {
   data: () => ({
     dialog: false,
     mdiClose,
-    mdiArrowleft,
+    mdiArrowLeft,
     mdiHistory
   }),
   computed: {
