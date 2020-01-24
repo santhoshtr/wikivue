@@ -30,7 +30,7 @@
         <table-of-contents :toc="toc" />
       </v-flex>
       <v-flex xs12 sm12 md9 lg9>
-        <v-sheet class="content px-3">
+        <div class="content px-3">
           <section
             v-for="section in sections"
             :key="`section-${section.id}`"
@@ -70,7 +70,7 @@
           <template v-if="loaded">
             <article-footer :article="article" />
           </template>
-        </v-sheet>
+        </div>
         <reference :reference="selectedReference" :if="selectedReference" />
         <image-viewer :if="selectedImage" :imgsrc="selectedImage" />
         <article-preview
