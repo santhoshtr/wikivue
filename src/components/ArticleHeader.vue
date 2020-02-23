@@ -1,7 +1,7 @@
 <template>
   <header class="artcle-header">
     <v-flex xs12 sm12 md12 lg12>
-      <div flat class="pa-1" v-if="$vuetify.breakpoint.smAndDown">
+      <v-card flat class="pa-1" v-if="$vuetify.breakpoint.smAndDown">
         <v-img
           eager
           class="banner-img ma-0"
@@ -25,10 +25,10 @@
           </v-card-text>
         </v-img>
         <v-card-actions class="mx-0 pa-0 hidden-sm-and-down" />
-      </div>
+      </v-card>
       <v-layout fill-height v-if="$vuetify.breakpoint.mdAndUp">
         <v-flex md3 lg3>
-          <div min-width="100%" min-height="100%" class="pt-5">
+          <v-sheet min-width="100%" min-height="100%" class="pt-5">
             <v-img
               eager
               v-if="bannerImageUrl"
@@ -39,10 +39,10 @@
               contain
               position="right center"
             />
-          </div>
+          </v-sheet>
         </v-flex>
         <v-flex md9 lg9>
-          <div flat height="100%" class="px-3 ma-0">
+          <v-card flat height="100%" class="px-3 ma-0">
             <v-card-title class="ma-0">
               <h1>
                 {{ article.title }}
@@ -60,7 +60,7 @@
                 }}
               </h3>
             </v-card-text>
-          </div>
+          </v-card>
         </v-flex>
       </v-layout>
     </v-flex>
@@ -217,7 +217,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 audio {
   max-width: 48px;
 }
