@@ -2,7 +2,7 @@ This is a [Vuejs](https://vuejs.org) powered modern, single page, progressive, o
 
 **Try**: [wikipedia.thottingal.in](https://wikipedia.thottingal.in)
 
-Also available in dat protocol:  dat://25689f3a757853a511474d38f0a6d6be2cd2b0cb161686d75fda5c1619137921 or [wikipedia.hashbase.io](wikipedia.hashbase.io)
+Also available in dat protocol:  dat://25689f3a757853a511474d38f0a6d6be2cd2b0cb161686d75fda5c1619137921 or [wikipedia.hashbase.io](https://wikipedia.hashbase.io)
 
 ## Features
 
