@@ -10,7 +10,7 @@
     "menu-about": "About",
     "toc-heading": "Contents",
     "categories-title":"Categories",
-    "article-lastmodified":"Last modified by $1 at $2",
+    "article-lastmodified":"Last modified by $1 <span title='$3'>$2</span>",
     "article-history-title":"History",
     "header-search": "Search..."
 }

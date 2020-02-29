@@ -54,11 +54,18 @@
               </h3>
             </v-card-text>
             <v-card-text class="ma-0 py-0 align-end" v-if="!isPreview">
-              <h3 class="body-2 font-weight-thin" v-if="lastmodifier">
-                {{
-                  $i18n("article-lastmodified", lastmodifier.user, lastmodified)
-                }}
-              </h3>
+              <h3
+                class="body-2 font-weight-thin"
+                v-if="lastmodifier"
+                v-html="
+                  $i18n(
+                    'article-lastmodified',
+                    lastmodifier.user,
+                    lastmodifiedRelative,
+                    lastmodified
+                  )
+                "
+              ></h3>
             </v-card-text>
           </div>
         </v-flex>
@@ -186,10 +193,16 @@ export default {
       return this.article.history && this.article.history.lastmodifier;
     },
     lastmodified: function() {
-      return (
-        this.article.history &&
-        new Date(this.article.history.lastmodified).toLocaleString()
+      return this.article.history && this.article.history.lastmodified;
+    },
+    lastmodifiedRelative: function() {
+      const timeDiff = Math.abs(
+        new Date() - new Date(this.article.history.lastmodified).getTime()
       );
+      var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      const rtf = new Intl.RelativeTimeFormat(this.uiLanguage);
+
+      return this.article.history && rtf.format(diffDays * -1, "days");
     },
     bannerImageUrl: function() {
       const imgURL =
@@ -203,6 +216,7 @@ export default {
     },
     ...mapState({
       contentLanguage: state => state.app.contentLanguage,
+      uiLanguage: state => state.app.uiLanguage,
       title: state => state.article.title
     })
   },
