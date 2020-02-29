@@ -199,10 +199,10 @@ export default {
       const timeDiff = Math.abs(
         new Date() - new Date(this.article.history.lastmodified).getTime()
       );
-      var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
       const rtf = new Intl.RelativeTimeFormat(this.uiLanguage);
 
-      return this.article.history && rtf.format(diffDays * -1, "days");
+      return rtf.format(diffDays * -1, "days");
     },
     bannerImageUrl: function() {
       const imgURL =
