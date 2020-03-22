@@ -28,7 +28,12 @@
       </v-card>
       <v-layout fill-height v-if="$vuetify.breakpoint.mdAndUp">
         <v-flex md3 lg3>
-          <v-sheet min-width="100%" min-height="100%" class="pt-5">
+          <v-sheet
+            min-width="100%"
+            min-height="100%"
+            class="pt-5"
+            color="transparent"
+          >
             <v-img
               eager
               v-if="bannerImageUrl"
@@ -42,7 +47,7 @@
           </v-sheet>
         </v-flex>
         <v-flex md9 lg9>
-          <v-card flat height="100%" class="px-3 ma-0">
+          <v-card flat height="100%" class="px-3 ma-0" color="transparent">
             <v-card-title class="ma-0">
               <h1>
                 {{ article.title }}
@@ -73,7 +78,7 @@
     </v-flex>
     <v-layout v-if="!isPreview">
       <v-flex xs12 sm12 md12 lg12>
-        <v-toolbar flat dense>
+        <v-toolbar flat dense color="transparent">
           <div class="flex-grow-1" />
           <v-toolbar-items>
             <v-dialog

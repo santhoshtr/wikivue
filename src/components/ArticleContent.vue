@@ -30,7 +30,7 @@
         <table-of-contents :toc="toc" />
       </v-flex>
       <v-flex xs12 sm12 md9 lg9>
-        <v-sheet class="content px-3">
+        <v-sheet class="content px-3" color="transparent">
           <section
             v-for="section in sections"
             :key="`section-${section.id}`"
