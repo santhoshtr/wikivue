@@ -122,9 +122,10 @@ export default {
       }
     },
     wikiSearch: async function(value) {
+      const titleQuery = value.trim();
       const api = `https://${
         this.contentLanguage
-      }.wikipedia.org/w/api.php?action=query&generator=prefixsearch&gpssearch=${value}&prop=pageimages|description&piprop=thumbnail&pithumbsize=50&pilimit=10&format=json&formatversion=2&origin=*`;
+      }.wikipedia.org/w/api.php?action=query&generator=prefixsearch&gpssearch=${titleQuery}&prop=pageimages|description&piprop=thumbnail&pithumbsize=50&pilimit=10&format=json&formatversion=2&origin=*`;
       // Handle empty value
       if (!value) {
         this.articles = [];

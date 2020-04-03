@@ -6,12 +6,14 @@ function fetchRandomArticle(language) {
 }
 
 function fetchMetadata(language, title) {
-  const api = `//${language}.wikipedia.org/api/rest_v1/page/metadata/${title}`;
+  const api = `//${language}.wikipedia.org/api/rest_v1/page/mobile-sections-lead/${title}`;
   return axios.get(api).then(response => response.data);
 }
 
 function fetchMedia(language, title) {
-  const api = `https://${language}.wikipedia.org/api/rest_v1/page/media/${title}`;
+  const api = `https://${language}.wikipedia.org/api/rest_v1/page/media-list/${encodeURIComponent(
+    title
+  )}`;
   return axios.get(api).then(response => response.data);
 }
 
@@ -22,8 +24,14 @@ function fetchArticle(language, title) {
   if (!title) {
     return fetchRandomArticle(language);
   }
-  const api = `https://${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${title}`;
+  const api = `https://${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${encodeURIComponent(
+    title
+  )}`;
   return axios.get(api).then(response => process(response.data));
+}
+
+function escapeAnchor(str) {
+  return str ? encodeURIComponent(str) : null;
 }
 
 function process(articleData) {
@@ -40,7 +48,7 @@ function process(articleData) {
       sections.push({
         id: section.id,
         toclevel: section.toclevel,
-        anchor: section.anchor,
+        anchor: escapeAnchor(section.anchor),
         heading: section.line,
         html: section.text
       });
@@ -48,13 +56,13 @@ function process(articleData) {
     }
     if (section.toclevel === 1) {
       toc.push({
-        id: section.anchor,
+        id: escapeAnchor(section.anchor),
         name: section.line,
         children: []
       });
     } else if (section.toclevel === 2) {
       toc[toc.length - 1].children.push({
-        id: section.anchor,
+        id: escapeAnchor(section.anchor),
         name: section.line
       });
     }
