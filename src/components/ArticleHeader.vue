@@ -60,7 +60,7 @@
             </v-card-text>
             <v-card-text class="ma-0 py-0 align-end" v-if="!isPreview">
               <h3
-                class="body-2 font-weight-thin"
+                class="body-2 font-weight-regular"
                 v-if="lastmodifier"
                 v-html="
                   $i18n(
