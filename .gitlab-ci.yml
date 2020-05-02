@@ -7,7 +7,7 @@ pages: # the job must be named pages
     - npm run build
     - mv public public-vue # GitLab Pages hooks on the public folder
     - mv dist public # rename the dist folder (result of npm run build)
-    - find public \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 | xargs -0 gzip -9 -kv
+    - find public \( -name '*.html' -o -name '*.css' -o -name '*.js' -o -name '*.woff*' \) -print0 | xargs -0 gzip -9 -kv
   artifacts:
     paths:
       - public # artifact path must be /public for GitLab Pages to pick it up
