@@ -23,7 +23,7 @@
               <v-icon v-text="item.icon" />
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title v-text="$i18n(item.msg)" />
+              <v-list-item-title v-i18n="item.msg" />
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
