@@ -1,9 +1,10 @@
 import languagedata from "@wikimedia/language-data";
 import wikicodes from "../../wiki/wikipedia-codes.json";
 
+const browserLanguage = navigator.language.split("-")[0] || "en";
 const state = {
-  uiLanguage: navigator.language || "en",
-  contentLanguage: "en",
+  uiLanguage: browserLanguage,
+  contentLanguage: browserLanguage,
   theme: "light",
   articlesHistory: [],
   nearbyArticles: []
