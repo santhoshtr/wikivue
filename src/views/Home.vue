@@ -10,19 +10,22 @@
             outlined
           >
             <v-row class="overflow-hidden">
-              <v-col class="pa-0 ma-0" cols="12" lg="4" md="4" sm="4">
+              <v-col class="pa-0 ma-0" cols="12" lg="6" md="6" sm="12">
                 <v-img
                   :src="
                     tfa.thumbnail
                       ? tfa.thumbnail.source
                       : require('@/assets/Wikipedia logo version 2.svg?lazy')
                   "
+                  :lazy-src="
+                    require('@/assets/Wikipedia logo version 2.svg?lazy')
+                  "
                   height="300"
-                  cover
+                  contain
                 >
                 </v-img>
               </v-col>
-              <v-col class="pa-0 ma-0" cols="12" lg="8" md="8" sm="6">
+              <v-col class="pa-0 ma-0" cols="12" lg="6" md="6" sm="12">
                 <v-card-title>
                   <h3 class="headline" v-html="tfa.displaytitle" />
                 </v-card-title>
@@ -37,16 +40,17 @@
       <v-layout justify-center row>
         <v-flex xs12 sm12 md10 lg10>
           <h2><v-icon>mdi-trending-up</v-icon>Trending</h2>
-          <v-slide-group>
-            <v-slide-item
+          <v-divider />
+          <v-row justify="center">
+            <v-col
+              md="6"
+              lg="4"
+              sm="12"
+              xs="12"
               v-for="article in [...mostreadArticles]"
               :key="article.pageid"
             >
               <v-card
-                max-width="250px"
-                min-width="250px"
-                max-height="250px"
-                min-height="250px"
                 :to="`/page/${contentLanguage}/${article.normalizedtitle}`"
                 class="ma-2 overflow-y-hidden"
                 outlined
@@ -58,7 +62,11 @@
                       : require('@/assets/Wikipedia logo version 2.svg?lazy')
                   "
                   cover
-                  height="250px"
+                  :lazy-src="
+                    require('@/assets/Wikipedia logo version 2.svg?lazy')
+                  "
+                  :height="$vuetify.breakpoint.mdAndUp ? '300px' : 'auto'"
+                  aspect-ratio="1"
                 >
                   <v-row class="fill-height align-end " style="opacity: 0.85;">
                     <v-col class="px-2 py-0 ma-0">
@@ -76,8 +84,8 @@
                   </v-row>
                 </v-img>
               </v-card>
-            </v-slide-item>
-          </v-slide-group>
+            </v-col>
+          </v-row>
         </v-flex>
       </v-layout>
     </article>
