@@ -13,8 +13,8 @@
               <v-col class="pa-0 ma-0" cols="12" lg="6" md="6" sm="12">
                 <v-img
                   :src="
-                    tfa.thumbnail
-                      ? tfa.thumbnail.source
+                    tfa.originalimage
+                      ? tfa.originalimage.source
                       : require('@/assets/Wikipedia logo version 2.svg?lazy')
                   "
                   :lazy-src="
@@ -54,11 +54,12 @@
                 :to="`/page/${contentLanguage}/${article.normalizedtitle}`"
                 class="ma-2 overflow-y-hidden"
                 outlined
+                min-width="300px"
               >
                 <v-img
                   :src="
-                    article.thumbnail
-                      ? article.thumbnail.source
+                    article.originalimage
+                      ? article.originalimage.source
                       : require('@/assets/Wikipedia logo version 2.svg?lazy')
                   "
                   cover
