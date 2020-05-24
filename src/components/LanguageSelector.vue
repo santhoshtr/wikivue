@@ -1,62 +1,58 @@
 <template>
-  <v-layout justify-center align-center>
-    <v-btn text :title="selectedLanguageAutonym" @click.stop="dialog = true">
-      <v-icon>{{ mdiTranslate }}</v-icon>
-      {{ selectedLanguageAutonym }}
-    </v-btn>
-
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-    >
-      <v-card>
-        <v-toolbar flat>
+  <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
+    <template v-slot:activator="{ on }">
+      <v-btn text :title="selectedLanguageAutonym" v-on="on">
+        <v-icon :title="selectedLanguageAutonym">{{ mdiTranslate }}</v-icon>
+        <template v-if="$vuetify.breakpoint.mdAndUp">{{
+          selectedLanguageAutonym
+        }}</template>
+      </v-btn>
+    </template>
+    <v-card>
+      <v-toolbar flat>
+        <v-btn icon @click="dialog = false">
+          <v-icon>{{ mdiArrowLeft }}</v-icon>
+        </v-btn>
+        <v-text-field
+          v-model="searchQuery"
+          flat
+          single-line
+          hide-details
+          @input="onSearch"
+          class="language-search"
+          label="Select language"
+        >
+          <template v-slot:prepend-inner>
+            <v-icon>{{ mdiMagnify }}</v-icon>
+          </template>
+        </v-text-field>
+        <v-toolbar-items>
           <v-btn icon @click="dialog = false">
-            <v-icon>{{ mdiArrowLeft }}</v-icon>
+            <v-icon>{{ mdiClose }}</v-icon>
           </v-btn>
-          <v-text-field
-            v-model="searchQuery"
-            flat
-            single-line
-            hide-details
-            @input="onSearch"
-            class="language-search"
-            label="Select language"
-          >
-            <template v-slot:prepend-inner>
-              <v-icon>{{ mdiMagnify }}</v-icon>
-            </template>
-          </v-text-field>
-          <v-toolbar-items>
-            <v-btn icon @click="dialog = false">
-              <v-icon>{{ mdiClose }}</v-icon>
-            </v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <v-container grid-list-md text-center>
-          <v-item-group>
-            <v-row>
-              <v-col
-                v-for="(autonym, code) in filteredLanguages || contentLanguages"
-                :key="code"
-                cols="12"
-                md="4"
-                lg="3"
-              >
-                <v-item>
-                  <v-btn text @click="selectLanguage(code, autonym)">{{
-                    autonym
-                  }}</v-btn>
-                </v-item>
-              </v-col>
-            </v-row>
-          </v-item-group>
-        </v-container>
-      </v-card>
-    </v-dialog>
-  </v-layout>
+        </v-toolbar-items>
+      </v-toolbar>
+      <v-container grid-list-md text-center>
+        <v-item-group>
+          <v-row>
+            <v-col
+              v-for="(autonym, code) in filteredLanguages || contentLanguages"
+              :key="code"
+              cols="12"
+              md="4"
+              lg="3"
+            >
+              <v-item>
+                <v-btn text @click="selectLanguage(code, autonym)">{{
+                  autonym
+                }}</v-btn>
+              </v-item>
+            </v-col>
+          </v-row>
+        </v-item-group>
+      </v-container>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>

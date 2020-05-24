@@ -53,6 +53,7 @@
       <v-spacer v-if="$vuetify.breakpoint.lgAndUp" />
       <search />
       <v-spacer v-if="$vuetify.breakpoint.lgAndUp" />
+      <language-selector />
     </v-app-bar>
     <v-content>
       <router-view />
@@ -91,6 +92,7 @@ import {
 export default {
   components: {
     AppSettings: () => import("./components/Settings"),
+    LanguageSelector: () => import("./components/LanguageSelector"),
     Brand,
     Search,
     Footer,

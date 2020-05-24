@@ -1,10 +1,5 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    fullscreen
-    hide-overlay
-    transition="dialog-bottom-transition"
-  >
+  <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
     <template v-slot:activator="{ on }">
       <v-btn text value="languages" v-on="on">
         <!-- <v-badge

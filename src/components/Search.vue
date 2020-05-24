@@ -31,7 +31,6 @@
           <v-list-item-title>
             <v-row class="align-center">
               <v-col> What would you like to know? </v-col>
-              <v-col> <language-selector /></v-col>
             </v-row>
           </v-list-item-title>
         </v-list-item>
@@ -82,9 +81,6 @@ import axios from "axios";
 
 export default {
   name: "Search",
-  components: {
-    LanguageSelector: () => import("./LanguageSelector")
-  },
   data: () => ({
     articles: [], // search results
     isLoading: false,
