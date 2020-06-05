@@ -26,7 +26,7 @@
       </v-flex>
     </v-layout>
     <v-layout fill-height>
-      <v-flex xs2 sm2 md3 lg3 hidden-sm-and-down>
+      <v-flex md3 lg3 hidden-sm-and-down>
         <table-of-contents :toc="toc" />
       </v-flex>
       <v-flex xs12 sm12 md9 lg9>
@@ -35,17 +35,24 @@
             v-for="section in sections"
             :key="`section-${section.id}`"
             :id="section.anchor"
-            class="py-4 px-2 ma-0"
+            class="pa-md-2 ma-0"
           >
             <a
               :href="`#${section.anchor}`"
               class="section-anchor text--primary"
             >
-              <h2 v-if="section.toclevel === 1" v-html="section.heading" />
-              <h3 v-else v-html="section.heading" />
+              <h2
+                class="px-2"
+                v-if="section.toclevel === 1"
+                v-html="section.heading"
+              />
+              <h3 class="px-2" v-else v-html="section.heading" />
             </a>
             <v-layout row fill-height class="pa-0 ma-0">
-              <div class="flex md8 lg8 xs12 sm12" v-html="section.content" />
+              <div
+                class="flex xs12 sm12 md8 lg8 pa-md-2"
+                v-html="section.content"
+              />
               <aside
                 class="flex px-2 md4 lg4 hidden-sm-and-down section-aside"
                 v-html="section.aside"
