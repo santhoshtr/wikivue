@@ -168,23 +168,4 @@ export default {
   text-align: left;
   font-size: 1em;
 }
-
-* {
-  text-transform: none !important;
-}
-
-// // Floating search bar
-// .v-toolbar.v-app-bar.v-app-bar--elevate-on-scroll {
-//   &.v-app-bar--is-scrolled {
-//     margin: 16px !important;
-//     border-radius: 8px;
-
-//     .v-toolbar__content {
-//       padding: 0;
-//     }
-//   }
-//   &.v-app-bar--hide-shadow {
-//     margin-top: 0 !important;
-//   }
-// }
 </style>

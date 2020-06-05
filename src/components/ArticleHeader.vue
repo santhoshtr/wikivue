@@ -28,12 +28,7 @@
       </v-card>
       <v-layout fill-height v-if="$vuetify.breakpoint.mdAndUp">
         <v-flex md3 lg3>
-          <v-sheet
-            min-width="100%"
-            min-height="100%"
-            class="pt-5"
-            color="transparent"
-          >
+          <v-sheet min-width="100%" min-height="100%" class="pt-5">
             <v-img
               eager
               v-if="bannerImageUrl"
@@ -47,7 +42,7 @@
           </v-sheet>
         </v-flex>
         <v-flex md9 lg9>
-          <v-card flat height="100%" class="px-3 ma-0" color="transparent">
+          <v-card flat height="100%" class="px-3 ma-0">
             <v-card-title class="ma-0">
               <h1>
                 {{ article.title }}
@@ -78,70 +73,72 @@
     </v-flex>
     <v-layout>
       <v-flex xs12 sm12 md12 lg12>
-        <v-toolbar flat dense color="transparent">
-          <div class="flex-grow-1" />
-          <v-toolbar-items>
-            <v-dialog
-              v-if="quickfacts"
-              fullscreen
-              hide-overlay
-              transition="dialog-bottom-transition"
-              v-model="quickfactsDialog"
-              attach="article"
-            >
-              <template v-slot:activator="{ on }">
-                <v-btn small text v-on="on">
-                  <v-icon>{{ mdiLightbulbOnOutline }}</v-icon>
-                </v-btn>
-              </template>
-              <v-card>
-                <v-toolbar color="primary">
-                  <v-toolbar-title>Quick facts</v-toolbar-title>
-                  <v-spacer></v-spacer>
-                  <v-toolbar-items>
-                    <v-btn icon @click="quickfactsDialog = false">
-                      <v-icon>{{ mdiClose }}</v-icon>
-                    </v-btn>
-                  </v-toolbar-items>
-                </v-toolbar>
-                <v-card-text v-html="quickfacts.infobox"> </v-card-text>
-              </v-card>
-            </v-dialog>
-            <v-btn small text>
-              <v-icon>{{ mdiPencilOutline }}</v-icon>
-            </v-btn>
-            <article-revisions />
-            <v-btn small text>
-              <v-icon>{{ mdiForumOutline }}</v-icon>
-            </v-btn>
-            <article-languages />
-            <v-btn
-              small
-              text
-              class="font-weight-regular"
-              :href="locationLink(article)"
-              target="__blank"
-              v-if="loaded && article.geo"
-            >
-              <v-icon>{{ mdiMapMarkerOutline }}</v-icon>
-            </v-btn>
-            <v-btn
-              small
-              text
-              class="font-weight-regular"
-              :href="`https://www.wikidata.org/wiki/${article.wikidataId}`"
-              v-if="loaded && article.wikidataId"
-              target="__blank"
-            >
-              <v-img src="../assets/Wikidata-logo.svg" max-width="24" />
-            </v-btn>
-            <!-- <audio
+        <v-sheet>
+          <v-toolbar flat dense color="transparent">
+            <div class="flex-grow-1" />
+            <v-toolbar-items>
+              <v-dialog
+                v-if="quickfacts"
+                fullscreen
+                hide-overlay
+                transition="dialog-bottom-transition"
+                v-model="quickfactsDialog"
+                attach="article"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-btn small text v-on="on">
+                    <v-icon>{{ mdiLightbulbOnOutline }}</v-icon>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-toolbar color="primary">
+                    <v-toolbar-title>Quick facts</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                      <v-btn icon @click="quickfactsDialog = false">
+                        <v-icon>{{ mdiClose }}</v-icon>
+                      </v-btn>
+                    </v-toolbar-items>
+                  </v-toolbar>
+                  <v-card-text v-html="quickfacts.infobox"> </v-card-text>
+                </v-card>
+              </v-dialog>
+              <v-btn small text>
+                <v-icon>{{ mdiPencilOutline }}</v-icon>
+              </v-btn>
+              <article-revisions />
+              <v-btn small text>
+                <v-icon>{{ mdiForumOutline }}</v-icon>
+              </v-btn>
+              <article-languages />
+              <v-btn
+                small
+                text
+                class="font-weight-regular"
+                :href="locationLink(article)"
+                target="__blank"
+                v-if="loaded && article.geo"
+              >
+                <v-icon>{{ mdiMapMarkerOutline }}</v-icon>
+              </v-btn>
+              <v-btn
+                small
+                text
+                class="font-weight-regular"
+                :href="`https://www.wikidata.org/wiki/${article.wikidataId}`"
+                v-if="loaded && article.wikidataId"
+                target="__blank"
+              >
+                <v-img src="../assets/Wikidata-logo.svg" max-width="24" />
+              </v-btn>
+              <!-- <audio
               controls
               v-if="loaded && article.pronunciation"
               :src="article.pronunciation.url"
             /> -->
-          </v-toolbar-items>
-        </v-toolbar>
+            </v-toolbar-items>
+          </v-toolbar>
+        </v-sheet>
       </v-flex>
     </v-layout>
   </header>
