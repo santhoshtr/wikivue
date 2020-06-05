@@ -15,11 +15,7 @@
     />
     <v-layout>
       <v-flex xs12>
-        <article-header
-          :article="article"
-          :is-preview="isPreview"
-          :quickfacts="quickfacts"
-        />
+        <article-header :article="article" :quickfacts="quickfacts" />
         <div class="error" :if="error">
           {{ error }}
         </div>
@@ -80,11 +76,6 @@
         </v-sheet>
         <reference :reference="selectedReference" :if="selectedReference" />
         <image-viewer :if="selectedImage" :imgsrc="selectedImage" />
-        <article-preview
-          :preview="preview"
-          :show="previewShown"
-          @close="previewShown = !previewShown"
-        />
       </v-flex>
     </v-layout>
   </article>
@@ -105,10 +96,6 @@ export default {
     article: {
       type: Object,
       default: () => null
-    },
-    isPreview: {
-      type: Boolean,
-      default: false
     }
   },
   components: {
@@ -116,8 +103,6 @@ export default {
     Reference: () => import(/* webpackPrefetch: true */ "./Reference.vue"),
     ArticleHeader,
     ArticleFooter,
-    ArticlePreview: () =>
-      import(/* webpackPrefetch: true */ "./ArticlePreview.vue"),
     ImageViewer: () => import(/* webpackPrefetch: true */ "./ImageViewer.vue")
   },
   data: () => ({
@@ -128,7 +113,6 @@ export default {
     selectedImage: null,
     sections: [],
     collapsibleSections: [],
-    previewShown: false,
     quickfacts: null
   }),
   computed: {
@@ -147,25 +131,23 @@ export default {
     ...mapGetters("app", ["contentLanguageDir"]),
     ...mapState({
       contentLanguage: state => state.app.contentLanguage,
-      articleLanguages: state => state.article.metadata.language_links,
-      preview: state => state.preview
+      articleLanguages: state => state.article.metadata.language_links
     })
   },
   watch: {
     loaded: function() {
       if (this.loaded) {
         this.layout();
-        this.previewShown = false;
         this.selectedImage = null;
-        if (!this.isPreview) {
-          setTimeout(() => this.listen(), 1000);
-          // Push the article to history
-          this.$store.commit("app/pushToHistory", {
-            title: this.article.title,
-            language: this.contentLanguage,
-            description: this.article.description
-          });
-        }
+
+        setTimeout(() => this.listen(), 1000);
+        // Push the article to history
+        this.$store.commit("app/pushToHistory", {
+          title: this.article.title,
+          language: this.contentLanguage,
+          description: this.article.description
+        });
+
         this.$nextTick(() => {
           this.$refs.article.focus();
           this.$root.$emit("pageLoaded");
@@ -193,9 +175,6 @@ export default {
       let sectionsCount;
       if (!this.article.sections) sectionsCount = 0;
       sectionsCount = this.article.sections.length;
-      if (this.isPreview) {
-        sectionsCount = Math.min(sectionsCount, 2);
-      }
       let isCollapsing = false;
       for (let i = 0; i < sectionsCount; i++) {
         const section = this.article.sections[i];
@@ -236,7 +215,7 @@ export default {
       for (let i = 0; i < links.length; i++) {
         const link = links[i];
         link.addEventListener("click", event =>
-          this.wikilinkHoverHandler(link, event)
+          this.wikilinkClickHandler(link, event)
         );
       }
 
@@ -254,23 +233,7 @@ export default {
         );
       }
     },
-
-    wikilinkHoverHandler(link, event) {
-      if (wikipage.isIgnorableLinkClick(event)) return;
-      // don't handle same page links/anchors
-      const url = new URL(link.href);
-      const to = url.pathname;
-      if (window.location.pathname !== to && event.preventDefault) {
-        event.preventDefault();
-        this.$store.dispatch("preview/fetch", {
-          title: link.title,
-          language: this.contentLanguage
-        });
-        this.previewShown = true;
-      }
-    },
     wikilinkClickHandler(link, event) {
-      this.previewShown = false;
       if (wikipage.isIgnorableLinkClick(event)) return;
       link.removeEventListener("mouseover", this.wikilinkHoverHandler);
 
@@ -280,6 +243,7 @@ export default {
       if (window.location.pathname !== to && event.preventDefault) {
         event.preventDefault();
         this.$router.push(`/page/${this.contentLanguage}/${link.title}`);
+        window.scrollTo(0, 0);
       }
     },
     referenceClickHandler(referenceLink, event) {

@@ -5,7 +5,7 @@
         <v-img
           eager
           class="banner-img ma-0"
-          :height="isPreview ? '100px' : '200px'"
+          :height="'200px'"
           gradient="to bottom right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4) "
           :lazy-src="require('@/assets/Wikipedia logo version 2.svg?lazy')"
           :src="
@@ -38,7 +38,7 @@
               eager
               v-if="bannerImageUrl"
               class="banner-img ma-0"
-              :height="isPreview ? '100px' : '150px'"
+              :height="'150px'"
               width="100%"
               :src="bannerImageUrl"
               contain
@@ -58,7 +58,7 @@
                 {{ description }}
               </h3>
             </v-card-text>
-            <v-card-text class="ma-0 py-0 align-end" v-if="!isPreview">
+            <v-card-text class="ma-0 py-0 align-end">
               <h3
                 class="body-2 font-weight-regular"
                 v-if="lastmodifier"
@@ -76,7 +76,7 @@
         </v-flex>
       </v-layout>
     </v-flex>
-    <v-layout v-if="!isPreview">
+    <v-layout>
       <v-flex xs12 sm12 md12 lg12>
         <v-toolbar flat dense color="transparent">
           <div class="flex-grow-1" />
@@ -167,10 +167,7 @@ export default {
       type: Object,
       default: () => null
     },
-    isPreview: {
-      type: Boolean,
-      default: false
-    },
+
     quickfacts: {
       type: Object,
       default: () => null
