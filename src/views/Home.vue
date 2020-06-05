@@ -3,11 +3,12 @@
     <article>
       <v-layout justify-center row>
         <v-flex xs12 sm12 md10 lg10 v-if="tfa">
-          <h2><v-icon>mdi-star-circle</v-icon>Featured article</h2>
+          <h2>Featured article</h2>
           <v-card
             :to="`/page/${contentLanguage}/${tfa.normalizedtitle}`"
             class="overflow-hidden"
-            outlined
+            color="transparent"
+            flat
           >
             <v-row class="overflow-hidden">
               <v-col class="pa-0 ma-0" cols="12" lg="6" md="6" sm="12">
@@ -20,10 +21,9 @@
                   :lazy-src="
                     require('@/assets/Wikipedia logo version 2.svg?lazy')
                   "
-                  height="300"
+                  height="250"
                   contain
-                >
-                </v-img>
+                ></v-img>
               </v-col>
               <v-col class="pa-0 ma-0" cols="12" lg="6" md="6" sm="12">
                 <v-card-title>
@@ -39,8 +39,7 @@
       </v-layout>
       <v-layout justify-center row>
         <v-flex xs12 sm12 md10 lg10>
-          <h2><v-icon>mdi-trending-up</v-icon>Trending</h2>
-          <v-divider />
+          <h2>Trending</h2>
           <v-row justify="center">
             <v-col
               md="6"
@@ -52,9 +51,9 @@
             >
               <v-card
                 :to="`/page/${contentLanguage}/${article.normalizedtitle}`"
-                class="ma-2 overflow-y-hidden"
-                outlined
                 min-width="300px"
+                color="transparent"
+                flat
               >
                 <v-img
                   :src="
@@ -62,28 +61,19 @@
                       ? article.originalimage.source
                       : require('@/assets/Wikipedia logo version 2.svg?lazy')
                   "
-                  cover
+                  contain
                   :lazy-src="
                     require('@/assets/Wikipedia logo version 2.svg?lazy')
                   "
-                  :height="$vuetify.breakpoint.mdAndUp ? '300px' : 'auto'"
-                  aspect-ratio="1"
-                >
-                  <v-row class="fill-height align-end " style="opacity: 0.85;">
-                    <v-col class="px-2 py-0 ma-0">
-                      <v-card-title
-                        class="pa-0 px-2 grey darken-3 white--text overflow-hidden text-no-wrap"
-                      >
-                        <h4 class="title" v-html="article.displaytitle" />
-                      </v-card-title>
-                      <v-card-text
-                        class="extract px-2 text-xs-left overflow-hidden text-no-wrap grey darken-3 white--text"
-                      >
-                        <h4 class="body-1">{{ article.description }}</h4>
-                      </v-card-text>
-                    </v-col>
-                  </v-row>
-                </v-img>
+                  :height="$vuetify.breakpoint.mdAndUp ? '250px' : 'auto'"
+                ></v-img>
+
+                <v-card-title class="pa-1">
+                  <h4 class="headline" v-html="article.displaytitle" />
+                </v-card-title>
+                <v-card-text class="extract text-xs-left pa-1">
+                  <h4 class="body-1">{{ article.description }}</h4>
+                </v-card-text>
               </v-card>
             </v-col>
           </v-row>
