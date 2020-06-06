@@ -38,11 +38,11 @@
               class="section-anchor text--primary"
             >
               <h2
-                class="px-2"
+                class="px-md-2"
                 v-if="section.toclevel === 1"
                 v-html="section.heading"
               />
-              <h3 class="px-2" v-else v-html="section.heading" />
+              <h3 class="px-md-2" v-else v-html="section.heading" />
             </a>
             <v-layout row fill-height class="pa-0 ma-0">
               <div
