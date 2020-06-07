@@ -1,7 +1,13 @@
 <template>
   <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
     <template v-slot:activator="{ on }">
-      <v-btn text :title="selectedLanguageAutonym" v-on="on">
+      <v-btn
+        :icon="$vuetify.breakpoint.smAndDown"
+        :text="$vuetify.breakpoint.mdAndUp"
+        :rounded="!$vuetify.breakpoint.mdAndUp"
+        :title="selectedLanguageAutonym"
+        v-on="on"
+      >
         <v-icon :title="selectedLanguageAutonym">{{ mdiTranslate }}</v-icon>
         <template v-if="$vuetify.breakpoint.mdAndUp">{{
           selectedLanguageAutonym
