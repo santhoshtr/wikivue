@@ -14,8 +14,8 @@
     return-object
     auto-select-first
     attach=".search"
-    rounded
-    filled
+    solo
+    flat
     single-line
     hide-details
     label="Search"
