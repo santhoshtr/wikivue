@@ -5,12 +5,6 @@ import wikicodes from "../wiki/wikipedia-codes.json";
 const routerOptions = [
   { path: "/", name: "home", component: "Home", params: true },
   { path: "/about", name: "about", component: "About", params: true },
-  {
-    path: "/page/random",
-    name: "random",
-    component: "Article",
-    meta: { random: true }
-  },
   { path: "/edit", name: "edit", component: "Edit", params: true },
   { path: "/explore", name: "explore", component: "Explore", params: true },
   {

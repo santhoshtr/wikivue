@@ -8,7 +8,7 @@
         >
           <span
             slot="badge"
-          >{{ $store.state.article.languagecount }}</span>
+          >{{ article.languagecount }}</span>
           <v-icon>{{mdiTranslate}}</v-icon>
         </v-badge> -->
         <v-icon>{{ mdiTranslate }}</v-icon>
@@ -44,11 +44,11 @@
             <v-list-item
               v-for="(item, index) in filteredLanguages || articleLanguages"
               :key="index"
-              @click="selectLanguage(item.lang, item.titles.normalized)"
+              @click="selectLanguage(item.lang, item.title)"
             >
               <v-list-item-content>
                 <v-list-item-title class="title">
-                  {{ item.titles.normalized }}
+                  {{ item.title }}
                 </v-list-item-title>
                 <v-list-item-subtitle>{{
                   autonym(item.lang)
@@ -65,7 +65,7 @@
 <script>
 import languagedata from "@wikimedia/language-data";
 import { mdiClose, mdiArrowLeft, mdiMagnify, mdiTranslate } from "@mdi/js";
-import { mapState } from "vuex";
+import Article from "../wiki/models/article";
 
 export default {
   name: "ArticleLanguages",
@@ -78,10 +78,16 @@ export default {
     mdiArrowLeft,
     mdiTranslate
   }),
+  props: {
+    article: {
+      type: Article,
+      default: () => null
+    }
+  },
   computed: {
-    ...mapState({
-      articleLanguages: state => state.article.metadata.language_links
-    })
+    articleLanguages() {
+      return this.article?.languages;
+    }
   },
   methods: {
     autonym: function(lang) {

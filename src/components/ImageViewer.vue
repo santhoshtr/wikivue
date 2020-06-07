@@ -9,53 +9,59 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-card :if="shown">
+    <v-card>
       <v-img
         contain
-        :src="image && image.original.source"
+        :src="image.srcset[0].src"
+        :srcset="image && srcset"
         aspect-ratio="1"
         width="auto"
-        height="80vh"
+        height="90vh"
       />
-      <v-card-title v-html="image && image.description.html" />
-      <v-card-text v-html="image && image.artist.html" />
-      <v-card-text v-html="image && image.credit.html" />
-      <v-card-text v-text="image && image.license.type" />
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-import { mapState } from "vuex";
 import { mdiClose } from "@mdi/js";
-
+import Article from "../wiki/models/article";
 export default {
   name: "ImageViewer",
   data: () => ({
-    shown: false,
+    shown: true,
     mdiClose
   }),
   computed: {
-    ...mapState({
-      media: state => state.article.media
-    }),
+    media() {
+      return this.article.media;
+    },
     image: function() {
-      if (this.media.items) {
-        return this.media.items.find(item => {
-          return item.titles && item.titles.canonical === this.imgsrc;
+      if (this.media && this.imgsrc) {
+        return this.media.find(item => {
+          return item.title === this.imgsrc;
         });
       }
       return null;
+    },
+    srcset() {
+      let srcsetStr = [];
+      this.image.srcset.forEach(item => {
+        srcsetStr.push([item.src, item.scale].join(" "));
+      });
+      return srcsetStr.join(",");
     }
   },
   props: {
+    article: {
+      type: Article
+    },
     imgsrc: {
       type: String,
       default: null
     }
   },
   watch: {
-    image: function() {
+    imgsrc: function() {
       this.shown = !!this.imgsrc;
     }
   }

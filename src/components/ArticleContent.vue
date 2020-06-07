@@ -1,29 +1,12 @@
 <template>
-  <article
-    :lang="contentLanguage"
-    :dir="contentLanguageDir"
-    ref="article"
-    :style="$vuetify.breakpoint.smAndDown && 'overflow:hidden;'"
-    tabindex="0"
-  >
-    <v-progress-linear
-      :active="!loaded"
-      :indeterminate="!loaded"
-      color="blue"
-      absolute
-      top
-    />
+  <v-sheet>
+    <article-header :article="article" :quickfacts="quickfacts" />
+    <div class="error" :if="error">
+      {{ error }}
+    </div>
     <v-layout>
-      <v-flex xs12>
-        <article-header :article="article" :quickfacts="quickfacts" />
-        <div class="error" :if="error">
-          {{ error }}
-        </div>
-      </v-flex>
-    </v-layout>
-    <v-layout fill-height>
       <v-flex md3 lg3 hidden-sm-and-down>
-        <table-of-contents :toc="toc" />
+        <table-of-contents :toc="article.toc" />
       </v-flex>
       <v-flex xs12 sm12 md9 lg9>
         <v-sheet class="content px-3">
@@ -70,15 +53,19 @@
           </v-expansion-panels>
 
           <v-divider />
-          <template v-if="loaded">
+          <template>
             <article-footer :article="article" />
           </template>
         </v-sheet>
         <reference :reference="selectedReference" :if="selectedReference" />
-        <image-viewer :if="selectedImage" :imgsrc="selectedImage" />
+        <image-viewer
+          v-if="article.media && selectedImage"
+          :imgsrc="selectedImage"
+          :article="article"
+        />
       </v-flex>
     </v-layout>
-  </article>
+  </v-sheet>
 </template>
 
 <script>
@@ -87,6 +74,7 @@ import ArticleHeader from "./ArticleHeader";
 import ArticleFooter from "./ArticleFooter";
 
 import wikipage from "../wiki/page";
+import Article from "../wiki/models/article";
 import { mapGetters, mapState } from "vuex";
 import { setTimeout } from "timers";
 
@@ -94,8 +82,7 @@ export default {
   name: "ArticleContent",
   props: {
     article: {
-      type: Object,
-      default: () => null
+      type: Article
     }
   },
   components: {
@@ -116,51 +103,39 @@ export default {
     quickfacts: null
   }),
   computed: {
-    loaded: function() {
-      return (
-        this.article.loadingStatus === "success" ||
-        this.article.loadingStatus === "failure"
-      );
-    },
-    toc: function() {
-      return this.article.toc;
-    },
     displaytitle: function() {
       return this.article.title;
     },
     ...mapGetters("app", ["contentLanguageDir"]),
     ...mapState({
-      contentLanguage: state => state.app.contentLanguage,
-      articleLanguages: state => state.article.metadata.language_links
+      contentLanguage: state => state.app.contentLanguage
     })
   },
   watch: {
-    loaded: function() {
-      if (this.loaded) {
-        this.layout();
-        this.selectedImage = null;
+    article: function() {
+      this.layout();
+      this.selectedImage = null;
 
-        setTimeout(() => this.listen(), 1000);
-        // Push the article to history
-        this.$store.commit("app/pushToHistory", {
-          title: this.article.title,
-          language: this.contentLanguage,
-          description: this.article.description
-        });
+      setTimeout(() => this.listen(), 1000);
+      // Push the article to history
+      this.$store.commit("app/pushToHistory", {
+        title: this.article.title,
+        language: this.contentLanguage,
+        description: this.article.description
+      });
 
-        this.$nextTick(() => {
-          this.$refs.article.focus();
-          this.$root.$emit("pageLoaded");
-        });
-      }
+      this.$nextTick(() => {
+        // this.$refs.articlecontent.focus();
+        this.$root.$emit("pageLoaded");
+      });
     },
     contentLanguage: function() {
       let titleInChangedLanguage = this.article.title;
-      const articleInChangedLanguage = this.articleLanguages.find(
+      const articleInChangedLanguage = this.article.languages.find(
         item => item.lang === this.contentLanguage
       );
       if (articleInChangedLanguage) {
-        titleInChangedLanguage = articleInChangedLanguage.titles.normalized;
+        titleInChangedLanguage = articleInChangedLanguage.title;
       }
       this.$router.push(
         `/page/${this.contentLanguage}/${titleInChangedLanguage}`
@@ -253,7 +228,7 @@ export default {
       if (referenceId && event.preventDefault) {
         event.preventDefault();
         const refTarget = document.querySelector(referenceId);
-        this.selectedReference = refTarget.innerHTML;
+        this.selectedReference = refTarget?.innerHTML;
       }
     },
     imageClickHandler(imageLink, event) {

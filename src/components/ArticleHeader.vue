@@ -91,7 +91,7 @@
                   </v-btn>
                 </template>
                 <v-card>
-                  <v-toolbar color="primary">
+                  <v-toolbar>
                     <v-toolbar-title>Quick facts</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
@@ -106,11 +106,11 @@
               <v-btn small text>
                 <v-icon>{{ mdiPencilOutline }}</v-icon>
               </v-btn>
-              <article-revisions />
+              <article-revisions :article="article" />
               <v-btn small text>
                 <v-icon>{{ mdiForumOutline }}</v-icon>
               </v-btn>
-              <article-languages />
+              <article-languages :article="article" />
               <v-btn
                 small
                 text
@@ -153,6 +153,7 @@ import {
   mdiForumOutline,
   mdiMapMarkerOutline
 } from "@mdi/js";
+import Article from "../wiki/models/article";
 export default {
   name: "ArticleHeader",
   components: {
@@ -161,10 +162,9 @@ export default {
   },
   props: {
     article: {
-      type: Object,
+      type: Article,
       default: () => null
     },
-
     quickfacts: {
       type: Object,
       default: () => null
@@ -215,8 +215,7 @@ export default {
     },
     ...mapState({
       contentLanguage: state => state.app.contentLanguage,
-      uiLanguage: state => state.app.uiLanguage,
-      title: state => state.article.title
+      uiLanguage: state => state.app.uiLanguage
     })
   },
   methods: {
@@ -230,7 +229,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
 audio {
   max-width: 48px;
 }

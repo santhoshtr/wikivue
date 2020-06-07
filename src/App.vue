@@ -59,7 +59,6 @@
       <router-view />
     </v-content>
     <Footer />
-    <BottomNav />
     <v-snackbar v-model="snackWithButtons" bottom left>
       {{ snackWithBtnText }}
       <v-spacer />
@@ -81,7 +80,6 @@ import { mapGetters } from "vuex";
 import {
   mdiClose,
   mdiHomeOutline,
-  mdiDice5Outline,
   mdiCompassOutline,
   mdiMapMarkerCircle,
   mdiStarOutline,
@@ -95,8 +93,7 @@ export default {
     LanguageSelector: () => import("./components/LanguageSelector"),
     Brand,
     Search,
-    Footer,
-    BottomNav: () => import("./components/BottomNav")
+    Footer
   },
   computed: {
     ...mapGetters("app", ["uiLanguageDir"])
@@ -106,7 +103,6 @@ export default {
     mdiClose,
     items: [
       { icon: mdiHomeOutline, msg: "menu-home", href: "/" },
-      { icon: mdiDice5Outline, msg: "menu-random", href: "/page/random" },
       { icon: mdiCompassOutline, msg: "menu-explore", href: "/explore" },
       { icon: mdiMapMarkerCircle, msg: "menu-nearby", href: "/nearby" },
       {

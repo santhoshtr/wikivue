@@ -1,13 +1,13 @@
 <template>
   <v-sheet>
     <v-bottom-navigation v-if="bottomNav" grow app hide-on-scroll>
-      <article-revisions />
+      <article-revisions :article="article" />
 
       <v-btn value="bookmark">
         <v-icon>{{ mdiBookmark }}</v-icon>
       </v-btn>
 
-      <article-languages />
+      <article-languages :article="article" />
 
       <v-btn v-show="tocButtonShown" value="tocbutton" @click="showToc">
         <v-icon>{{ mdiTableOfContents }}</v-icon>
@@ -31,6 +31,7 @@ import TableOfContents from "./TOC";
 import ArticleLanguages from "./ArticleLanguages";
 import ArticleRevisions from "./History";
 import { mdiBookmark, mdiTableOfContents } from "@mdi/js";
+import Article from "../wiki/models/article";
 
 export default {
   name: "BottomNav",
@@ -44,14 +45,15 @@ export default {
     mdiBookmark,
     mdiTableOfContents
   }),
+  props: {
+    article: Article
+  },
   computed: {
     bottomNav() {
-      return (
-        !!this.$store.state.article.title && this.$vuetify.breakpoint.smAndDown
-      );
+      return !!this.article.title && this.$vuetify.breakpoint.smAndDown;
     },
     toc() {
-      return this.$store.state.article.toc;
+      return this.article.toc;
     },
     tocButtonShown() {
       return (

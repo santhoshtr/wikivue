@@ -1,14 +1,6 @@
+/* eslint-disable no-console */
 import axios from "axios";
-
-function fetchRandomArticle(language) {
-  const api = `https://${language}.wikipedia.org/api/rest_v1/page/random/mobile-sections`;
-  return axios.get(api).then(response => process(response.data));
-}
-
-function fetchMetadata(language, title) {
-  const api = `//${language}.wikipedia.org/api/rest_v1/page/mobile-sections-lead/${title}`;
-  return axios.get(api).then(response => response.data);
-}
+import Article from "../models/article";
 
 function fetchMedia(language, title) {
   const api = `https://${language}.wikipedia.org/api/rest_v1/page/media-list/${encodeURIComponent(
@@ -17,58 +9,66 @@ function fetchMedia(language, title) {
   return axios.get(api).then(response => response.data);
 }
 
-function fetchArticle(language, title) {
+function fetchLanguages(language, title) {
+  const params = {
+    action: "query",
+    format: "json",
+    formatversion: 2,
+    prop: "langlinks",
+    titles: title,
+    lllimit: 500,
+    origin: "*"
+  };
+
+  const api = `//${language}.wikipedia.org/w/api.php`;
+  return axios.get(api, { params }).then(response => {
+    return response.data.query.pages.length
+      ? response.data.query.pages[0].langlinks
+      : [];
+  });
+}
+function fetchRevisions(language, title) {
+  const params = {
+    action: "query",
+    format: "json",
+    formatversion: 2,
+    prop: "revisions",
+    titles: title,
+    rvprop: "ids|timestamp|comment|size|flags|user",
+    rvlimit: 100,
+    origin: "*"
+  };
+
+  const api = `//${language}.wikipedia.org/w/api.php`;
+  return axios.get(api, { params }).then(response => {
+    return response.data.query.pages.length
+      ? response.data.query.pages[0].revisions
+      : [];
+  });
+}
+
+async function fetchArticle(language, title) {
   if (!language) {
     throw new Error("Language is null");
   }
-  if (!title) {
-    return fetchRandomArticle(language);
+  let api;
+  if (title) {
+    api = `https://${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${encodeURIComponent(
+      title
+    )}`;
+  } else {
+    api = `https://${language}.wikipedia.org/api/rest_v1/page/random/mobile-sections`;
   }
-  const api = `https://${language}.wikipedia.org/api/rest_v1/page/mobile-sections/${encodeURIComponent(
-    title
-  )}`;
-  return axios.get(api).then(response => process(response.data));
-}
+  const [articleData, revisions, media, languages] = await Promise.all([
+    axios.get(api).then(response => response.data),
+    fetchRevisions(language, title),
+    fetchMedia(language, title),
+    fetchLanguages(language, title)
+  ]);
 
-function escapeAnchor(str) {
-  return str ? encodeURIComponent(str) : null;
-}
-
-function process(articleData) {
-  const sections = [];
-  const toc = [];
-
-  const articleSections = [
-    ...articleData.lead.sections,
-    ...articleData.remaining.sections
-  ];
-  for (let i = 0; i < articleSections.length; i++) {
-    const section = articleSections[i];
-    if (section.text) {
-      sections.push({
-        id: section.id,
-        toclevel: section.toclevel,
-        anchor: escapeAnchor(section.anchor),
-        heading: section.line,
-        html: section.text
-      });
-      continue;
-    }
-    if (section.toclevel === 1) {
-      toc.push({
-        id: escapeAnchor(section.anchor),
-        name: section.line,
-        children: []
-      });
-    } else if (section.toclevel === 2) {
-      toc[toc.length - 1].children.push({
-        id: escapeAnchor(section.anchor),
-        name: section.line
-      });
-    }
-  }
-
-  return {
+  return new Article({
+    pageid: articleData.lead.id,
+    namespace: articleData.lead.ns,
     title: articleData.lead.normalizedtitle,
     description: articleData.lead.description,
     image: articleData.lead.image,
@@ -77,14 +77,15 @@ function process(articleData) {
     pronunciation: articleData.lead.pronunciation,
     languagecount: articleData.lead.languagecount,
     wikidataId: articleData.lead.wikibase_item,
-    history: {
-      lastmodifier: articleData.lead.lastmodifier,
-      lastmodified: articleData.lead.lastmodified,
-      lastrevision: articleData.lead.revision
-    },
-    sections: sections,
-    toc: toc
-  };
+    lastmodifier: articleData.lead.lastmodifier,
+    lastmodified: articleData.lead.lastmodified,
+    revision: articleData.lead.revision,
+    language,
+    revisions,
+    languages,
+    media: media.items,
+    _sections: [...articleData.lead.sections, ...articleData.remaining.sections]
+  });
 }
 
-export default { fetchArticle, fetchMetadata, fetchMedia };
+export default { fetchArticle };

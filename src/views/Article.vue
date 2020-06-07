@@ -1,34 +1,63 @@
 <template>
-  <article-content :article="article" />
+  <article
+    :lang="language"
+    :dir="contentLanguageDir"
+    ref="article"
+    :style="$vuetify.breakpoint.smAndDown && 'overflow:hidden;'"
+    tabindex="0"
+  >
+    <v-progress-linear
+      :active="!loaded"
+      :indeterminate="!loaded"
+      color="blue"
+      absolute
+      top
+    />
+    <article-content :article="article" />
+    <BottomNav :article="article" />
+  </article>
 </template>
 
 <script>
 import ArticleContent from "../components/ArticleContent";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
+import Article from "../wiki/models/article";
 
 export default {
   name: "Article",
   components: {
-    ArticleContent
+    ArticleContent,
+    BottomNav: () => import("../components/BottomNav")
   },
+  data: () => ({
+    title: null,
+    language: null
+  }),
   computed: {
+    loaded() {
+      return this.article.revision;
+    },
     ...mapState({
-      article: state => state.article,
       contentLanguage: state => state.app.contentLanguage
-    })
+    }),
+    ...mapGetters("app", ["contentLanguageDir"]),
+    article() {
+      return (
+        this.$store.getters["wikipedia/getArticle"](
+          this.language,
+          this.title
+        ) || new Article({ title: this.title })
+      );
+    }
   },
   methods: {
     loadArticle(language, title) {
-      if (!title) {
-        this.$store.dispatch("article/fetch", {
-          language: language || this.contentLanguage
-        });
-      } else {
-        this.$store.dispatch("article/fetch", {
-          title,
-          language
-        });
-      }
+      this.title = title;
+      this.language = language;
+      this.$store.dispatch("wikipedia/fetchArticle", {
+        title,
+        language
+      });
     }
   },
   beforeRouteEnter(to, from, next) {

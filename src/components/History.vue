@@ -5,7 +5,7 @@
         <v-icon>{{ mdiHistory }}</v-icon>
       </v-btn>
     </template>
-    <v-card>
+    <v-card v-if="article">
       <v-container grid-list-md>
         <v-toolbar flat>
           <v-btn icon @click="dialog = false">
@@ -21,7 +21,7 @@
         </v-toolbar>
         <v-timeline dense>
           <v-timeline-item
-            v-for="revision in revisions"
+            v-for="revision in article.revisions"
             :key="revision.revid"
             right
             small
@@ -32,7 +32,9 @@
               <v-card-actions>
                 <v-btn
                   :to="
-                    `/page/${contentLanguage}/${title}?oldid=${revision.revid}`
+                    `/page/${article.language}/${article.title}?oldid=${
+                      article.revision
+                    }`
                   "
                   @click="dialog = false"
                   text
@@ -48,8 +50,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import { mdiClose, mdiArrowLeft, mdiHistory } from "@mdi/js";
+import Article from "../wiki/models/article";
+
 export default {
   data: () => ({
     dialog: false,
@@ -57,12 +60,10 @@ export default {
     mdiArrowLeft,
     mdiHistory
   }),
-  computed: {
-    ...mapState({
-      contentLanguage: state => state.app.contentLanguage,
-      revisions: state => state.article.revisions,
-      title: state => state.article.title
-    })
+  props: {
+    article: {
+      type: Article
+    }
   },
   methods: {
     localTime(timestamp) {

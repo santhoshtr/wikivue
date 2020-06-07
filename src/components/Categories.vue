@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 sm12 md12 lg12>
+  <v-flex xs12 sm12 md12 lg12 v-if="categories.length">
     <v-expansion-panels
       accordion
       focusable
