@@ -9,7 +9,7 @@
         <table-of-contents :toc="article.toc" />
       </v-flex>
       <v-flex xs12 sm12 md9 lg9>
-        <v-sheet class="content px-3">
+        <v-sheet class="content px-2">
           <section
             v-for="section in sections"
             :key="`section-${section.id}`"

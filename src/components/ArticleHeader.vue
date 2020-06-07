@@ -1,7 +1,7 @@
 <template>
   <header class="artcle-header">
     <v-flex xs12 sm12 md12 lg12>
-      <v-card flat class="pa-1" v-if="$vuetify.breakpoint.smAndDown">
+      <v-card flat v-if="$vuetify.breakpoint.smAndDown">
         <v-img
           eager
           class="banner-img ma-0"
