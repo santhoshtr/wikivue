@@ -1,82 +1,101 @@
 <template>
-  <v-autocomplete
-    v-model="article"
-    id="wikip-search"
-    :items="articles"
-    :loading="isLoading ? 'blue' : false"
-    :search-input.sync="search"
-    :menu-props="{ maxHeight: '80vh' }"
-    hide-selected
-    clearable
-    item-text="title"
-    item-value="title"
-    :placeholder="$i18n('header-search')"
-    return-object
-    auto-select-first
-    attach=".search"
-    solo
-    flat
-    single-line
-    hide-details
-    label="Search"
-    class="search lg12"
-    @change="onSelect"
-  >
-    <template v-slot:prepend-inner>
-      <v-icon>{{ mdiMagnify }}</v-icon>
+  <v-dialog v-model="dialog" fullscreen transition="slide-x-reverse-transition">
+    <template v-slot:activator="{ on }">
+      <v-text-field
+        v-on="on"
+        flat
+        single-line
+        :placeholder="$i18n('header-search')"
+        auto-select-first
+        solo
+        hide-details
+        label="Search"
+      >
+        <template v-slot:prepend-inner>
+          <v-icon>{{ mdiMagnify }}</v-icon>
+        </template>
+      </v-text-field>
     </template>
-    <template v-slot:no-data>
-      <v-list>
-        <v-list-item>
-          <v-list-item-title>
-            <v-row class="align-center">
-              <v-col> What would you like to know? </v-col>
-            </v-row>
-          </v-list-item-title>
-        </v-list-item>
-        <v-subheader v-if="articlesHistory.length">
-          Recently viewed articles
-        </v-subheader>
-        <v-list-item-group color="primary">
-          <v-list-item
-            v-for="(item, i) in articlesHistory"
-            :key="i"
-            :to="item.title"
-          >
-            <v-list-item-icon>
-              <v-icon>{{ mdiFileDocumentBox }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title v-text="item.title" />
-              <v-list-item-subtitle v-html="item.description" />
-            </v-list-item-content>
+    <v-card>
+      <v-app-bar flat>
+        <v-app-bar-nav-icon @click.stop="dialog = !dialog">
+          <v-icon>{{ mdiArrowLeft }}</v-icon>
+        </v-app-bar-nav-icon>
+        <brand />
+        <v-spacer v-if="$vuetify.breakpoint.lgAndUp" />
+
+        <v-text-field
+          v-model.trim.lazy="search"
+          :loading="isLoading ? 'blue' : false"
+          flat
+          single-line
+          solo
+          hide-details
+          @input="wikiSearch"
+          :placeholder="$i18n('header-search')"
+          :prepend-inner-icon="mdiMagnify"
+          class="article-search"
+        >
+        </v-text-field>
+        <v-spacer v-if="$vuetify.breakpoint.lgAndUp" />
+        <language-selector />
+      </v-app-bar>
+      <v-container grid-list-md>
+        <v-list v-if="articles.length === 0 || !this.search">
+          <v-list-item>
+            <v-list-item-title>
+              <v-row class="align-center">
+                <v-col> What would you like to know? </v-col>
+              </v-row>
+            </v-list-item-title>
           </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </template>
-    <template v-slot:item="data">
-      <template v-if="typeof data.item !== 'object'">
-        <v-list-item-content v-text="data.item" />
-      </template>
-      <template v-else>
-        <v-list-item-avatar>
-          <img v-if="data.item.thumbnail" :src="data.item.thumbnail.source" />
-          <v-icon v-else large>
-            {{ mdiFileDocumentBox }}
-          </v-icon>
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title v-html="data.item.title" />
-          <v-list-item-subtitle v-html="data.item.description" />
-        </v-list-item-content>
-      </template>
-    </template>
-  </v-autocomplete>
+          <v-subheader v-if="articlesHistory.length">
+            Recently viewed articles
+          </v-subheader>
+          <v-list-item-group color="primary">
+            <v-list-item
+              v-for="(item, i) in articlesHistory"
+              :key="i"
+              :to="item.title"
+            >
+              <v-list-item-avatar>
+                <img v-if="item.thumbnail" :src="item.thumbnail.source" />
+                <v-icon v-else large> {{ mdiFileDocumentBox }} </v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title v-text="item.title" />
+                <v-list-item-subtitle v-html="item.description" />
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+        <v-list v-if="articles.length && this.search">
+          <v-list-item-group color="primary">
+            <v-list-item
+              v-for="(item, i) in articles"
+              :key="i"
+              @click="onSelect(item)"
+            >
+              <v-list-item-avatar>
+                <img v-if="item.thumbnail" :src="item.thumbnail.source" />
+                <v-icon v-else large> {{ mdiFileDocumentBox }} </v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title v-text="item.title" />
+                <v-list-item-subtitle v-html="item.description" />
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-container>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import { mdiMagnify, mdiFileDocumentBox } from "@mdi/js";
+
+import { mdiMagnify, mdiArrowLeft, mdiFileDocumentBox } from "@mdi/js";
 import axios from "axios";
 
 export default {
@@ -86,20 +105,19 @@ export default {
     isLoading: false,
     article: null,
     search: "",
-    drawer: false,
+    dialog: false,
     mdiMagnify,
+    mdiArrowLeft,
     mdiFileDocumentBox
   }),
+  components: {
+    Brand: () => import("./Brand"),
+    LanguageSelector: () => import("./LanguageSelector")
+  },
   watch: {
     $route(to) {
       const contentLanguage = to.meta.language || this.contentLanguage;
       this.$store.commit("app/setContentLanguage", contentLanguage);
-    },
-    search(value) {
-      if (!value) {
-        return;
-      }
-      this.wikiSearch(value);
     }
   },
   computed: {
@@ -114,6 +132,7 @@ export default {
         this.$router.push({
           path: `/page/${this.contentLanguage || "en"}/${selected.title}`
         });
+        this.dialog = false;
         window.scrollTo(0, 0);
       }
     },
@@ -125,7 +144,8 @@ export default {
       // Handle empty value
       if (!value) {
         this.articles = [];
-        this.person = null;
+        this.isLoading = false;
+        return;
       }
       if (this.isLoading) {
         return;
