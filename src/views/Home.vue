@@ -30,7 +30,7 @@
                   <h3 class="headline" v-html="tfa.displaytitle" />
                 </v-card-title>
                 <v-card-text>
-                  <p class="body-1" v-html="tfa.extract_html"></p>
+                  <p class="text-body-1" v-html="tfa.extract_html"></p>
                 </v-card-text>
               </v-col>
             </v-row>
@@ -72,7 +72,7 @@
                   <h4 class="headline" v-html="article.displaytitle" />
                 </v-card-title>
                 <v-card-text class="extract text-xs-left pa-1">
-                  <h4 class="body-1">{{ article.description }}</h4>
+                  <h4 class="text-body-1">{{ article.description }}</h4>
                 </v-card-text>
               </v-card>
             </v-col>

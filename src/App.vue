@@ -55,9 +55,9 @@
       <v-spacer v-if="$vuetify.breakpoint.lgAndUp" />
       <language-selector />
     </v-app-bar>
-    <v-content>
+    <v-main>
       <router-view />
-    </v-content>
+    </v-main>
     <Footer />
     <v-snackbar v-model="snackWithButtons" bottom left>
       {{ snackWithBtnText }}

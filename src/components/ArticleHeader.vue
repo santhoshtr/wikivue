@@ -55,7 +55,7 @@
             </v-card-text>
             <v-card-text class="ma-0 py-0 align-end">
               <h3
-                class="body-2 font-weight-regular"
+                class="text-body-2 font-weight-regular"
                 v-if="lastmodifier"
                 v-html="
                   $i18n(
