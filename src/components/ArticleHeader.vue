@@ -221,9 +221,7 @@ export default {
   methods: {
     locationLink(article) {
       if (article.geo) {
-        return `https://www.openstreetmap.org/?mlat=${
-          article.geo.latitude
-        }&mlon=${article.geo.longitude}&zoom=12&layers=M`;
+        return `https://www.openstreetmap.org/?mlat=${article.geo.latitude}&mlon=${article.geo.longitude}&zoom=12&layers=M`;
       }
     }
   }

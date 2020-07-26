@@ -112,9 +112,7 @@ export default {
       const year = today.getFullYear();
       const month = ("0" + (today.getMonth() + 1)).slice(-2);
       const date = ("0" + today.getDate()).slice(-2);
-      const api = `https://${
-        this.contentLanguage
-      }.wikipedia.org/api/rest_v1/feed/featured/${year}/${month}/${date}`;
+      const api = `https://${this.contentLanguage}.wikipedia.org/api/rest_v1/feed/featured/${year}/${month}/${date}`;
       axios.get(api).then(response => {
         this.mostreadArticles = response.data.mostread.articles;
         this.tfa = response.data.tfa;

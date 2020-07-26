@@ -79,9 +79,7 @@
               "
               :href="
                 task === 'translate' &&
-                  `https://en.wikipedia.org/wiki/Special:CX?page=${
-                    article.itemLabel.value
-                  }&from=${contentLanguage}&to=${targetLanguage}`
+                  `https://en.wikipedia.org/wiki/Special:CX?page=${article.itemLabel.value}&from=${contentLanguage}&to=${targetLanguage}`
               "
             >
               <v-img

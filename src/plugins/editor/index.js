@@ -57,9 +57,7 @@ class WikiEditor extends Editor {
     super(Object.assign(options, defaultOptions));
   }
   html2wikitext(html) {
-    const api = `https://${
-      this.contentLanguage
-    }.wikipedia.org/api/rest_v1/transform/html/to/wikitext`;
+    const api = `https://${this.contentLanguage}.wikipedia.org/api/rest_v1/transform/html/to/wikitext`;
     return axios
       .post(api, { html, scrub_wikitext: true })
       .then(response => response.data);

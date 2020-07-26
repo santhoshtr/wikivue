@@ -32,9 +32,7 @@
               <v-card-actions>
                 <v-btn
                   :to="
-                    `/page/${article.language}/${article.title}?oldid=${
-                      article.revision
-                    }`
+                    `/page/${article.language}/${article.title}?oldid=${article.revision}`
                   "
                   @click="dialog = false"
                   text
