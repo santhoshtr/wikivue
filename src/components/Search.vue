@@ -96,7 +96,7 @@
 import { mapState, mapMutations } from "vuex";
 
 import { mdiMagnify, mdiArrowLeft, mdiFileDocumentBox } from "@mdi/js";
-import axios from "axios";
+import generalApi from "../wiki/api/general";
 
 export default {
   name: "Search",
@@ -137,8 +137,6 @@ export default {
       }
     },
     wikiSearch: async function(value) {
-      const titleQuery = value.trim();
-      const api = `https://${this.contentLanguage}.wikipedia.org/w/api.php?action=query&generator=prefixsearch&gpssearch=${titleQuery}&prop=pageimages|description&piprop=thumbnail&pithumbsize=50&pilimit=10&format=json&formatversion=2&origin=*`;
       // Handle empty value
       if (!value) {
         this.articles = [];
@@ -149,11 +147,8 @@ export default {
         return;
       }
       this.isLoading = true;
-      this.articles = await axios
-        .get(api)
-        .then(response => {
-          return response.data.query.pages;
-        })
+      this.articles = await generalApi
+        .wikiSearch(this.contentLanguage, value)
         .finally(() => (this.isLoading = false));
     },
     ...mapMutations(["setContentLanguage"])

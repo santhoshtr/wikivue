@@ -84,8 +84,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import { mapState } from "vuex";
+import generalApi from "../wiki/api/general";
 
 export default {
   name: "Home",
@@ -108,14 +108,9 @@ export default {
   },
   methods: {
     feed() {
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = ("0" + (today.getMonth() + 1)).slice(-2);
-      const date = ("0" + today.getDate()).slice(-2);
-      const api = `https://${this.contentLanguage}.wikipedia.org/api/rest_v1/feed/featured/${year}/${month}/${date}`;
-      axios.get(api).then(response => {
-        this.mostreadArticles = response.data.mostread.articles;
-        this.tfa = response.data.tfa;
+      generalApi.fetchFeed(this.contentLanguage).then(feed => {
+        this.mostreadArticles = feed.mostread.articles;
+        this.tfa = feed.tfa;
       });
     }
   }
