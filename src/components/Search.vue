@@ -35,6 +35,7 @@
           :placeholder="$i18n('header-search')"
           :prepend-inner-icon="mdiMagnify"
           class="article-search"
+          autofocus
         >
         </v-text-field>
         <v-spacer v-if="$vuetify.breakpoint.lgAndUp" />
