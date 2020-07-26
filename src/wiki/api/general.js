@@ -17,7 +17,15 @@ function wikiSearch(language, query) {
   return axios.get(api).then(response => response.data.query.pages);
 }
 
+function html2wikitext(language, html) {
+  const api = `https://${language}.wikipedia.org/api/rest_v1/transform/html/to/wikitext`;
+  return axios
+    .post(api, { html, scrub_wikitext: true })
+    .then(response => response.data);
+}
+
 export default {
   fetchFeed,
-  wikiSearch
+  wikiSearch,
+  html2wikitext
 };

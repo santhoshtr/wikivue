@@ -24,7 +24,6 @@ import Underline from "./marks/Underline";
 
 import History from "./extensions/History";
 
-import axios from "axios";
 class WikiEditor extends Editor {
   constructor(options) {
     const defaultOptions = {
@@ -55,12 +54,6 @@ class WikiEditor extends Editor {
       ]
     };
     super(Object.assign(options, defaultOptions));
-  }
-  html2wikitext(html) {
-    const api = `https://${this.contentLanguage}.wikipedia.org/api/rest_v1/transform/html/to/wikitext`;
-    return axios
-      .post(api, { html, scrub_wikitext: true })
-      .then(response => response.data);
   }
 }
 
