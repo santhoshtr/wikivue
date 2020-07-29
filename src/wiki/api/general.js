@@ -2,9 +2,9 @@ import axios from "axios";
 
 function fetchFeed(language) {
   const today = new Date();
-  const year = today.getFullYear();
-  const month = ("0" + (today.getMonth() + 1)).slice(-2);
-  const date = ("0" + today.getDate()).slice(-2);
+  const year = today.getUTCFullYear();
+  const month = ("0" + (today.getUTCMonth() + 1)).slice(-2);
+  const date = ("0" + today.getUTCDate()).slice(-2);
 
   const api = `https://${language}.wikipedia.org/api/rest_v1/feed/featured/${year}/${month}/${date}`;
   return axios.get(api).then(response => response.data);
