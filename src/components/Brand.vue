@@ -21,9 +21,9 @@ export default {
     font-variant: common-ligatures small-caps;
     margin-left: -2px;
   }
-  a {
-    color: #000 !important;
-    text-decoration: none;
-  }
+}
+.v-application .wikipedia a {
+  color: #000;
+  text-decoration: none;
 }
 </style>
