@@ -11,7 +11,7 @@
           <v-img
             :aspect-ratio="1 / 1"
             contain
-            src="@/assets/Wikipedia logo version 2.svg?lazy"
+            src="@/assets/Wikipedia-logo-version-2.svg?lazy"
           />
         </v-list-item-avatar>
       </v-list-item>
@@ -46,7 +46,7 @@
           height="32"
           contain
           class="mx-sm-1 mx-md-2 mx-lg-2 pa-0"
-          src="@/assets/Wikipedia logo version 2.svg?lazy"
+          src="@/assets/Wikipedia-logo-version-2.svg?lazy"
         />
       </v-app-bar-nav-icon>
       <brand />
