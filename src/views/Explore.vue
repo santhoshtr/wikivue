@@ -84,12 +84,12 @@
             >
               <v-img
                 :lazy-src="
-                  require('@/assets/Wikipedia logo version 2.svg?lazy')
+                  require('@/assets/Wikipedia-logo-version-2.svg?lazy')
                 "
                 :src="
                   article.image
                     ? `${article.image.value}?width=300`
-                    : require('@/assets/Wikipedia logo version 2.svg?lazy')
+                    : require('@/assets/Wikipedia-logo-version-2.svg?lazy')
                 "
                 cover
                 width="100%"
