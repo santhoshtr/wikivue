@@ -1,11 +1,9 @@
 <template>
-  <v-toolbar-title
-    class="wikipedia"
-    v-show="$vuetify.breakpoint.smAndUp"
-    @click.stop="$router.push('/')"
-  >
-    <span class="cap">W</span><span class="smallcap">ikipedi</span
-    ><span class="cap">A</span>
+  <v-toolbar-title class="wikipedia" v-show="$vuetify.breakpoint.smAndUp">
+    <router-link to="/" class="text--primary text-decoration-none">
+      <span class="cap">W</span><span class="smallcap">ikipedi</span
+      ><span class="cap">A</span>
+    </router-link>
   </v-toolbar-title>
 </template>
 
