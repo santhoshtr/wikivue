@@ -1,49 +1,31 @@
 /* eslint-disable no-console */
 import axios from "axios";
 import Article from "../models/article";
-
+const headers = {
+  // "Api-User-Agent": "wikivue/0.1 (https://github.com/santhoshtr/wikivue)"
+};
 function fetchMedia(language, title) {
-  const api = `https://${language}.wikipedia.org/api/rest_v1/page/media-list/${encodeURIComponent(
+  const api = `//${language}.wikipedia.org/w/rest.php/v1/page/${encodeURIComponent(
     title
-  )}`;
-  return axios.get(api).then(response => response.data);
+  )}/links/media`;
+  return axios.get(api, { headers }).then(response => response.data);
 }
 
 function fetchLanguages(language, title) {
-  const params = {
-    action: "query",
-    format: "json",
-    formatversion: 2,
-    prop: "langlinks",
-    titles: title,
-    lllimit: 500,
-    origin: "*"
-  };
-
-  const api = `//${language}.wikipedia.org/w/api.php`;
-  return axios.get(api, { params }).then(response => {
-    return response.data.query.pages.length
-      ? response.data.query.pages[0].langlinks
-      : [];
+  const api = `//${language}.wikipedia.org/w/rest.php/v1/page/${encodeURIComponent(
+    title
+  )}/links/language`;
+  return axios.get(api, { headers }).then(response => {
+    return response.data || [];
   });
 }
-function fetchRevisions(language, title) {
-  const params = {
-    action: "query",
-    format: "json",
-    formatversion: 2,
-    prop: "revisions",
-    titles: title,
-    rvprop: "ids|timestamp|comment|size|flags|user",
-    rvlimit: 100,
-    origin: "*"
-  };
 
-  const api = `//${language}.wikipedia.org/w/api.php`;
-  return axios.get(api, { params }).then(response => {
-    return response.data.query.pages.length
-      ? response.data.query.pages[0].revisions
-      : [];
+function fetchRevisions(language, title) {
+  const api = `//${language}.wikipedia.org/w/rest.php/v1/page/${encodeURIComponent(
+    title
+  )}/history`;
+  return axios.get(api, { headers }).then(response => {
+    return response.data?.revisions || [];
   });
 }
 
@@ -60,7 +42,7 @@ async function fetchArticle(language, title) {
     api = `https://${language}.wikipedia.org/api/rest_v1/page/random/mobile-sections`;
   }
   const [articleData, revisions, media, languages] = await Promise.all([
-    axios.get(api).then(response => response.data),
+    axios.get(api, { headers }).then(response => response.data),
     fetchRevisions(language, title),
     fetchMedia(language, title),
     fetchLanguages(language, title)
@@ -82,8 +64,8 @@ async function fetchArticle(language, title) {
     revision: articleData.lead.revision,
     language,
     revisions,
-    languages,
-    media: media.items,
+    languages, //Format: [{"code":"af","name":"Afrikaans","key":"Jupiter","title":"Jupiter"}]
+    media: media.files,
     _sections: [...articleData.lead.sections, ...articleData.remaining.sections]
   });
 }

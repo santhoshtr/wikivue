@@ -117,7 +117,7 @@
                 class="font-weight-regular"
                 :href="locationLink(article)"
                 target="__blank"
-                v-if="loaded && article.geo"
+                v-if="article.geo"
               >
                 <v-icon>{{ mdiMapMarkerOutline }}</v-icon>
               </v-btn>
@@ -126,16 +126,16 @@
                 text
                 class="font-weight-regular"
                 :href="`https://www.wikidata.org/wiki/${article.wikidataId}`"
-                v-if="loaded && article.wikidataId"
+                v-if="article.wikidataId"
                 target="__blank"
               >
                 <v-img src="../assets/Wikidata-logo.svg" max-width="24" />
               </v-btn>
-              <!-- <audio
-              controls
-              v-if="loaded && article.pronunciation"
-              :src="article.pronunciation.url"
-            /> -->
+              <audio
+                controls
+                v-if="article.pronunciation"
+                :src="article.pronunciation.url"
+              />
             </v-toolbar-items>
           </v-toolbar>
         </v-sheet>

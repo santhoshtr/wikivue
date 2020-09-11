@@ -2,15 +2,6 @@
   <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
     <template v-slot:activator="{ on }">
       <v-btn text value="languages" v-on="on">
-        <!-- <v-badge
-          right
-          color="blue"
-        >
-          <span
-            slot="badge"
-          >{{ article.languagecount }}</span>
-          <v-icon>{{mdiTranslate}}</v-icon>
-        </v-badge> -->
         <v-icon>{{ mdiTranslate }}</v-icon>
       </v-btn>
     </template>
@@ -44,15 +35,13 @@
             <v-list-item
               v-for="(item, index) in filteredLanguages || articleLanguages"
               :key="index"
-              @click="selectLanguage(item.lang, item.title)"
+              @click="selectLanguage(item.code, item.title)"
             >
               <v-list-item-content>
                 <v-list-item-title class="title">
                   {{ item.title }}
                 </v-list-item-title>
-                <v-list-item-subtitle>{{
-                  autonym(item.lang)
-                }}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{ item.name }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
@@ -63,7 +52,6 @@
 </template>
 
 <script>
-import languagedata from "@wikimedia/language-data";
 import { mdiClose, mdiArrowLeft, mdiMagnify, mdiTranslate } from "@mdi/js";
 import Article from "../wiki/models/article";
 
@@ -90,12 +78,9 @@ export default {
     }
   },
   methods: {
-    autonym: function(lang) {
-      return languagedata.getAutonym(lang);
-    },
     onSearch: function() {
       this.filteredLanguages = this.articleLanguages.filter(item => {
-        return item.lang
+        return item.code
           .toLowerCase()
           .startsWith(this.searchQuery.toLowerCase());
       });

@@ -4,6 +4,7 @@ export default class Article {
     languagecount = 1,
     original,
     namespace,
+    pronunciation,
     pageid,
     language,
     languages = [],
@@ -19,6 +20,7 @@ export default class Article {
     geo,
     image,
     media,
+    wikidataId,
     _sections = [],
     _alias // The title from this page redirected from, if any. See mw/api/page.js#fetchMetadata
   } = {}) {
@@ -31,6 +33,7 @@ export default class Article {
     this.pageviews = pageviews;
     this.thumbnail = thumbnail;
     this.languagecount = languagecount;
+    this.pronunciation = pronunciation;
     this.revision = revision;
     this.alias = _alias;
     this.image = image;
@@ -43,6 +46,7 @@ export default class Article {
     this.lastmodifier = lastmodifier;
     this.lastmodified = lastmodified;
     this.revisions = revisions;
+    this.wikidataId = wikidataId;
   }
 
   get id() {

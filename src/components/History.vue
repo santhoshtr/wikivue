@@ -27,7 +27,7 @@
             small
           >
             <v-card>
-              <v-card-title>{{ revision.user }}</v-card-title>
+              <v-card-title>{{ revision.user.name }}</v-card-title>
               <v-card-text>{{ revision.comment }}</v-card-text>
               <v-card-actions>
                 <v-btn

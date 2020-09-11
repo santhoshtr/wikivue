@@ -12,12 +12,15 @@
     <v-card>
       <v-img
         contain
-        :src="image.srcset[0].src"
-        :srcset="image && srcset"
+        :src="image.original.url"
         aspect-ratio="1"
-        width="auto"
-        height="90vh"
+        :width="image.original.width"
+        :height="image.original.height"
       />
+      <v-card-title>
+        <a :href="image.file_description_url">{{ image.title }}</a> by
+        {{ image.latest.user.name }}
+      </v-card-title>
     </v-card>
   </v-dialog>
 </template>
@@ -38,17 +41,13 @@ export default {
     image: function() {
       if (this.media && this.imgsrc) {
         return this.media.find(item => {
-          return item.title === this.imgsrc;
+          return (
+            item.title === this.imgsrc ||
+            item.title === this.imgsrc.split(":").pop()
+          );
         });
       }
       return null;
-    },
-    srcset() {
-      let srcsetStr = [];
-      this.image.srcset.forEach(item => {
-        srcsetStr.push([item.src, item.scale].join(" "));
-      });
-      return srcsetStr.join(",");
     }
   },
   props: {
@@ -62,7 +61,7 @@ export default {
   },
   watch: {
     imgsrc: function() {
-      this.shown = !!this.imgsrc;
+      this.shown = !!this.imgsrc && !!this.image;
     }
   }
 };
