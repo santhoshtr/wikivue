@@ -11,7 +11,7 @@ module.exports = {
       runtimeCaching: [
         {
           urlPattern: new RegExp("^https://.*.wikipedia.org/api/"),
-          handler: "cacheFirst",
+          handler: "CacheFirst",
           options: {
             cacheName: "Wikipedia-api",
             expiration: {
@@ -27,7 +27,7 @@ module.exports = {
           urlPattern: new RegExp(
             "^https://upload.wikimedia.org/wikipedia/commons/"
           ),
-          handler: "cacheFirst",
+          handler: "CacheFirst",
           options: {
             cacheName: "Wikipedia-commons",
             expiration: {
