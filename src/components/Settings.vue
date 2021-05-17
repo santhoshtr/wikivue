@@ -2,7 +2,7 @@
   <v-layout>
     <v-list-item @click.stop="dialog = true">
       <v-list-item-icon>
-        <v-icon>{{ mdiSettingsOutline }}</v-icon>
+        <v-icon>{{ mdiCogOutline }}</v-icon>
       </v-list-item-icon>
       <v-list-item-content>
         <v-list-item-title v-i18n="msg" />
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { mdiSettingsOutline } from "@mdi/js";
+import { mdiCogOutline } from "@mdi/js";
 
 export default {
   name: "AppSettings",
@@ -54,7 +54,7 @@ export default {
     msg: "menu-settings",
     selectedTheme: "light",
     themes: ["dark", "light"],
-    mdiSettingsOutline
+    mdiCogOutline
   }),
   mounted: function() {
     this.selectedTheme = this.$vuetify.theme.dark ? "dark" : "light";

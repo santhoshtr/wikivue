@@ -61,7 +61,7 @@
             >
               <v-list-item-avatar>
                 <img v-if="item.thumbnail" :src="item.thumbnail.source" />
-                <v-icon v-else large> {{ mdiFileDocumentBox }} </v-icon>
+                <v-icon v-else large> {{ mdiFileDocumentOutline }} </v-icon>
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title v-text="item.title" />
@@ -79,7 +79,7 @@
             >
               <v-list-item-avatar>
                 <img v-if="item.thumbnail" :src="item.thumbnail.source" />
-                <v-icon v-else large> {{ mdiFileDocumentBox }} </v-icon>
+                <v-icon v-else large> {{ mdiFileDocumentOutline }} </v-icon>
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title v-text="item.title" />
@@ -96,7 +96,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 
-import { mdiMagnify, mdiArrowLeft, mdiFileDocumentBox } from "@mdi/js";
+import { mdiMagnify, mdiArrowLeft, mdiFileDocumentOutline } from "@mdi/js";
 import generalApi from "../wiki/api/general";
 
 export default {
@@ -109,7 +109,7 @@ export default {
     dialog: false,
     mdiMagnify,
     mdiArrowLeft,
-    mdiFileDocumentBox
+    mdiFileDocumentOutline
   }),
   components: {
     Brand: () => import("./Brand"),
