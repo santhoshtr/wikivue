@@ -5,10 +5,10 @@ const headers = {
   // "Api-User-Agent": "wikivue/0.1 (https://github.com/santhoshtr/wikivue)"
 };
 function fetchMedia(language, title) {
-  const api = `//${language}.wikipedia.org/w/rest.php/v1/page/${encodeURIComponent(
+  const api = `https://${language}.wikipedia.org/api/rest_v1/page/media-list/${encodeURIComponent(
     title
-  )}/links/media`;
-  return axios.get(api, { headers }).then(response => response.data);
+  )}`;
+  return axios.get(api).then(response => response.data);
 }
 
 function fetchLanguages(language, title) {
@@ -65,7 +65,7 @@ async function fetchArticle(language, title) {
     language,
     revisions,
     languages, //Format: [{"code":"af","name":"Afrikaans","key":"Jupiter","title":"Jupiter"}]
-    media: media.files,
+    media: media.items,
     _sections: [...articleData.lead.sections, ...articleData.remaining.sections]
   });
 }
