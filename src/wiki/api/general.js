@@ -14,7 +14,10 @@ function wikiSearch(language, query) {
   const titleQuery = query.trim();
   const api = `https://${language}.wikipedia.org/w/api.php?action=query&generator=prefixsearch&gpssearch=${titleQuery}&prop=pageimages|description&piprop=thumbnail&pithumbsize=50&pilimit=10&format=json&formatversion=2&origin=*`;
 
-  return axios.get(api).then(response => response.data.query.pages);
+  return axios
+    .get(api)
+    .then(response => response.data.query.pages)
+    .then(pages => pages.sort((page1, page2) => page1.index - page2.index));
 }
 
 function html2wikitext(language, html) {
