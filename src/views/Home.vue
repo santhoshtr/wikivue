@@ -53,6 +53,7 @@
                 :to="`/page/${contentLanguage}/${article.normalizedtitle}`"
                 min-width="300px"
                 color="transparent"
+                height="300px"
                 flat
               >
                 <v-img
@@ -61,19 +62,30 @@
                       ? article.originalimage.source
                       : require('@/assets/Wikipedia-logo-version-2.svg?lazy')
                   "
-                  contain
+                  :contain="!article.originalimage"
+                  :cover="!!article.originalimage"
+                  :position="
+                    article.originalimage ? 'center 33%' : 'center center'
+                  "
+                  width="100%"
                   :lazy-src="
                     require('@/assets/Wikipedia-logo-version-2.svg?lazy')
                   "
-                  :height="$vuetify.breakpoint.mdAndUp ? '250px' : 'auto'"
-                ></v-img>
-
-                <v-card-title class="pa-1">
-                  <h4 class="headline" v-html="article.displaytitle" />
-                </v-card-title>
-                <v-card-text class="extract text-xs-left pa-1">
-                  <h4 class="text-body-1">{{ article.description }}</h4>
-                </v-card-text>
+                  :height="$vuetify.breakpoint.mdAndUp ? '250px' : '300px'"
+                >
+                  <v-row class="fill-height  align-end " style="opacity: 0.85;">
+                    <v-col class="px-2 py-0 ma-0">
+                      <v-card-title class="pa-1 grey darken-3 white--text ">
+                        <h4 class="headline" v-html="article.displaytitle" />
+                      </v-card-title>
+                      <v-card-text
+                        class="extract text-xs-left pa-1   grey darken-3 white--text"
+                      >
+                        <h4 class="text-body-1">{{ article.description }}</h4>
+                      </v-card-text>
+                    </v-col>
+                  </v-row>
+                </v-img>
               </v-card>
             </v-col>
           </v-row>

@@ -9,7 +9,7 @@
             </h2>
           </v-col>
         </v-row>
-        <v-row>
+        <v-row class="ma-auto">
           <v-col v-for="item in topics" :key="item.wd" cols="12" md="2" sm="4">
             <v-item :value="item.wd" v-slot:default="{ active, toggle }">
               <v-card @click="toggle">
@@ -94,8 +94,9 @@
                 cover
                 width="100%"
                 height="300px"
+                position="center 33%"
               >
-                <v-row class="fill-height align-end " style="opacity: 0.85;">
+                <v-row class="fill-height  align-end " style="opacity: 0.85;">
                   <v-col class="px-2 py-0 ma-0">
                     <v-card-title
                       class="pa-0 px-2 grey darken-3 white--text overflow-hidden text-no-wrap"

@@ -12,6 +12,7 @@
             bannerImageUrl ||
               require('@/assets/Wikipedia-logo-version-2.svg?lazy')
           "
+          position="center 33%"
         >
           <v-card-title class="white--text ma-0">
             <h1 class="white--text">
@@ -37,7 +38,7 @@
               width="100%"
               :src="bannerImageUrl"
               contain
-              position="right center"
+              position="center right"
             />
           </v-sheet>
         </v-flex>
